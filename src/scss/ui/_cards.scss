@@ -1,0 +1,35 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.tabla{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr .5fr;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lighten(v.$gris, 35%);
+    color: v.$gris;
+    font-weight: v.$bold;
+}
+.fila{
+        display: grid;
+        align-items: center;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid lighten($color: v.$gris, $amount: 35%)
+            span{
+                color: v.$gris-oscuro;
+            }
+}
+.grid-6{
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+        padding: 1.8rem 0;
+}
+.grid-7{
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1.1fr 1.2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 1.8rem 0;
+}

@@ -1,0 +1,23 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.alerta{
+    width: fit-content;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    font-size: 1.6rem;
+    font-weight: v.$regular;
+        &--error{
+            background-color: rgba(220, 38, 38, .08);
+            border-left: .6rem solid v.$rojo;
+            color: v.$rojo;
+        }
+        &--exito{
+            background-color: rgba(22, 163, 74, .08);
+            border-left: .6rem solid v.$verde;
+            color: v.$verde;
+        }
+}

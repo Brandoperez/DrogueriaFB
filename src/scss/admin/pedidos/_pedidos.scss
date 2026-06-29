@@ -1,0 +1,59 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.pedidos{
+    &__breadcrum{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        font-weight: v.$bold;
+            a{
+                color: v.$azul;
+            }
+            span, 
+            p{
+                margin: 0;
+                color: v.$gris;
+            }
+    }
+    &__grid--productos{
+        display: grid;
+        @include m.grid(2, 2rem);
+        gap: 1rem;
+    }
+    &__card--titulo{
+    margin-bottom: 2rem;
+    h3{
+        margin: 0;
+        color: v.$gris-oscuro;
+        font-size: 2.2rem;
+    }
+    p{
+        margin: .8rem 0 0 0;
+        color: v.$gris;
+    }
+    }
+    &__productos{
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    align-items: end;
+    gap: 2rem;
+}
+
+&__agregar{
+    @include m.centrado;
+    gap: .8rem;
+    height: 4.9rem;
+    padding: 0 2rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: v.$azul;
+    color: v.$blanco;
+    font-weight: v.$bold;
+    cursor: pointer;
+}
+}
+ 

@@ -1,0 +1,40 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.acciones{
+    &--tabla{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    &__editar,
+    &__eliminar{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        border: none;
+        border-radius: 1.5rem;
+        cursor: pointer;
+        transition: all .3s ease;
+        text-decoration: none;
+    }
+    &__editar{
+    background-color: rgba(0, 125, 244, .15);
+    color: v.$azul-secundario;
+        &:hover{
+            background-color: v.$azul-secundario;
+            color: v.$blanco;
+        }
+    }
+
+    &__eliminar{
+    background-color: rgba(220, 38, 38, .15);
+    color: v.$rojo;
+        &:hover{
+            background-color: v.$rojo;
+            color: v.$blanco;
+        }
+    }
+}

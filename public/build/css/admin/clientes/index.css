@@ -1,0 +1,100 @@
+/** Media Queries **/
+.clientes__header {
+  margin-bottom: 3rem;
+}
+.clientes__header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.clientes__header--info h2 {
+  margin: 0;
+  font-size: 2.4rem;
+  color: #1E293B;
+}
+.clientes__header--info p {
+  margin: 0.8rem 0 0 0;
+  color: #64748B;
+}
+.clientes__acciones {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.clientes__accion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 4.9rem;
+  padding: 0 2rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.clientes__accion--primary, .clientes__accion--secundario {
+  background-color: rgba(0, 52, 130, 0.85);
+  color: #FFFFFF;
+}
+.clientes__accion--primary:hover, .clientes__accion--secundario:hover {
+  background-color: rgba(0, 31.6, 79, 0.85);
+}
+.clientes__filtros {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: flex-end;
+}
+.clientes__acciones--filtros {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.clientes__acciones--filtros .busqueda__filtros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 4.9rem;
+  padding: 0 2rem;
+  border: 1px solid rgb(171.5418410042, 181.1485355649, 194.9581589958);
+  border-radius: 1rem;
+  background-color: transparent;
+  color: rgba(0, 52, 130, 0.85);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.clientes__acciones--filtros .busqueda__filtros:hover {
+  background-color: rgba(155.5, 195.3, 255, 0.85);
+  border-color: rgba(0, 52, 130, 0.85);
+}
+.clientes__tabla {
+  margin-bottom: 3rem;
+}
+.clientes__tabla-header h3 {
+  font-size: 2.2rem;
+  color: #1E293B;
+  margin: 0 0 2rem 0;
+}
+.clientes__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1fr 1.4fr auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.8rem 0;
+}
+.clientes__fila {
+  transition: background-color 0.3s ease;
+}
+.clientes__fila:hover {
+  background-color: rgb(251.57, 252.55, 253.53);
+}
+.clientes__nombre {
+  font-weight: 700;
+}
+/*# sourceMappingURL=index.css.map */

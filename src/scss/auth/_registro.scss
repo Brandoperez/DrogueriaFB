@@ -1,0 +1,125 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.registro{
+    min-height: 100vh;
+    background-color: v.$gris-claro;
+    @include m.tablet{
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
+        &__imagen{
+            position: relative;
+            background-image: url('/build/img/registro-bg.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: none;
+                @include m.tablet{
+                    display: block;
+                }
+        }
+        &__overlay{
+            background: linear-gradient(to bottom right, rgba(0, 32, 70, .55), rgba(0, 84, 180, .35));
+            width: 100%;
+            height: 100%;
+            padding: 2rem 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 4rem;
+            backdrop-filter: blur(.15rem);
+            color: v.$blanco;
+        }
+        &__marca{
+            img{
+                width: 22rem;
+                border-radius: 1rem;
+            }
+        }
+        &__contenido{
+            margin: 0;
+            h1{
+                font-size: 5.5rem;
+                line-height: 1.1;
+                font-weight: v.$black;
+                margin-bottom: 2rem;
+            }
+            p{
+                font-size: 2rem;
+            line-height: 1.5;
+            margin: 0;
+            }
+        }
+        &__beneficios{
+            display: grid;
+            gap: 2rem;
+        }
+        &__beneficio{
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+                i{
+                    background-color: v.$azul;
+                    color: v.$blanco;
+                    width: 6.5rem;
+                    height: 6.5rem;
+                    border-radius: 1rem;
+                    font-size: 2.7rem;
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                strong{
+                    display: block;
+                    font-size: 1.7rem;
+                    margin-bottom: .5rem;
+                }
+                p{
+                    margin: 0;
+                    font-size: 1.4rem;
+                    line-height: 1;
+                }
+        }
+        &__formulario{
+            background-color: v.$blanco;
+            padding: 5rem;
+            overflow: auto;
+        }
+        &__heading{
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 5rem;
+                i{
+                    font-size: 5rem;
+                    color: v.$azul;
+                    margin-top: .5rem;
+                }
+                h2{
+                    margin: 0 0 3rem 0;
+                    font-size: 4rem;
+                    color: v.$gris-oscuro;
+                }
+                p{
+                    color: v.$gris;
+                    font-size: 2rem;
+                    line-height: 1;
+                    margin: 0;
+                }
+        }
+        &__login{
+            margin-top: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: v.$gris;
+                a{
+                    color: v.$azul;
+                    font-weight: v.$bold;
+                }
+        }
+}
+

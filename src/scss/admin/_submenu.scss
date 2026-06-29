@@ -1,0 +1,64 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m; 
+
+.sidebar{
+    &__grupo{
+        border-radius: 1rem;
+
+        &--activo{
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: .8rem;
+        }
+    }
+
+    &__grupo--abierto{
+        .sidebar__submenu{
+            max-height: 20rem;
+            opacity: 1;
+        }
+
+        .sidebar__flecha{
+            transform: rotate(180deg);
+        }
+    }
+
+    &__flecha{
+        margin-left: auto;
+        font-size: 1.4rem;
+        transition: transform .3s ease;
+    }
+
+    &__submenu{
+        max-height: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+        opacity: 0;
+        margin-left: 3rem;
+        margin-top: .5rem;
+        transition: max-height .35s ease, opacity .25s ease;
+    }
+
+    &__submenu--enlace{
+        color: v.$blanco;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        padding: 1.2rem 1.5rem;
+        border-radius: .8rem;
+        font-size: 2rem;
+        opacity: .9;
+
+        i{
+            width: 2rem;
+            text-align: center;
+        }
+
+        &:hover,
+        &--actual{
+            background-color: rgba(255, 255, 255, .15);
+            opacity: 1;
+        }
+    }
+}

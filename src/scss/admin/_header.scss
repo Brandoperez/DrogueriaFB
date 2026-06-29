@@ -1,0 +1,68 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.admin-header{
+    background-color: v.$blanco;
+    padding: 2rem 3rem;
+    border-bottom: 1px solid lighten($color: v.$gris, $amount: 35%);
+    @include m.shadow;
+        &__contenido{
+          display: flex;
+          justify-content: space-between;
+          align-items: center; 
+          gap: 2rem;
+        }
+        &__heading{
+            margin: 0;
+            color: v.$gris-oscuro;
+            font-size: 3.5rem;
+        }
+        &__acciones{
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        &__busqueda{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 42rem;
+            height: 5rem;
+            background-color: v.$blanco;
+            border-radius: 1.2rem;
+            border: 1px solid v.$azul;
+            padding: 0 1.5rem;
+                &-icono{
+                    color: v.$gris;
+                    font-size: 1.8rem;
+                }
+                input{
+                    flex: 1;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    font-size: 1.5rem;
+                    color: v.$gris-oscuro;
+                    &::placeholder{
+                        color: v.$gris;
+                    }
+                }
+                button{
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    color: v.$azul;
+                    font-size: 1.8rem;
+                }
+        }
+        &__icono{
+            width: 4.2rem;
+            height: 4.2rem;
+            border-radius: 1rem;
+            border: none;
+            color: v.$gris-oscuro;
+            font-size: 2.6rem;
+            background-color: v.$gris-claro;
+            cursor: pointer;
+        }
+}

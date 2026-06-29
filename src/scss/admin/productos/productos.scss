@@ -1,0 +1,26 @@
+@use '../../base/variables' as v;
+@use '../../base/mixins' as m;
+
+.excel{
+    &__contenido-carga--productos{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    &__tabla{
+        width: 100%;
+        overflow-x: auto;
+    }
+    &__grid--productos{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1.5fr 1fr .8fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+    &__grid--confirmar-productos{
+        display: grid;
+        grid-template-columns: 1fr 2fr 1.5fr 1fr .8fr 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+}

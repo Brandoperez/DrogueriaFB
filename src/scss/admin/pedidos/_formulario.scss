@@ -1,0 +1,43 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario{
+    &__card{
+        background-color: v.$blanco;
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        @include m.shadow;
+    }
+    &__campos{
+        @include m.grid(3, 2rem)
+    }
+    &__campo{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+            label{
+                color: v.$gris-oscuro;
+                font-weight: v.$bold;
+            }
+            input,
+            select,
+            textarea{
+                width: 100%;
+                outline: none;
+                border: 1px solid lighten($color: v.$gris, $amount: 30%);
+                border-radius: 1rem;
+                padding: 1.2rem;
+                color: v.$gris-oscuro;
+                font-size: 1.6rem;
+                background-color: v.$blanco;
+            }
+            textarea{
+                min-height: 5rem;
+                resize: vertical;
+            }
+            &--full{
+                grid-column: 1 / 4;
+            }
+    }
+}

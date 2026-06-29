@@ -1,0 +1,147 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.excel{
+    &__validacion{
+        margin-bottom: 2rem;
+    }
+    &__stats{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    &__stat{
+        background-color: v.$blanco;
+        @include m.shadow;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        border-left: 1rem solid v.$azul;
+            &--validos{
+                border-left: 1rem solid v.$verde;
+            }
+            &--error{
+                border-left: 1rem solid v.$rojo;
+            }
+            p{
+                margin: 1rem 0 0 0;
+                color: v.$gris;
+            }
+    }
+    &__stat--numero{
+        color: v.$gris-oscuro;
+        font-weight: v.$bold;
+        font-size: 3rem;
+    }
+    &__tabs{
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    &__tab{
+        background-color: v.$blanco;
+        border: none;
+        padding: 1.4rem 2.5rem;
+        border-radius: 1rem;
+        color: v.$gris;
+        font-weight: v.$bold;
+        @include m.shadow;
+        cursor: pointer;
+            &--active{
+                background-color: v.$azul;
+                color: v.$blanco;
+            }
+    }
+    &__contenido-carga{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+    }
+    &__grid{
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr 1fr;
+        gap: 2rem;
+    }
+    &__estado{
+        width: fit-content;
+        padding: .8rem 1.2rem;
+        border-radius: 5rem;
+        font-size: 1.6rem;
+        font-weight: v.$bold;
+            &--valido{
+                background-color: rgba(22, 163, 74, .15);
+                color: v.$verde;
+            }
+            &--error{
+                background-color: rgba(220, 38, 38, .15);
+                color: v.$rojo;
+            }
+    }
+    &__errores{
+        height: fit-content;
+        margin-top: 3.5rem;
+    }
+    &__error{
+        padding: 1.5rem 0;
+        border-bottom: 1px solid lighten(v.$gris, 35%);
+        p{
+            margin: .8rem 0 0 0;
+            color: v.$gris;
+            line-height: 1.6;
+        }
+    }
+    &__error--fila{
+        display: inline-block;
+        background-color: rgba(220, 38, 38, .15);
+        color: v.$rojo;
+        padding: .5rem 1rem;
+        border-radius: 5rem;
+        font-size: 1.3rem;
+        font-weight: v.$bold;
+    }
+    &__acciones{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3rem;
+    }
+    &__acciones-right{
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    &__accion{
+        @include m.centrado;
+        gap: 1rem;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 1.4rem 2.5rem;
+        font-weight: v.$bold;
+        cursor: pointer;
+        transition: all .3s ease;
+            &--secundaria{
+                background-color: transparent;
+                color: v.$gris-oscuro;
+                border: 1px solid lighten($color: v.$gris, $amount: 20%);
+                &:hover{
+                     background-color: lighten(v.$gris, 35%);
+                }
+            }
+            &--outline{
+                background-color: transparent;
+                color: v.$azul;
+                border: 1px solid v.$azul;
+                &:hover{
+                     background-color: v.$azul;
+                     color: v.$blanco;
+                }
+            }
+            &--primary{
+                background-color: v.$azul;
+                color: v.$blanco;
+                &:hover{
+                    background-color: darken(v.$azul, 10%);
+                }
+            }
+    }
+}

@@ -1,0 +1,123 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.pedidos{
+    &__header{
+        margin-bottom: 3rem;
+    }
+    &__header-top{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+        h2{
+            color: v.$gris-oscuro;
+            font-size: 2.2rem;
+            margin: 0;
+        }
+    }
+    &__exportar{
+        @include m.centrado;
+        gap: 1rem;
+        border: 1px solid lighten($color: v.$gris, $amount: 25%);
+        padding: 1.4rem 2.5rem;
+        border-radius: 1rem;
+        color: v.$azul;
+        font-weight: v.$bold;
+        transition: all .3s ease;
+        cursor: pointer;
+            &:hover{
+                background-color: v.$azul;
+                color: v.$blanco;
+                border-color: v.$azul;
+    }
+    }
+    &__filtros{
+        @include m.grid(5, 2rem);
+        align-items: flex-end;
+    }
+    &__acciones-filtros{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    &__limpiar{
+        @include m.centrado;
+        gap: 1rem;
+        height: 4.9rem;
+        padding: 0 2rem;
+        border: 1px solid lighten(v.$gris, 25%);
+        border-radius: 1rem;
+        background-color: transparent;
+        color: v.$azul;
+        font-weight: v.$bold;
+        cursor: pointer;
+        transition: all .3s ease;
+            &:hover{
+            background-color: lighten(v.$azul, 55%);
+            border-color: v.$azul;
+        }
+    }
+    &__buscar{
+        @include m.centrado;
+        gap: 1rem;
+        height: 4.9rem;
+        padding: 0 2rem;
+        border: none;
+        border-radius: 1rem;
+        background-color: v.$azul;
+        color: v.$blanco;
+        font-weight: v.$bold;
+        cursor: pointer;
+        transition: all .3s ease;
+            &:hover{
+                background-color: darken(v.$azul, 10%);
+            }
+    }
+    &__tabla{
+        margin-bottom: 3rem;
+    }
+    &__tabla--header{
+        display: flex;
+        align-items: center;
+        font-size: 2.2rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        color: v.$gris-oscuro;
+            h3{
+                font-size: 2.2rem;
+                margin: 0;
+                color: v.$gris-oscuro;
+            }
+            p{
+                margin: 0;
+            }
+    }
+    &__tabla--contenido{
+        width: 100%;
+        overflow-x: auto;
+    }
+    &__listado--grid{
+        display: grid;
+        grid-template-columns: 1fr .8fr 2fr 1.5fr 1.4fr 1fr auto;
+        padding: 1.8rem 0;
+        min-width: 110rem;
+        gap: 2rem;
+        align-items: center;
+    }
+    &__fila{
+    transition: background-color .3s ease;
+
+            &:hover{
+                background-color: lighten(v.$gris-claro, 1%);
+            }
+    }
+    &__pedido-id{
+    color: v.$azul-secundario;
+    font-weight: v.$bold;
+}
+    
+}

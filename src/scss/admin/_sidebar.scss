@@ -1,0 +1,84 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.sidebar{
+    @include m.fondoDegradado((v.$azul),  rgba(0, 32, 80, 1) );
+    min-height: 100vh;
+    width: 28rem;
+    padding: 2.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-start;
+        &__logo{
+            margin-bottom: 4rem;
+            text-align: center;
+            img{
+                width: 15rem;
+                margin: 0 auto 1.5rem auto;
+                display: block;
+                border-radius: 1rem;
+            }
+            p{
+                color: v.$blanco;
+                font-size: 1.8rem;
+                margin: 0;
+                opacity: .85;
+            }
+        }
+        &__menu{
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        &__enlace{
+            color: v.$blanco;
+            gap: 1.2rem;
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-radius: 1rem;
+            font-size: 2rem;
+            transition: background-color .3s ease;
+            i{
+            width: 2rem;
+            text-align: center;
+        }
+            &:hover,
+            &--actual{
+                background-color: rgba(255, 255, 255, .15);
+            }
+        }
+        &__usuario{
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, .2);
+            margin-top: auto;
+        }
+        &__avatar{
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, .18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                i{
+                    color: v.$blanco;
+                    font-size: 2rem;
+                }
+        }
+        &__info{
+            margin: 0;
+            color: v.$blanco;
+            font-weight: v.$bold;
+            font-size: 2rem;
+            span{
+                font-weight: v.$regular;
+                color: v.$blanco;
+                opacity: .85;
+            }
+        }
+
+}

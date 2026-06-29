@@ -1,0 +1,16 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.admin{
+    min-height: 100vh;
+    display: flex;
+    background-color: v.$gris-claro;
+        &__contenido{
+            flex: 1;
+            min-width: 0;
+            background-color: v.$gris-claro;
+        }
+        &__main{
+            padding: 3rem;
+        }
+}

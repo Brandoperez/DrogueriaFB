@@ -1,0 +1,149 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario{
+        &__campo{
+            margin-bottom: 2rem;
+                label{
+                    display: block;
+                    margin: .8rem;
+                    font-weight: v.$bold;
+                    color: v.$gris-oscuro;
+                    font-size: 2;
+                }
+                input,
+                select{
+                    width: 100%;
+                    padding: 1.5rem;
+                    border-radius: 1rem;
+                    border: 1px solid #CBD5E1;
+                    font-size: 1.6rem;
+                    background-color: v.$blanco;
+                    &:focus{
+                        outline: none;
+                        border-color: v.$azul;
+                        box-shadow: 0 0 0 .3rem rgba(0, 125, 244, .15);
+                    }
+                }
+        }
+        &__input--icono{
+            position: relative;
+                i{
+                    position: absolute;
+                    top: 50%;
+                    left: 1.8rem;
+                    transform: translateY(-50%);
+                    color: v.$gris;
+                    font-size: 1.5rem;
+                    z-index: 2;
+                    pointer-events: none;
+                }
+                input, 
+                select{
+                    width: 100%;
+                    padding-left: 4.5rem !important;
+                }
+        }
+        &__input--select{
+            position: relative;
+            select{
+                    appearance: none;
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                }
+            &::after {
+                            content: '\f078';
+                            font-family: "Font Awesome 6 Free";
+                            font-weight: 900;
+                            position: absolute;
+                            right: 1.5rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            color: v.$azul;
+                            pointer-events: none;
+                }
+        }
+        &__submit{
+            @include m.boton(v.$azul, v.$blanco);
+            width: fit-content;
+            padding: 1.2rem 2.5rem;
+            border-radius: 1rem;
+        }
+        &__acciones--submit{
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        &__section{
+        border: 1px solid #E2E8F0;
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin-bottom: 3rem;
+            legend{
+                color: v.$azul;
+                font-weight: v.$bold;
+                text-transform: uppercase;
+                font-size: 2rem;
+                padding: 0 1rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+    }
+        &__grid{
+            display: grid;
+            gap: 2rem;
+                @include m.tablet{
+                    &--2{
+                        @include m.grid(2, 2rem);
+                    }
+                    &--3{
+                        @include m.grid(3, 2rem);
+                    }
+                }
+        }
+        &__acciones{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 1.5rem;
+                label{
+                    display: flex;
+                    align-items: center;
+                    gap: 1.8rem;
+                    color: v.$gris;
+                }
+                a{
+                    color: v.$azul;
+                    font-weight: v.$bold;
+                        &:hover{
+                            text-decoration: none;
+                        }
+                }
+        }
+        &__buscador{
+            width: 32rem;
+        }
+        &__enlaces{
+            margin-top: 4rem;
+            display: flex;
+            align-items: center;
+            color: v.$gris;
+            gap: 2rem;
+                a{
+                    color: v.$azul;
+                    font-weight: v.$bold;
+                }
+                &--crear{
+                    justify-content: center;
+                }
+                &--login{
+                    justify-content: space-between;
+                }
+        }
+    }
+
