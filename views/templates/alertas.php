@@ -5,3 +5,10 @@
         </div>
     <?php } ?>
 <?php } ?>
+
+<?php if(isset($_SESSION['alerta'])): ?>
+    <script>
+        window.ALERTA = <?= json_encode($_SESSION['alerta']); ?>;
+    </script>
+    <?php unset($_SESSION['alerta']); ?>
+<?php endif; ?>

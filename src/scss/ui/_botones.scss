@@ -38,3 +38,8 @@
         }
     }
 }
+.boton__desabilitado{
+    opacity: .5;
+    cursor: not-allowed;
+    pointer-events: none;
+}

@@ -33,3 +33,11 @@
     align-items: center;
     padding: 1.8rem 0;
 }
+
+.tabla__header--historial,
+.tabla__fila--historial {
+    display: grid;
+    grid-template-columns: 2fr 1.4fr 1.4fr .8fr .8fr 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}

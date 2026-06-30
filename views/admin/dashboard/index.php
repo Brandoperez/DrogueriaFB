@@ -1,3 +1,4 @@
+<?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
 <section class="dashboard">
     <div class="dashboard__header">
         <div class="dashboard__bienvenida">

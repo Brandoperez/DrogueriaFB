@@ -49,7 +49,7 @@ $router->get('/admin/productos/excel', [ProductosController::class, 'excel']);
 $router->post('/admin/productos/excel', [ProductosController::class, 'excel']);
 $router->get('/admin/productos/confirmar', [ProductosController::class, 'confirmar']);
 $router->post('/admin/productos/confirmar', [ProductosController::class, 'confirmar']);
-$router->get('/admin/productos/resultado', [ProductosController::class, 'resultado']);
+$router->get('/admin/productos/preview', [ProductosController::class, 'preview']);
 $router->get('/admin/productos/historial', [ProductosController::class, 'listado']);
 
 //CLientes

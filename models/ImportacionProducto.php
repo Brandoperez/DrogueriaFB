@@ -27,6 +27,24 @@ class ImportacionProducto extends ActiveRecord{
         $this->status = $args['status'] ?? 'completed';
         $this->created_at = $args['created_at'] ?? null;
     }
+
+    public static function obtenerHistorial() {
+    $query = "SELECT 
+                pi.id,
+                pi.file_name,
+                pi.total_records,
+                pi.new_products,
+                pi.updated_products,
+                pi.errors_count,
+                pi.status,
+                pi.created_at,
+                u.name AS usuario
+            FROM product_imports pi
+            LEFT JOIN users u ON pi.user_id = u.id
+            ORDER BY pi.created_at DESC";
+
+    return self::consultarSQL($query);
+}
 }
 
 

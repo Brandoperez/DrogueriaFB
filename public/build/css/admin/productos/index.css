@@ -20,4 +20,9 @@
   gap: 2rem;
   align-items: center;
 }
+.excel__ver-mas {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
 /*# sourceMappingURL=index.css.map */

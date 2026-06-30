@@ -36,25 +36,13 @@
 
             <div class="excel__linea"></div>
 
-            <div class="excel__step">
+            <div class="excel__step <?= $step >= 3 ? 'excel__step--active' : '' ?>">
                 <div class="excel__numero">
                     <p>3</p>
                 </div>
                 <div class="excel__contenido">
                     <h3>Confirmar Carga</h3>
                     <p>Ver Resumen Final</p>
-                </div>
-            </div>
-
-            <div class="excel__linea"></div>
-
-            <div class="excel__step">
-                <div class="excel__numero">
-                    <p>4</p>
-                </div>
-                <div class="excel__contenido">
-                    <h3>Resultado</h3>
-                    <p>Carga Completa</p>
                 </div>
             </div>
         </div>
@@ -145,7 +133,7 @@
 
                 <div class="excel__stat excel__stat--validos">
                     <span class="excel__stat--numero"><?php echo $resultado['actualizados'] ?? 0; ?></span>
-                    <p>Registros Actualizados</p>
+                    <p>Registros para Actualizar</p>
                 </div>
 
                 <div class="excel__stat excel__stat--error">
@@ -183,6 +171,10 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
+
+                    <div class="excel__ver-mas">
+                        <a href="/admin/productos/preview" class="excel__accion excel__accion--primary">Ver todos</a>
+                    </div>
                 </div>
 
                 <aside class="excel__errores formulario__card">
@@ -213,11 +205,12 @@
         </div>
 
         <div class="excel__acciones">
-                <div></div>
-
+             <div></div>
                 <div class="excel__acciones-right">
-                    <a href="/admin/productos/confirmar" class="excel__accion excel__accion--primary">
-                        <i class="fa-solid fa-check"></i>Confirmar</a>
+                    <form action="/admin/productos/confirmar" method="POST">
+                        <?php $hayErrores = !empty($resultado['errores']); ?>
+                        <a href="/admin/productos/confirmar" class="excel__accion excel__accion--primary <?php echo $hayErrores ? 'boton__desabilitado': ''; ?>" <?php echo $hayErrores ? 'disabled' : '' ?>><i class="fa-solid fa-check"></i>Confirmar</a>
+                    </form>
                 </div>
             </div>
         </div>
