@@ -30,7 +30,6 @@
                         <label for="producto">Producto:</label>
                         <input type="text" id="producto" name="producto" placeholder="Buscar por nombre, laboratorio o SKU">
                         <input type="hidden" id="producto_id" name="producto_id">
-                        <div id="resultado-productos" class="pedidos__resultados"></div>
                     </div>
 
                     <div class="formulario__campo pedidos__cantidad">
@@ -40,6 +39,8 @@
 
                     <button type="button" class="btn btn__azul pedidos__agregar"><i class="fa-solid fa-plus"></i>Agregar</button>
                 </div>
+
+                    <div id="resultado-productos" class="pedidos__resultados"></div>
             </div>
             
             <div class="formulario__card">
@@ -47,12 +48,12 @@
                     <h3>Productos del Pedido</h3>
                 </div>
                 <div class="tabla__productos">
-                    <div class="tabla__header">
+                    <div class="tabla tabla__grid--pedidos">
                         <span>Producto</span>
                         <span>Cantidad</span>
                         <span>Precio</span>
                         <span>Subtotal</span>
-                        <span></span>
+                        <span>Acciones</span>
                     </div>
 
                     <div class="tabla__vacia">
@@ -68,6 +69,7 @@
                     <textarea name="observaciones" id="observaciones" placeholder="Escribí alguna observación si es necesario..."></textarea>
                 </div>
             </div>
+            <input type="hidden" name="productos" id="productos_json">
         </section>
 
         <div class="excel__acciones"> <!--Arreglar CSS-->

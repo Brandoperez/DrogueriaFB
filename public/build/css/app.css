@@ -817,6 +817,9 @@ h3 {
   color: #64748B;
   font-weight: 700;
 }
+.tabla:last-child {
+  border-bottom: none;
+}
 .tabla__grid--listado, .tabla__fila--listado {
   display: grid;
   grid-template-columns: 2fr 1.3fr 1.3fr 1fr 0.7fr;
@@ -836,6 +839,37 @@ h3 {
   gap: 2rem;
   align-items: center;
   padding: 1.8rem 0;
+}
+.tabla__grid--pedidos, .tabla__fila--pedidos {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+  gap: 2rem;
+  padding: 1.8rem 0;
+  color: #64748B;
+}
+.tabla__vacia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 18rem;
+  color: #64748B;
+  text-align: center;
+}
+.tabla__vacia i {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: rgb(156.7112970711, 168.0251046025, 184.2887029289);
+}
+.tabla__vacia p {
+  margin: 0;
+}
+.tabla__grid--listado-pe, .tabla__fila--listado-pe {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr 1.2fr 1.2fr 0.8fr 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.8rem 1rem;
 }
 
 .fila {
@@ -1439,42 +1473,6 @@ h3 {
 }
 .formulario__campo--full {
   grid-column: 1/4;
-}
-
-.tabla__header {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgb(201.2029288703, 207.3953974895, 216.2970711297);
-  color: #64748B;
-  font-weight: 700;
-}
-.tabla__vacia {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: 18rem;
-  color: #64748B;
-  text-align: center;
-}
-.tabla__vacia i {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  color: rgb(156.7112970711, 168.0251046025, 184.2887029289);
-}
-.tabla__vacia p {
-  margin: 0;
-}
-.tabla__fila {
-  display: grid;
-  align-items: center;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgb(201.2029288703, 207.3953974895, 216.2970711297);
-}
-.tabla__fila span {
-  color: #1E293B;
 }
 
 .excel__steps {

@@ -1,5 +1,6 @@
 <?php 
 namespace Model;
+use Model\ActiveRecord;
 use PDO;
 
 class Producto extends ActiveRecord{
@@ -31,23 +32,31 @@ class Producto extends ActiveRecord{
         $this->updated_at = $args['updated_at'] ?? null;
     }
 
-    public static function buscarParaPedido($termino) {
+    public static function buscarParaPedido($termino, $priceListId = null) {
         global $db;
 
-        $query = "SELECT id, code, description, laboratory, stock
-                FROM products
-                WHERE active = true
-                AND (
-                    code ILIKE :termino
-                    OR description ILIKE :termino
-                    OR laboratory ILIKE :termino
-                )
-                ORDER BY description ASC
-                LIMIT 10";
+         $query = "SELECT p.id, p.code, p.description, p.laboratory, p.stock,
+                COALESCE(
+                pp.price - (pp.price * pp.discount_percentage / 100),
+                p.base_price
+            ) AS precio
+            FROM products p
+            LEFT JOIN product_prices pp
+                ON pp.product_id = p.id
+                AND pp.price_list_id = :price_list_id
+            WHERE p.active = true
+            AND (
+                p.code ILIKE :termino
+                OR p.description ILIKE :termino
+                OR p.laboratory ILIKE :termino
+            )
+            ORDER BY p.description ASC
+            LIMIT 10";
 
         $stmt = $db->prepare($query);
         $stmt->execute([
-            ':termino' => "%{$termino}%"
+            ':termino' => "%{$termino}%",
+            ':price_list_id' => $priceListId
         ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

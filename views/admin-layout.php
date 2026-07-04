@@ -22,6 +22,7 @@
                 </main>
             </div>
     </div>
+    <?php include_once  __DIR__ . '/templates/alertas.php';  ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/build/js/bundle.min.js" defer></script>
 </body>

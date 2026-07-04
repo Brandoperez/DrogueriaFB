@@ -112,6 +112,7 @@ if(btnBuscar && btnLimpiar){ // ← verificar que existan antes de usarlos
 //BUSCAR CLIENTES PARA PEDIDOS
 const inputCliente = document.querySelector('#cliente');
 const contenedorInputCliente = document.querySelector('#resultado-clientes');
+let clienteSeleccionado = null;
 
 if(inputCliente && contenedorInputCliente){
     inputCliente.addEventListener('input', (e) =>{
@@ -135,6 +136,7 @@ if(inputCliente && contenedorInputCliente){
                     resultado.addEventListener('click', () => {
                         inputCliente.value = cliente.name;
                         document.querySelector('#cliente_id').value = cliente.id;
+                        clienteSeleccionado = cliente;
                         contenedorInputCliente.innerHTML = '';
                     });
 
@@ -147,6 +149,9 @@ if(inputCliente && contenedorInputCliente){
 //BUSCAR PRODUCTOS PEDIDOS
 const inputProducto = document.querySelector('#producto');
 const contenedorProductos = document.querySelector('#resultado-productos');
+let productoSeleccionado = null;
+const inputCantidad = document.querySelector('#cantidad');
+const btnAgregarProductos = document.querySelector('.pedidos__agregar');
 
       if (inputProducto && contenedorProductos) {
         inputProducto.addEventListener('input', (e) => {
@@ -156,8 +161,12 @@ const contenedorProductos = document.querySelector('#resultado-productos');
                 contenedorProductos.innerHTML = '';
                 return;
             }
+            if(!clienteSeleccionado){
+                contenedorProductos.innerHTML = '<div class="pedidos__resultado">Primero seleccioná un cliente</div>';
+                return;
+            }
 
-            fetch(`/api/pedidos/productos?q=${encodeURIComponent(termino)}`)
+            fetch(`/api/pedidos/productos?q=${encodeURIComponent(termino)}&price_list_id=${clienteSeleccionado.price_list_id ?? ''}`)
                 .then(respuesta => respuesta.json())
                 .then(productos => {
                     console.log(productos);
@@ -172,6 +181,7 @@ const contenedorProductos = document.querySelector('#resultado-productos');
                             resultado.addEventListener('click', () => {
                                 inputProducto.value = producto.description;
                                 document.querySelector('#producto_id').value = producto.id;
+                                productoSeleccionado = producto;
                                 contenedorProductos.innerHTML = '';
                             });
 
@@ -179,7 +189,112 @@ const contenedorProductos = document.querySelector('#resultado-productos');
                     });
                 });
         });
+    }
+
+//TABLA DE PRODUCTOS
+const tablaProductos = document.querySelector('.tabla__productos');
+const filaVacia = document.querySelector('.tabla__vacia');
+let productosPedidos = [];
+
+    function renderizarTablaPedidos(){
+        tablaProductos.querySelectorAll('.tabla__fila--pedidos').forEach(fila => fila.remove());
+            if(productosPedidos.length === 0){
+                tablaProductos.appendChild(filaVacia);
+                return;
+            }
+
+            filaVacia.remove();
+
+            productosPedidos.forEach((item, index) => {
+                const fila = document.createElement('DIV');
+                      fila.className = 'tabla__fila--pedidos';
+                      fila.innerHTML = `
+                            <span>${item.description}</span>
+                            <span>${item.cantidad}</span>
+                            <span>$${item.precio.toFixed(2)}</span>
+                            <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
+                            <button type="button" class="tabla__eliminar" data-index="${index}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        `;
+                        tablaProductos.appendChild(fila);
+            });
+    }
+
+//AGREGAR PRODUCTOS A LA TABLA
+function agregarProducto(){
+    if(!productoSeleccionado){
+        alert('Debes Seleccionar un producto');
+        return;
+    }
+
+    const cantidad = parseInt(inputCantidad.value);
+    if(!cantidad || cantidad <= 0){
+        alert('Debes Ingresar una cantidad validad');
+        return;
+    }
+
+    const existente = productosPedidos.find(p => p.producto_id === productoSeleccionado.id);
+    if(existente){
+        existente.cantidad += cantidad;
+    }else{
+        productosPedidos.push({
+            producto_id: productoSeleccionado.id,
+            description: productoSeleccionado.description,
+            precio: parseFloat(productoSeleccionado.precio),
+            cantidad: cantidad
+        });
+    }
+    renderizarTablaPedidos();
+
+    inputProducto.value = '';
+    document.querySelector('#producto_id').value = '';
+    inputCantidad.value = '';
+    productoSeleccionado = null;
 }
+
+if(btnAgregarProductos){
+    btnAgregarProductos.addEventListener('click', agregarProducto);
+}
+
+if(inputCantidad){
+    inputCantidad.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter'){
+            e.preventDefault(); // evita que el Enter mande el formulario completo
+            agregarProducto();
+        }
+    });
+}
+    
+//ELIMINAR PRODUCTO TABLA
+document.addEventListener('click', (e) =>{
+    const btnEliminar = e.target.closest('.tabla__eliminar');
+        if(!btnEliminar) return;
+
+        const index = parseInt(btnEliminar.dataset.index);
+        productosPedidos.splice(index, 1);
+        renderizarTablaPedidos();
+})
+
+//ENVIAR FORMULARIO DEL PEDIDO
+const formularioPedido = document.querySelector('.formulario');
+    if(formularioPedido){
+        formularioPedido.addEventListener('submit', (e) => {
+            if(!document.querySelector('#cliente_id').value){
+            e.preventDefault();
+            alert('Debes seleccionar un cliente');
+            return;
+            }
+
+            if(productosPedidos.length === 0){
+            e.preventDefault();
+            alert('Debes agregar al menos un producto');
+            return;
+            }
+
+            document.querySelector('#productos_json').value = JSON.stringify(productosPedidos);
+        })
+    }
 // ESTADOS — delegación de eventos para filas estáticas Y dinámicas
 document.addEventListener('click', async function(e) {
     const el = e.target.closest('.js-cambiar-estado');
@@ -209,10 +324,11 @@ document.addEventListener('click', async function(e) {
 const inputArchivo = document.querySelector('#archivo');
 const textoArchivo = document.querySelector('.excel__archivo--seleccionado');
 
-    inputArchivo.addEventListener('change', () => {
+    if(inputArchivo && textoArchivo){
+        inputArchivo.addEventListener('change', () => {
         if(inputArchivo.files.length > 0){
             textoArchivo.textContent = inputArchivo.files[0].name;
         }else{
             textoArchivo.textContent = '';
         }
-    })
+    });}

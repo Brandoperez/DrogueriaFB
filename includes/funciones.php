@@ -77,4 +77,5 @@ function ao_animation(){
     echo $efectos[$efecto];
 }
 
+
 ?>

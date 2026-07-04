@@ -46,7 +46,7 @@ $router->get('/admin/pedidos/listado', [PedidosController::class, 'listado']);
 
 $router->get('/api/pedidos/clientes', [PedidosController::class, 'buscarClientes']);
 $router->get('/api/pedidos/productos', [PedidosController::class, 'buscarProductos']);
-
+$router->get('/api/pedidos/buscar', [PedidosController::class, 'buscarPedidos']);
 
 //Productos
 $router->get('/admin/productos/excel', [ProductosController::class, 'excel']);
