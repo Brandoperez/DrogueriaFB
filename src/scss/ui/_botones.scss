@@ -43,3 +43,41 @@
     cursor: not-allowed;
     pointer-events: none;
 }
+.btn{
+    &__acciones{
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 2rem;
+    }
+    &__azul{
+        @include m.centrado;
+        gap: 1rem;
+        border: none;
+        border-radius: 1rem;
+        background-color: v.$azul;
+        color: v.$blanco;
+        font-weight: v.$bold;
+        padding: 1.4rem 2.5rem;
+        cursor: pointer;
+        margin-bottom: 2rem;
+            &:hover{
+                background-color: darken(v.$azul, 10%);
+            }
+    }
+    &__transparente{
+        @include m.centrado;
+        gap: 1rem;
+        color: v.$azul;
+        font-weight: v.$bold;
+        border: 1px solid v.$gris;
+        border-radius: 1.5rem;
+        padding: 1.4rem 2.5rem;
+        cursor: pointer;
+        transition: background-color .3s ease, color .3s ease;
+            &:hover{
+                background-color: lighten(v.$azul, 55%);
+                color: v.$azul;
+                border-color: v.$azul;
+            }
+    }
+}

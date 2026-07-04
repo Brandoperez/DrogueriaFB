@@ -62,7 +62,7 @@
                         <p>o selecciona un archivo desde tu computadora.</p>
 
                         <input type="file" name="archivo" id="archivo" accept=".xlsx,.xls" hidden>
-                        <label for="archivo" class="excel__boton"><i class="fa-solid fa-upload"></i>Seleccionar Archivo</label>
+                        <label for="archivo" class="btn btn__azul"><i class="fa-solid fa-upload"></i>Seleccionar Archivo</label>
                         <p class="excel__archivo--seleccionado"></p>
 
                         <div class="excel__formatos">
@@ -72,12 +72,10 @@
                     </div>
                 </div>
                 <div class="excel__acciones">
-                    <button type="button" class="excel__accion excel__accion--secundaria"> 
-                        <i class="fa-solid fa-arrow-left"></i> Cancelar
-                    </button>
+                    <a href="/admin/dashboard" class="btn btn__transparente"> <i class="fa-solid fa-arrow-left"></i> Cancelar</a>
 
                     <div class="excel__acciones-right">
-                        <button type="submit" class="excel__accion excel__accion--primary">
+                        <button type="submit" class="excel__accion btn__azul">
                             <i class="fa-solid fa-file-import"></i>Procesar Archivo</button>
                     </div>
                 </div>
@@ -105,7 +103,7 @@
                 </div>
 
                 <p class="excel__texto">Descargá la plantilla para cargar tus pedidos correctamente.</p>
-                <button type="button" class="excel__descargar">
+                <button type="button" class="btn btn__transparente">
                     <i class="fa-solid fa-download"></i>
                     Descargar
                 </button>
@@ -173,7 +171,7 @@
                     <?php endforeach; ?>
 
                     <div class="excel__ver-mas">
-                        <a href="/admin/productos/preview" class="excel__accion excel__accion--primary">Ver todos</a>
+                        <a href="/admin/productos/preview" class="excel__accion btn__azul">Ver todos</a>
                     </div>
                 </div>
 
@@ -209,7 +207,7 @@
                 <div class="excel__acciones-right">
                     <form action="/admin/productos/confirmar" method="POST">
                         <?php $hayErrores = !empty($resultado['errores']); ?>
-                        <a href="/admin/productos/confirmar" class="excel__accion excel__accion--primary <?php echo $hayErrores ? 'boton__desabilitado': ''; ?>" <?php echo $hayErrores ? 'disabled' : '' ?>><i class="fa-solid fa-check"></i>Confirmar</a>
+                        <a href="/admin/productos/confirmar" class="excel__accion btn__azul <?php echo $hayErrores ? 'boton__desabilitado': ''; ?>" <?php echo $hayErrores ? 'disabled' : '' ?>><i class="fa-solid fa-check"></i>Confirmar</a>
                     </form>
                 </div>
             </div>

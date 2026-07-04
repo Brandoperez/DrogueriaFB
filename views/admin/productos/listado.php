@@ -5,36 +5,36 @@
         <p>Historial de Cargas</p>
     </div>
 
-    <div class="pedidos__acciones">
-        <a href="/admin/productos/excel" class="excel__accion excel__accion--primary">
+    <div class="btn btn__acciones">
+        <a href="/admin/productos/excel" class="excel__accion btn__azul">
             <i class="fa-solid fa-file-import"></i>
             Nueva Importación
         </a>
     </div>
 
-    <div class="excel__tabla formulario__card">
-        <div class="tabla__header tabla__header--historial">
+    <div class="formulario__card">
+        <div class="tabla tabla__grid--listado">
             <span>Archivo</span>
             <span>Fecha</span>
             <span>Usuario</span>
-            <span>Total</span>
-            <span>Nuevos</span>
-            <span>Actualizados</span>
             <span>Estado</span>
+            <span>Acciones</span>
         </div>
 
         <?php foreach($importaciones as $importacion): ?>
-            <div class="tabla__fila tabla__fila--historial">
+
+            <div class="tabla__fila tabla__fila--listado">
                 <span><?php echo $importacion->file_name; ?></span>
                 <span><?php echo date('d/m/Y H:i', strtotime($importacion->created_at)); ?></span>
                 <span><?php echo $importacion->usuario ?? 'Sin usuario'; ?></span>
-                <span><?php echo $importacion->total_records; ?></span>
-                <span><?php echo $importacion->new_products; ?></span>
-                <span><?php echo $importacion->updated_products; ?></span>
                 <span class="estado estado--completado">
                     <?php echo $importacion->status; ?>
                 </span>
+                <span class="tabla__acciones">
+                    <a href="#" class="tabla__accion"><i class="fa-solid fa-eye"></i></a>
+                </span>
             </div>
+
         <?php endforeach; ?>
     </div>
 </section>

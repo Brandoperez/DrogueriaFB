@@ -8,7 +8,7 @@
 
         <div class="dashboard__bienvenida--acciones">
             <p><i class="fa-solid fa-calendar-days"></i>Domingo 31 de mayo de 2026</p>
-            <a href="/admin/dashboard" class="dashboard__boton">Actualizar</a>
+            <a href="/admin/dashboard" class="btn btn__transparente">Actualizar</a>
         </div>  
     </div>
 
@@ -78,7 +78,7 @@
         <div class="dashboard__panel dashboard__panel--pedidos">
             <div class="dashboard__panel--header">
                 <h3>Últimos pedidos</h3>
-                <a href="/admin/pedidos" class="dashboard__boton">Ver Todos <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="/admin/pedidos" class="btn btn__transparente">Ver Todos <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
             <div class="dashboard__tabla">

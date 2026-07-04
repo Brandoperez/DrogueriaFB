@@ -10,7 +10,7 @@
     <div class="pedidos__header formulario__card">
         <div class="pedidos__header-top">
             <h2>Filtros de Búsqueda</h2>
-            <a href="#" class="pedidos__exportar"><i class="fa-solid fa-download"></i>Exportar</a>
+            <a href="#" class="btn btn__transparente"><i class="fa-solid fa-download"></i>Exportar</a>
         </div>
 
         <div class="pedidos__filtros">
@@ -47,8 +47,8 @@
     </div>
 
     <div class="pedidos__acciones-filtros">
-            <button type="button" class="pedidos__limpiar"><i class="fa-solid fa-rotate-left"></i>Limpiar filtros</button>
-            <button type="button" class="pedidos__buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar Pedidos</button>
+            <button type="button" class="btn btn__transparente"><i class="fa-solid fa-rotate-left"></i>Limpiar filtros</button>
+            <button type="button" class="btn btn__transparente"><i class="fa-solid fa-magnifying-glass"></i>Buscar Pedidos</button>
     </div>
 </div>
 

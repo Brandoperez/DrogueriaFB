@@ -13,8 +13,8 @@
             </div>
 
             <div class="clientes__acciones">
-                <a href="#" class="clientes__accion clientes__accion--secundario">Modificar Saldos</a>
-                <a href="/admin/clientes/crear" class="clientes__accion clientes__accion--primary">Nuevo Cliente</a>
+                <a href="#" class="btn btn__azul">Modificar Saldos</a>
+                <a href="/admin/clientes/crear" class="btn btn__azul"><i class="fa-solid fa-plus"></i>Nuevo Cliente</a>
             </div>
         </div>
 
@@ -55,8 +55,8 @@
         </div>
 
         <div class="clientes__acciones--filtros">
-            <button type="button" id="btnLimpiarFiltros" class="busqueda__filtros"><i class="fa-solid fa-rotate-left"></i>Limpiar Filtros</button>
-            <button type="button" id="btnBuscarClientes" class="busqueda__filtros"><i class="fa-solid fa-magnifying-glass"></i>Buscar Clientes</button>
+            <button type="button" id="btnLimpiarFiltros" class="btn btn__transparente"><i class="fa-solid fa-rotate-left"></i>Limpiar Filtros</button>
+            <button type="button" id="btnBuscarClientes" class="btn btn__transparente"><i class="fa-solid fa-magnifying-glass"></i>Buscar Clientes</button>
         </div>
     </div>
 
@@ -66,7 +66,7 @@
         </div>
 
         
-        <div class="tabla grid-7">
+        <div class="tabla tabla__grid--clientes">
             <span>Cliente</span>
             <span>CUIT</span>
             <span>Provincia</span>
@@ -79,7 +79,7 @@
 
         <?php if(!empty($clientes)) : ?>
             <?php foreach($clientes as $cliente) : ?>
-        <div class="fila grid-7">
+        <div class="tabla__fila--clientes">
             <span class="clientes__nombre"><?php echo $cliente->name; ?></span>
             <span><?php echo $cliente->cuit; ?></span>
             <span><?php echo $cliente->province; ?></span>

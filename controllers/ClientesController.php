@@ -6,6 +6,8 @@ use Model\PriceList;
 use Model\Usuario;
 use MVC\Router;
 use PDO;
+
+
 class ClientesController{
     public static function index(Router $router){
          isRole('admin');

@@ -44,6 +44,10 @@ $router->post('/admin/pedidos/confirmar', [PedidosController::class, 'confirmar'
 $router->get('/admin/pedidos/resultado', [PedidosController::class, 'resultado']);
 $router->get('/admin/pedidos/listado', [PedidosController::class, 'listado']);
 
+$router->get('/api/pedidos/clientes', [PedidosController::class, 'buscarClientes']);
+$router->get('/api/pedidos/productos', [PedidosController::class, 'buscarProductos']);
+
+
 //Productos
 $router->get('/admin/productos/excel', [ProductosController::class, 'excel']);
 $router->post('/admin/productos/excel', [ProductosController::class, 'excel']);

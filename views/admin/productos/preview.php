@@ -82,7 +82,7 @@
              <div></div>
                 <div class="excel__acciones-right">
                     <form action="/admin/productos/confirmar" method="POST">
-                        <button type="submit" class="excel__accion excel__accion--primary"><i class="fa-solid fa-check"></i>Confirmar<button>
+                        <button type="submit" class="excel__accion btn__azul"><i class="fa-solid fa-check"></i>Confirmar<button>
                     </form>
                 </div>
             </div>

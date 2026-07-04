@@ -81,7 +81,7 @@
 
         <button type="button" class="excel__accion excel__accion--secundaria"><i class="fa-solid fa-arrow-left"></i>Cancelar</button>
         <div class="excel__acciones-right">
-            <a href="/admin/pedidos/resultado" class="excel__accion excel__accion--primary">Confirmar</a>
+            <a href="/admin/pedidos/resultado" class="excel__accion btn__azul">Confirmar</a>
         </div>
     </div>
 </div>

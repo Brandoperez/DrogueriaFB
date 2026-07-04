@@ -161,6 +161,20 @@ class Cliente extends ActiveRecord{
 
     }
 
+    public static function buscarParaPedido($termino){
+            global $db;
+                $query = "SELECT id, name, cuit, seller_id, price_list_id FROM clients WHERE active = true AND (
+                name ILIKE :termino OR cuit ILIKE :termino)
+                ORDER BY name ASC LIMIT 10";
+
+                $stmt = $db->prepare($query);
+                $stmt->execute([
+                    ':termino' => "%{$termino}%"
+                ]);
+
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Hashea el password
     public function hashPassword() : void {
         $this->password = password_hash($this->password, PASSWORD_BCRYPT);

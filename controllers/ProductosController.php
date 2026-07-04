@@ -291,7 +291,7 @@ class ProductosController{
 
         $router->render('admin/productos/listado', [
             'titulo' => 'Historial de Cargas',
-            'impotaciones' => $importaciones
+            'importaciones' => $importaciones
         ], 'admin-layout');
     }
 }

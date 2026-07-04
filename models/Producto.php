@@ -1,5 +1,6 @@
 <?php 
 namespace Model;
+use PDO;
 
 class Producto extends ActiveRecord{
     protected static $tabla = 'products';
@@ -28,6 +29,28 @@ class Producto extends ActiveRecord{
         $this->active = $args['active'] ?? true;
         $this->created_at = $args['created_at'] ?? null;
         $this->updated_at = $args['updated_at'] ?? null;
+    }
+
+    public static function buscarParaPedido($termino) {
+        global $db;
+
+        $query = "SELECT id, code, description, laboratory, stock
+                FROM products
+                WHERE active = true
+                AND (
+                    code ILIKE :termino
+                    OR description ILIKE :termino
+                    OR laboratory ILIKE :termino
+                )
+                ORDER BY description ASC
+                LIMIT 10";
+
+        $stmt = $db->prepare($query);
+        $stmt->execute([
+            ':termino' => "%{$termino}%"
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

@@ -2,14 +2,37 @@
 @use 'base/mixins' as m;
 
 .tabla{
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr .5fr;
-    gap: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid lighten(v.$gris, 35%);
     color: v.$gris;
-    font-weight: v.$bold;
+    font-weight: v.$bold; 
+        &__grid--listado,
+        &__fila--listado{
+            display: grid;
+            grid-template-columns: 2fr 1.3fr 1.3fr 1fr .7fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        &__grid--usuarios,
+        &__fila--usuarios{
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            padding: 1.8rem 0;
+        }
+        &__grid--clientes,
+        &__fila--clientes{
+            display: grid;
+            grid-template-columns: 1.2fr 1.2fr 1.1fr 1.2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            padding: 1.8rem 0;
+        }
 }
+
+
+
 .fila{
         display: grid;
         align-items: center;
@@ -18,26 +41,4 @@
             span{
                 color: v.$gris-oscuro;
             }
-}
-.grid-6{
-        display: grid;
-        grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr;
-        gap: 2rem;
-        align-items: center;
-        padding: 1.8rem 0;
-}
-.grid-7{
-    display: grid;
-    grid-template-columns: 1.2fr 1.2fr 1.1fr 1.2fr 1fr 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-    padding: 1.8rem 0;
-}
-
-.tabla__header--historial,
-.tabla__fila--historial {
-    display: grid;
-    grid-template-columns: 2fr 1.4fr 1.4fr .8fr .8fr 1fr 1fr;
-    gap: 1rem;
-    align-items: center;
 }

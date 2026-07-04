@@ -12,55 +12,39 @@
             <div class="formulario__campos">
                 <div class="formulario__campo">
                     <label for="cliente">Cliente:</label>
-                    <select name="cliente_id" id="cliente">
-                        <option value="">Seleccionar Cliente</option>
-                    </select>
-                </div>
-
-                <div class="formulario__campo">
-                    <label for="vendedor">Vendedor:</label>
-                    <select name="vendedor_id" id="vendedor">
-                        <option value="">Seleccionar Vendedor</option>
-                    </select>
-                </div>
-
-                <div class="formulario__campo">
-                    <label for="fecha">Fecha del pedido:</label>
-                    <input type="date" name="fecha" id="fecha">
-                </div>
-
-                <div class="formulario__campo formulario__campo--full">
-                    <label for="observaciones">Observaciones:</label>
-                    <textarea name="observaciones" id="observaciones" placeholder="Agregar observaciones del pedido"></textarea>
+                    <input type="text" name="cliente" id="cliente" placeholder="Buscar cliente por nombre o CUIT.">
+                    <input type="hidden" name="cliente_id" id="cliente_id">
+                    <div id="resultado-clientes" class="pedidos__resultados"></div>
                 </div>
             </div>
         </section>
 
-        <section class="pedidos__grid--productos">
+        <section>
             <div class="formulario__card">
                 <div class="pedidos__card--titulo">
                     <h3>Agregar Productos</h3>
                     <p>Agrega el producto y la cantidad.</p>
                 </div>
                 <div class="pedidos__productos">
-                    <div class="formulario__campo">
+                    <div class="formulario__campo pedidos__producto--busqueda">
                         <label for="producto">Producto:</label>
-                        <input type="text" id="producto" name="producto" placeholder="Buscar por nombre o SKU">
+                        <input type="text" id="producto" name="producto" placeholder="Buscar por nombre, laboratorio o SKU">
+                        <input type="hidden" id="producto_id" name="producto_id">
+                        <div id="resultado-productos" class="pedidos__resultados"></div>
                     </div>
 
-                    <div class="formulario__campo">
+                    <div class="formulario__campo pedidos__cantidad">
                         <label for="cantidad">Cantidad:</label>
                         <input type="number" id="cantidad" name="cantidad" min="1" placeholder="0">
                     </div>
 
-                    <button type="button" class="pedidos__agregar"><i class="fa-solid fa-plus"></i>Agregar</button>
+                    <button type="button" class="btn btn__azul pedidos__agregar"><i class="fa-solid fa-plus"></i>Agregar</button>
                 </div>
             </div>
-
+            
             <div class="formulario__card">
                 <div class="pedidos__card--titulo">
-                    <h3>Productos en el Pedido</h3>
-                    <p>Listado de productos agregados al pedido</p>
+                    <h3>Productos del Pedido</h3>
                 </div>
                 <div class="tabla__productos">
                     <div class="tabla__header">
@@ -77,7 +61,22 @@
                     </div>
                 </div>
             </div>
+
+            <div class="formulario__card">
+                <div class="formulario__campo">
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea name="observaciones" id="observaciones" placeholder="Escribí alguna observación si es necesario..."></textarea>
+                </div>
+            </div>
         </section>
+
+        <div class="excel__acciones"> <!--Arreglar CSS-->
+            <a href="/admin/dashboard" class="btn btn__transparente"> <i class="fa-solid fa-arrow-left"></i> Cancelar</a>
+
+            <div class="excel__acciones-right">
+                <button type="submit" class="excel__accion btn__azul"><i class="fa-solid fa-file-import"></i>Confirmar</button>
+            </div>
+        </div>
     </form>
 </section>
 

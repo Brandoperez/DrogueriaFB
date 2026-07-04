@@ -67,7 +67,7 @@
                     <h3>Arrastra y soltá tu archivo excel aquí.</h3>
                     <p>o selecciona un achivo desde tu computadora.</p>
 
-                    <button type="button" class="excel__boton">
+                    <button type="button" class="btn btn__azul">
                         <i class="fa-solid fa-upload"></i>Seleccionar Archivo
                     </button>
 
@@ -99,7 +99,7 @@
                 </div>
 
                 <p class="excel__texto">Descargá la plantilla para cargar tus pedidos correctamente.</p>
-                <button type="button" class="excel__descargar">
+                <button type="button" class="btn btn__transparente">
                     <i class="fa-solid fa-download"></i>
                     Descargar
                 </button>
@@ -171,10 +171,10 @@
 
         <div class="excel__acciones">
 
-        <button type="button" class="excel__accion excel__accion--secundaria"><i class="fa-solid fa-arrow-left"></i>Cancelar</button>
+        <button type="button" class="btn btn__transparente"><i class="fa-solid fa-arrow-left"></i>Cancelar</button>
         <div class="excel__acciones-right">
-            <button type="button" class="excel__accion excel__accion--outline">Guardar borrador</button>
-            <a href="/admin/pedidos/confirmar" class="excel__accion excel__accion--primary">
+            <button type="button" class="btn btn__transparente">Guardar borrador</button>
+            <a href="/admin/pedidos/confirmar" class="btn btn__azul">
             <i class="fa-solid fa-file-import"></i>Procesar Archivo</a>
         </div>
 </div>

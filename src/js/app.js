@@ -109,7 +109,77 @@ if(btnBuscar && btnLimpiar){ // ← verificar que existan antes de usarlos
         });
     }
 }
+//BUSCAR CLIENTES PARA PEDIDOS
+const inputCliente = document.querySelector('#cliente');
+const contenedorInputCliente = document.querySelector('#resultado-clientes');
 
+if(inputCliente && contenedorInputCliente){
+    inputCliente.addEventListener('input', (e) =>{
+        const termino = e.target.value;
+
+        if(termino.length < 3){
+            contenedorInputCliente.innerHTML = '';
+            return;
+        }
+
+        fetch(`/api/pedidos/clientes?q=${encodeURIComponent(termino)}`)
+            .then(respuesta => respuesta.json())
+            .then(clientes => {
+                contenedorInputCliente.innerHTML = '';
+
+                clientes.forEach(cliente => {
+                    const resultado = document.createElement('DIV');
+                    resultado.classList.add('pedidos__resultado');
+                    resultado.textContent = `${cliente.name} - ${cliente.cuit}`;
+
+                    resultado.addEventListener('click', () => {
+                        inputCliente.value = cliente.name;
+                        document.querySelector('#cliente_id').value = cliente.id;
+                        contenedorInputCliente.innerHTML = '';
+                    });
+
+                    contenedorInputCliente.appendChild(resultado);
+                });
+            });
+    });
+}
+
+//BUSCAR PRODUCTOS PEDIDOS
+const inputProducto = document.querySelector('#producto');
+const contenedorProductos = document.querySelector('#resultado-productos');
+
+      if (inputProducto && contenedorProductos) {
+        inputProducto.addEventListener('input', (e) => {
+            const termino = e.target.value;
+
+            if (termino.length < 2) {
+                contenedorProductos.innerHTML = '';
+                return;
+            }
+
+            fetch(`/api/pedidos/productos?q=${encodeURIComponent(termino)}`)
+                .then(respuesta => respuesta.json())
+                .then(productos => {
+                    console.log(productos);
+                    contenedorProductos.innerHTML = '';
+
+                        productos.forEach(producto => {
+                            const resultado = document.createElement('DIV');
+                            resultado.classList.add('pedidos__resultado');
+
+                            resultado.textContent = `${producto.code} - ${producto.description}`;
+
+                            resultado.addEventListener('click', () => {
+                                inputProducto.value = producto.description;
+                                document.querySelector('#producto_id').value = producto.id;
+                                contenedorProductos.innerHTML = '';
+                            });
+
+                            contenedorProductos.appendChild(resultado);
+                    });
+                });
+        });
+}
 // ESTADOS — delegación de eventos para filas estáticas Y dinámicas
 document.addEventListener('click', async function(e) {
     const el = e.target.closest('.js-cambiar-estado');

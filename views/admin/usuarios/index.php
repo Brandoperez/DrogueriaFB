@@ -15,7 +15,7 @@
             </div>
 
             <div class="clientes__acciones">
-                <a href="/admin/usuarios/crear" class="clientes__accion clientes__accion--primary"><i class="fa-solid fa-plus"></i>
+                <a href="/admin/usuarios/crear" class="btn btn__azul"><i class="fa-solid fa-plus"></i>
                 Nuevo Usuario</a>
             </div>
         </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="tabla grid-6">
+        <div class="tabla tabla__grid--usuarios">
             <span>Nombre</span>
             <span>Apellido</span>
             <span>Email</span>
@@ -40,7 +40,7 @@
 
         <?php if(!empty($usuarios)) : ?>
             <?php foreach($usuarios as $usuario) : ?>
-        <div class="grid-6 filas usuario-fila">
+        <div class="tabla__fila--usuarios">
             <span class="clientes__nombre"><?php echo $usuario->first_name ?></span>
             <span class="clientes__nombre"><?php echo $usuario->last_name ?></span>
             <span><?php echo $usuario->email ?></span>
