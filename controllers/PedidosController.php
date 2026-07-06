@@ -7,6 +7,8 @@ use Model\Producto;
 use Model\Pedidos;
 use Model\Usuario;
 
+use Classes\Email;
+
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class PedidosController{
@@ -41,6 +43,8 @@ class PedidosController{
             ], $pedido->productos);
 
             if($orderId){
+
+                self::enviarCorreoFacturacion($orderId);
                 $_SESSION['alerta'] = [
                     'tipo' => 'success',
                     'mensaje' => 'Pedido cargado correctamente'
@@ -168,6 +172,7 @@ class PedidosController{
             unset($_SESSION['pedido_excel']);
 
             if($orderId){
+                self::enviarCorreoFacturacion($orderId);
                 $_SESSION['alerta'] = ['tipo' => 'success', 'mensaje' => 'Pedido creado correctamente'];
                 header('Location: /admin/pedidos/listado');
                 exit;
@@ -243,12 +248,33 @@ class PedidosController{
     }
 
                 $resultado = Pedidos::cambiarEstado($id, $estado);
-
+                $emailEnviado = false;
+                    if($resultado && $estado === 'confirmed'){
+                        $datosCorreo = Pedidos::obtenerDatosCorreo($id);
+                            if($datosCorreo && !empty($datosCorreo['email'])){
+                                $email = new Email($datosCorreo['email'], $datosCorreo['name'], null);
+                                $emailEnviado = $email->enviarConfirmacionPedido(
+                                    str_pad($datosCorreo['id'], 6, '0', STR_PAD_LEFT)
+                                );
+                            }
+                    }
                 header('Content-Type: application/json');
                 echo json_encode([
                     'resultado' => $resultado,
-                    'estado' => $estado
+                    'estado' => $estado,
+                    'email' => $emailEnviado
                 ]);
+    }
+
+    private static function enviarCorreoFacturacion($orderId){
+        $pedido = Pedidos::obtenerDetallePedido($orderId);
+
+                if(!$pedido){
+                return;
+            }
+
+            $email = new Email('', '', null);
+            $email->enviarAvisoFacturacion($pedido);
     }
 
     public static function detalle(Router $router){
@@ -282,6 +308,8 @@ class PedidosController{
             'clientes' => $clientes
         ], 'admin-layout');
     }
+
+    
 }
 
 

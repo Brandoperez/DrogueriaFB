@@ -235,6 +235,24 @@ class Pedidos extends ActiveRecord{
                     ];
     }
 
+    public static function obtenerDatosCorreo($id){
+        global $db;
+
+        $query = "SELECT
+                o.id,
+                c.name,
+                c.email
+            FROM orders o
+            INNER JOIN clients c
+                ON o.client_id = c.id
+            WHERE o.id = ?";
+
+            $stmt = $db->prepare($query);
+            $stmt->execute([$id]);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
     public static function cambiarEstado($id, $nuevoEstado){
     global $db;
 

@@ -98,7 +98,6 @@ if(botonesEstado.length > 0){
             });
 
             const resultado = await respuesta.json();
-            console.log(resultado)
             if(resultado.resultado){
 
     const fila = this.closest('.pedidos__fila');
