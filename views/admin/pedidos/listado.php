@@ -7,8 +7,8 @@
         <p>Listado de Pedidos</p>
     </div>
 
-    <div class="pedidos__header formulario__card">
-        <div class="pedidos__header-top">
+    <div class="m__bottom formulario__card">
+        <div class="titulos--h2 m__bottom">
             <h2>Filtros de Búsqueda</h2>
         </div>
 
@@ -60,10 +60,10 @@
     </div>
 </div>
 
-<div class="pedidos__tabla formulario__card">
-    <div class="pedidos__tabla--header">
-        <h3>Pedidos Del Día </h3>
-        <p>- Miercoles 24 de abril de 2026</p>
+<div class="m__bottom formulario__card">
+    <div class="titulos--h2 m__bottom">
+        <h2>Pedidos Del Día </h2>
+        <p>Miercoles 24 de abril de 2026</p>
     </div>
 
     <div class="tabla tabla__grid--listado-pe">
@@ -84,13 +84,23 @@
                     <span><?php echo date('d/m/Y H:i', strtotime($pedido['created_at'])); ?></span>
                     <span><?php echo s($pedido['client_name'] ?? 'Sin cliente'); ?></span>
                     <span><?php echo s($pedido['seller_name'] ?? 'Sin vendedor'); ?></span>
-                    <div class="estado estado--proceso">
+                    <div class="estado <?php echo claseEstado($pedido['status']); ?>">
                         <span><?php echo $pedido['status']; ?></span>
                     </div>
                     <span>$<?php echo number_format($pedido['total'], 2, ',', '.'); ?></span>
-                    <div class="tabla__acciones-tabla">
-                        <button class="tabla__editar"><i class="fa-solid fa-eye"></i></button>
-                        <button class="tabla__editar"><i class="fa-solid fa-ellipsis"></i></button>
+                    <div class="tabla__acciones">
+                        <a href="/admin/pedidos/detalle?id=<?php echo $pedido['id']; ?>"><i class="fa-solid fa-eye"></i></a>
+
+                        <?php if($pedido['status'] === 'pending'): ?>
+                            <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="confirmed" title="Confirmar pedido"> <i class="fa-solid fa-circle-arrow-right"></i></a>
+
+                            <a href="#" class="tabla__accion js-cancelar-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>
+
+                        <?php elseif($pedido['status'] === 'confirmed'): ?>
+                            <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="completed" title="Completar pedido"><i class="fa-solid fa-check"></i></a>
+
+                            <a href="#" class="tabla__accion js-cancelar-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

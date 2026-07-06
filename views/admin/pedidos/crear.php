@@ -20,9 +20,9 @@
         </section>
 
         <section>
-            <div class="formulario__card">
-                <div class="pedidos__card--titulo">
-                    <h3>Agregar Productos</h3>
+            <div class="formulario__card m__botom">
+                <div class="titulos--h2">
+                    <h2>Agregar Productos</h2>
                     <p>Agrega el producto y la cantidad.</p>
                 </div>
                 <div class="pedidos__productos">
@@ -44,8 +44,8 @@
             </div>
             
             <div class="formulario__card">
-                <div class="pedidos__card--titulo">
-                    <h3>Productos del Pedido</h3>
+                <div class="titulos--h2">
+                    <h2>Productos del Pedido</h2>
                 </div>
                 <div class="tabla__productos">
                     <div class="tabla tabla__grid--pedidos">

@@ -1,0 +1,32 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.detalle__pedido{ 
+    &--info{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+        p{
+            margin: 2rem 0 0 0;
+            font-size: 1.8rem;
+            color: v.$gris;
+        }
+        .estado{
+            margin: 2rem 0 0 0;
+        }
+    }
+    &--label{
+        font-size: 1.4rem;
+        color: v.$gris;
+        text-transform: uppercase;
+        font-weight: v.$bold;
+    }
+    &--observaciones{
+        p{
+            margin: .4rem 0 0 0;
+            font-size: 1.8rem;
+            color: v.$gris-oscuro;
+        }
+    }
+}

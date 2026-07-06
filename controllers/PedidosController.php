@@ -7,6 +7,8 @@ use Model\Producto;
 use Model\Pedidos;
 use Model\Usuario;
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 class PedidosController{
     public static function crear(Router $router){
          isRole('admin');
@@ -59,17 +61,121 @@ class PedidosController{
     public static function excel(Router $router){
          isRole('admin');
 
-        $router->render('admin/pedidos/excel', [
-            'titulo' => 'Carga masiva de pedidos con excel'
-        ], 'admin-layout');
-    }
+         if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $clienteId = $_POST['cliente_id'] ?? null;
+            $cliente = $clienteId ? Cliente::find($clienteId) : null;
 
+                if(!$cliente){
+                    $_SESSION['alerta'] = [
+                        'tipo' => 'error',
+                        'mensaje' => 'Debe seleccionar un cliente para continuar.'
+                    ];
+                    $router->render('admin/pedidos/excel', [
+                        'titulo' => 'Carga masiva de Pedidos',
+                        'step' => 1,
+                        'resultado' => null
+                    ], 'admin-layout');
+                    return;
+                }
+
+                $archivoTemporal = $_FILES['archivo']['tmp_name'];
+                $spreadsheet = IOFactory::load($archivoTemporal);
+                $filas = $spreadsheet->getActiveSheet()->toArray();
+
+                $resultado = Pedidos::validarPedidoExcel($filas, $cliente->price_list_id);
+
+                $_SESSION['pedido_excel'] = [
+                    'cliente_id' => $cliente->id,
+                    'cliente_nombre' => $cliente->name,
+                    'seller_id' => $cliente->seller_id,
+                    'resultado' => $resultado
+                ];
+
+                $_SESSION['alerta'] = !empty($resultado['errores'])
+                    ? ['tipo' => 'warning', 'mensaje' => 'El archivo tiene errores, corregilos antes de confirmar']
+                    : ['tipo' => 'success', 'mensaje' => 'Archivo validado correctamente, podés confirmar la carga.'];
+                     $router->render('admin/pedidos/excel', [
+                        'titulo' => 'Carga masiva de Pedidos',
+                        'step' => 2,
+                        'resultado' => $resultado,
+                        'cliente' => $cliente
+                    ], 'admin-layout');
+                    return;
+         }
+                    $router->render('admin/pedidos/excel', [
+                        'titulo' => 'Carga masiva de Pedidos',
+                        'step' => 1,
+                        'resultado' => null
+                    ], 'admin-layout');
+         }
+
+    public static function plantilla(){
+        isRole('admin');
+
+            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $hoja = $spreadsheet->getActiveSheet();
+
+                $hoja->setCellValue('A1', 'Codigo de Producto');
+                $hoja->setCellValue('B1', 'Descripcion');
+                $hoja->setCellValue('C1', 'Cantidad');
+                $hoja->getStyle('A1:C1')->getFont()->setBold(true);
+
+                $hoja->setCellValue('A2', 'PROD001');
+                $hoja->setCellValue('B2', 'Ibuprofeno 600mg');
+                $hoja->setCellValue('C2', 10);
+
+                foreach(['A', 'B', 'C'] as $columna){
+                    $hoja->getColumnDimension($columna)->setAutoSize(true);
+                }
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="plantilla-pedidos.xlsx"');
+                header('Cache-Control: max-age=0');
+
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save('php://output');
+                exit;
+    }
     public static function confirmar(Router $router){
          isRole('admin');
 
-    $router->render('admin/pedidos/confirmar', [
-        'titulo' => 'Confirmar Pedido',
-    ], 'admin-layout');
+          if(empty($_SESSION['pedido_excel'])){
+                header('Location: /admin/pedidos/excel');
+                exit;
+            }
+
+            $datos = $_SESSION['pedido_excel'];
+            $resultado = $datos['resultado'];
+
+            if(!empty($resultado['errores'])){
+                $_SESSION['alerta'] = ['tipo' => 'error', 'mensaje' => 'No se puede confirmar una carga con errores'];
+                header('Location: /admin/pedidos/excel');
+                exit;
+            }
+
+            $productos = array_map(fn($item) => [
+                'producto_id' => $item['producto_id'],
+                'cantidad' => $item['cantidad'],
+                'precio' => $item['precio']
+            ], $resultado['itemsProcesados']);
+
+            $orderId = Pedidos::crearConProductos([
+                'client_id' => $datos['cliente_id'],
+                'seller_id' => $datos['seller_id'],
+                'observations' => 'Pedido cargado por excel',
+                'total' => $resultado['total']
+            ], $productos);
+
+            unset($_SESSION['pedido_excel']);
+
+            if($orderId){
+                $_SESSION['alerta'] = ['tipo' => 'success', 'mensaje' => 'Pedido creado correctamente'];
+                header('Location: /admin/pedidos/listado');
+                exit;
+            }
+
+            $_SESSION['alerta'] = ['tipo' => 'error', 'mensaje' => 'Ocurrió un error al crear el pedido'];
+            header('Location: /admin/pedidos/excel');
+            exit;
     }
 
     public static function buscarClientes(){
@@ -120,10 +226,46 @@ class PedidosController{
             echo json_encode($pedidos);
     }
 
-    public static function resultado(Router $router){
+    public static function completarPedido(){
+        isRole('admin');
+
+        $id = $_POST['id'] ?? null;
+        $estado = $_POST['estado'] ?? null;
+
+        $estadosPermitidos = ['confirmed', 'completed', 'cancelled'];
+
+            if(!$id || !in_array($estado, $estadosPermitidos)){
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'resultado' => false
+                ]);
+                return;
+    }
+
+                $resultado = Pedidos::cambiarEstado($id, $estado);
+
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'resultado' => $resultado,
+                    'estado' => $estado
+                ]);
+    }
+
+    public static function detalle(Router $router){
          isRole('admin');
-        $router->render('admin/pedidos/resultado', [
-            'titulo' => 'Resultado'
+         $id = $_GET['id'] ?? null;
+         $pedido = $id ? Pedidos::obtenerDetallePedido($id) : null;
+            if(!$pedido){
+                $_SESSION['alerta'] = [
+                    'tipo' => 'error',
+                    'mensaje' => 'El pedido Solicitado no existe.'
+                ];
+                header('Location: /admin/pedidos/listado');
+                exit;
+            }
+        $router->render('admin/pedidos/detalle', [
+            'titulo' => 'Detalle del pedido',
+            'pedido' => $pedido
         ], 'admin-layout');
     }
 

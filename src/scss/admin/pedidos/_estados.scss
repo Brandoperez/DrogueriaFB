@@ -6,14 +6,20 @@
     border-radius: 5rem;
     font-size: 1.8rem;
     font-weight: v.$bold;
+    margin-right: auto;
 
     &--proceso{
         background-color: rgba(245, 158, 11, .15);
         color: #d97706;
     }
 
-    &--despacho{
-        background-color: rgba(22, 163, 74, .15);
+    &--confirmado{
+        background-color: rgba(0, 125, 244, .12);
+        color: v.$azul-secundario;
+    }
+
+    &--completado{
+        background-color: rgba(22, 163, 74, .12);
         color: v.$verde;
     }
 
@@ -23,12 +29,7 @@
     }
 
     &--nuevo{
-        background-color: rgba(0, 125, 244, .12);
-        color: v.$azul-secundario;
-    }
-
-    &--completado{
-        background-color: rgba(22, 163, 74, .12);
-        color: v.$verde;
+        background-color: rgba(107, 114, 128, .12);
+        color: v.$gris;
     }
 }

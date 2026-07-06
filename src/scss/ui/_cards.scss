@@ -40,6 +40,14 @@
             padding: 1.8rem 0;
             color: v.$gris;
         }
+        &__grid--excel,
+        &__fila--excel{
+            display: grid;
+            grid-template-columns: .7fr 2fr 1fr 1.3fr 1.3fr .7fr;
+            gap: 2rem;
+            padding: 1.8rem 0;
+            color: v.$gris;
+        }
         &__vacia{
         @include m.centrado;
         flex-direction: column;
@@ -65,16 +73,32 @@
         align-items: center;
         padding: 1.8rem 1rem;
     }
+    &__fila--listado-pe{
+    .estado{
+        justify-self: start;
+        margin-left: -1rem;
+    }
 }
-
-
-
-.fila{
+    &__grid--detalle,
+    &__fila--detalle{
         display: grid;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
+        gap: 2rem;
         align-items: center;
-        padding: 1.5rem 0;
-        border-bottom: 1px solid lighten($color: v.$gris, $amount: 35%)
-            span{
-                color: v.$gris-oscuro;
-            }
+        padding: 1.8rem 1rem;
+    }
+    &__acciones{
+        display: flex;
+        justify-content: flex-start;
+        gap: 2rem;
+        margin: 0 .5rem;
+        a{
+            font-size: 2rem;
+            color: v.$azul;
+            padding: 0 .3rem;
+            align-items: center;
+        }
+    }
 }
+
+

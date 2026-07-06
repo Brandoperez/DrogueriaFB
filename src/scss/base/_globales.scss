@@ -23,3 +23,18 @@ img {
     width: 90rem !important;
     font-size: 1.9rem;
 }
+.titulos--h2{
+    margin-bottom: 2rem;
+    h2{
+            font-size: 2.2rem;
+            color: v.$gris-oscuro;
+            margin: 0;     
+        }
+        p{
+            color: v.$gris;
+            margin: .8rem 0 0 0;
+        }
+}
+.m__bottom{
+    margin-bottom: 2rem;
+}

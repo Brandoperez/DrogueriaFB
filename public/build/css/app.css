@@ -329,6 +329,23 @@ img {
   font-size: 1.9rem;
 }
 
+.titulos--h2 {
+  margin-bottom: 2rem;
+}
+.titulos--h2 h2 {
+  font-size: 2.2rem;
+  color: #1E293B;
+  margin: 0;
+}
+.titulos--h2 p {
+  color: #64748B;
+  margin: 0.8rem 0 0 0;
+}
+
+.m__bottom {
+  margin-bottom: 2rem;
+}
+
 h1 {
   font-size: 4rem;
 }
@@ -847,6 +864,13 @@ h3 {
   padding: 1.8rem 0;
   color: #64748B;
 }
+.tabla__grid--excel, .tabla__fila--excel {
+  display: grid;
+  grid-template-columns: 0.7fr 2fr 1fr 1.3fr 1.3fr 0.7fr;
+  gap: 2rem;
+  padding: 1.8rem 0;
+  color: #64748B;
+}
 .tabla__vacia {
   display: flex;
   justify-content: center;
@@ -871,13 +895,28 @@ h3 {
   align-items: center;
   padding: 1.8rem 1rem;
 }
-
-.fila {
+.tabla__fila--listado-pe .estado {
+  justify-self: start;
+  margin-left: -1rem;
+}
+.tabla__grid--detalle, .tabla__fila--detalle {
   display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  gap: 2rem;
   align-items: center;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgb(201.2029288703, 207.3953974895, 216.2970711297) span;
-  border-bottom-color: #1E293B;
+  padding: 1.8rem 1rem;
+}
+.tabla__acciones {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  margin: 0 0.5rem;
+}
+.tabla__acciones a {
+  font-size: 2rem;
+  color: rgba(0, 52, 130, 0.85);
+  padding: 0 0.3rem;
+  align-items: center;
 }
 
 .acciones--tabla {
@@ -1389,18 +1428,6 @@ h3 {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
-.pedidos__card--titulo {
-  margin-bottom: 2rem;
-}
-.pedidos__card--titulo h3 {
-  margin: 0;
-  color: #1E293B;
-  font-size: 2.2rem;
-}
-.pedidos__card--titulo p {
-  margin: 0.8rem 0 0 0;
-  color: #64748B;
-}
 .pedidos__productos {
   display: grid;
   grid-template-columns: 2fr 1fr auto;
@@ -1517,7 +1544,7 @@ h3 {
   margin: 0.5rem 0 0 0;
 }
 .excel__linea {
-  width: 12rem;
+  width: 25rem;
   height: 0.1rem;
   margin: 0 3rem;
   background-color: rgb(186.3723849372, 194.2719665272, 205.6276150628);
@@ -1740,61 +1767,6 @@ h3 {
   background-color: rgba(0, 31.6, 79, 0.85);
 }
 
-.confirmar__tabla {
-  margin-bottom: 2rem;
-}
-.confirmar__header {
-  margin-bottom: 2rem;
-}
-.confirmar__header h2 {
-  font-size: 2.2rem;
-  color: #1E293B;
-  margin: 0;
-}
-.confirmar__header p {
-  color: #64748B;
-  margin: 0.8rem 0 0 0;
-}
-.confirmar__grid {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr 1fr auto;
-  gap: 2rem;
-  align-items: center;
-}
-
-.pedidos__header {
-  margin-bottom: 3rem;
-}
-.pedidos__header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-.pedidos__header-top h2 {
-  color: #1E293B;
-  font-size: 2.2rem;
-  margin: 0;
-}
-.pedidos__exportar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  border: 1px solid rgb(171.5418410042, 181.1485355649, 194.9581589958);
-  padding: 1.4rem 2.5rem;
-  border-radius: 1rem;
-  color: rgba(0, 52, 130, 0.85);
-  font-weight: 700;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-.pedidos__exportar:hover {
-  background-color: rgba(0, 52, 130, 0.85);
-  color: #FFFFFF;
-  border-color: rgba(0, 52, 130, 0.85);
-}
 .pedidos__filtros {
   display: grid;
   gap: 2rem;
@@ -1808,84 +1780,6 @@ h3 {
   gap: 1.5rem;
   margin-top: 2rem;
 }
-.pedidos__limpiar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  height: 4.9rem;
-  padding: 0 2rem;
-  border: 1px solid rgb(171.5418410042, 181.1485355649, 194.9581589958);
-  border-radius: 1rem;
-  background-color: transparent;
-  color: rgba(0, 52, 130, 0.85);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.pedidos__limpiar:hover {
-  background-color: rgba(155.5, 195.3, 255, 0.85);
-  border-color: rgba(0, 52, 130, 0.85);
-}
-.pedidos__buscar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  height: 4.9rem;
-  padding: 0 2rem;
-  border: none;
-  border-radius: 1rem;
-  background-color: rgba(0, 52, 130, 0.85);
-  color: #FFFFFF;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.pedidos__buscar:hover {
-  background-color: rgba(0, 31.6, 79, 0.85);
-}
-.pedidos__tabla {
-  margin-bottom: 3rem;
-}
-.pedidos__tabla--header {
-  display: flex;
-  align-items: center;
-  font-size: 2.2rem;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  color: #1E293B;
-}
-.pedidos__tabla--header h3 {
-  font-size: 2.2rem;
-  margin: 0;
-  color: #1E293B;
-}
-.pedidos__tabla--header p {
-  margin: 0;
-}
-.pedidos__tabla--contenido {
-  width: 100%;
-  overflow-x: auto;
-}
-.pedidos__listado--grid {
-  display: grid;
-  grid-template-columns: 1fr 0.8fr 2fr 1.5fr 1.4fr 1fr auto;
-  padding: 1.8rem 0;
-  min-width: 110rem;
-  gap: 2rem;
-  align-items: center;
-}
-.pedidos__fila {
-  transition: background-color 0.3s ease;
-}
-.pedidos__fila:hover {
-  background-color: rgb(251.57, 252.55, 253.53);
-}
-.pedidos__pedido-id {
-  color: #007df4;
-  font-weight: 700;
-}
 
 .estado {
   width: fit-content;
@@ -1893,13 +1787,18 @@ h3 {
   border-radius: 5rem;
   font-size: 1.8rem;
   font-weight: 700;
+  margin-right: auto;
 }
 .estado--proceso {
   background-color: rgba(245, 158, 11, 0.15);
   color: #d97706;
 }
-.estado--despacho {
-  background-color: rgba(22, 163, 74, 0.15);
+.estado--confirmado {
+  background-color: rgba(0, 125, 244, 0.12);
+  color: #007df4;
+}
+.estado--completado {
+  background-color: rgba(22, 163, 74, 0.12);
   color: #16A34A;
 }
 .estado--cancelado {
@@ -1907,12 +1806,34 @@ h3 {
   color: #DC2626;
 }
 .estado--nuevo {
-  background-color: rgba(0, 125, 244, 0.12);
-  color: #007df4;
+  background-color: rgba(107, 114, 128, 0.12);
+  color: #64748B;
 }
-.estado--completado {
-  background-color: rgba(22, 163, 74, 0.12);
-  color: #16A34A;
+
+.detalle__pedido--info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.detalle__pedido--info p {
+  margin: 2rem 0 0 0;
+  font-size: 1.8rem;
+  color: #64748B;
+}
+.detalle__pedido--info .estado {
+  margin: 2rem 0 0 0;
+}
+.detalle__pedido--label {
+  font-size: 1.4rem;
+  color: #64748B;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.detalle__pedido--observaciones p {
+  margin: 0.4rem 0 0 0;
+  font-size: 1.8rem;
+  color: #1E293B;
 }
 
 .excel__contenido-carga--productos {

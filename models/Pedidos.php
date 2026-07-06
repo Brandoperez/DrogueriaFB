@@ -2,6 +2,7 @@
 namespace Model;
 
 use Model\ActiveRecord;
+use Model\Producto;
 use PDO;
 use PDOException;
 
@@ -80,7 +81,38 @@ class Pedidos extends ActiveRecord{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function buscarConFiltros(){
+    public static function obtenerDetallePedido($id){
+        global $db;
+        
+        $query = "SELECT o.id, o.status, o.total, o.observations, o.created_at,
+                    c.name AS client_name,
+                    u.first_name || ' ' || u.last_name AS seller_name
+                    FROM orders o
+                    LEFT JOIN clients c ON o.client_id = c.id
+                    LEFT JOIN users u ON o.seller_id = u.id
+                    WHERE o.id = ?";
+                $stmt = $db->prepare($query);
+                $stmt->execute([$id]);
+                $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if(!$pedido){
+                    return null;
+                }
+
+                $queryItems = "SELECT oi.quantity, oi.price, oi.subtotal,
+                                p.description AS product_name
+                                FROM order_items oi
+                                LEFT JOIN products p ON oi.product_id = p.id
+                                WHERE oi.order_id = ?";
+
+                                $stmtItems = $db->prepare($queryItems);
+                                $stmtItems->execute([$id]);
+                                $pedido['items'] = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
+
+                                return $pedido;
+     }
+
+    public static function buscarConFiltros($filtros = []){
         global $db;
 
          $query = "SELECT o.id, o.status, o.total, o.observations, o.created_at,
@@ -115,11 +147,12 @@ class Pedidos extends ActiveRecord{
 
         if(!empty($filtros['buscar'])){
             $query .= " AND (
-                CAST(o.id AS TEXT) ILIKE ?
+                LPAD(CAST(o.id AS TEXT), 6, '0') ILIKE ?
                 OR c.name ILIKE ?
             )";
 
-            $busqueda = '%' . $filtros['buscar'] . '%';
+            $termino = ltrim(trim($filtros['buscar']), '#');
+            $busqueda = '%' . $termino . '%';
             $params[] = $busqueda;
             $params[] = $busqueda;
         }
@@ -144,7 +177,98 @@ class Pedidos extends ActiveRecord{
 
         return $alertas;
         }
+
+    public static function validarPedidoExcel($filas, $priceListId){
+        $errores = [];
+        $itemsProcesados = [];
+        $total = 0;
+
+        foreach(array_slice($filas, 1) as $index => $fila){
+            $numeroFila = $index + 2;
+            $codigo = trim($fila[0] ?? '');
+
+            if(empty($codigo)){
+                continue;
+            }
+
+            $cantidad = $fila[2] ?? null;
+            $erroresFila = [];
+
+            if(!is_numeric($cantidad) || $cantidad <= 0){
+                $erroresFila[] = 'La cantidad no es válida';
+            } 
+            $producto = Producto::where('code', $codigo);
+                if(!$producto){
+                    $erroresFila[] = "El código {$codigo} no existe";
+                }
+
+                if(!empty($erroresFila)){
+                    $errores[] = [
+                        'fila' => $numeroFila,
+                        'codigo' => $codigo,
+                        'errores' => $erroresFila
+                    ];
+
+                    continue;
+                }
+                $precio = Producto::obtenerPrecioLista($producto->id, $priceListId);
+                $subtotal = $precio * $cantidad;
+                $total += $subtotal;
+
+                $itemsProcesados[] = [
+                    'producto_id' => $producto->id,
+                    'code' => $codigo,
+                    'description' => $producto->description,
+                    'cantidad' => (int) $cantidad,
+                    'precio' => $precio,
+                    'subtotal' => $subtotal,
+                    'estado' => 'Válido'
+                ];
+                    }
+
+                    return [
+                        'totalRegistros' => count($itemsProcesados) + count($errores),
+                        'validos' => count($itemsProcesados),
+                        'errores' => $errores,
+                        'itemsProcesados' => $itemsProcesados,
+                        'total' => $total
+                    ];
     }
+
+    public static function cambiarEstado($id, $nuevoEstado){
+    global $db;
+
+    $queryEstado = "SELECT status FROM orders WHERE id = ?";
+    $stmtEstado = $db->prepare($queryEstado);
+    $stmtEstado->execute([$id]);
+    $estadoActual = $stmtEstado->fetchColumn();
+
+            if(!$estadoActual){
+                return false;
+            }
+
+            $transicionesPermitidas = [
+                'pending' => ['confirmed', 'cancelled'],
+                'confirmed' => ['completed', 'cancelled']
+            ];
+
+            if(
+                !isset($transicionesPermitidas[$estadoActual]) ||
+                !in_array($nuevoEstado, $transicionesPermitidas[$estadoActual])
+            ){
+                return false;
+            }
+
+            $query = "UPDATE orders 
+                    SET status = ?
+                    WHERE id = ?";
+
+            $stmt = $db->prepare($query);
+            return $stmt->execute([$nuevoEstado, $id]);
+        }
+}
+
+    
 
 
 

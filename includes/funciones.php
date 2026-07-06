@@ -77,5 +77,14 @@ function ao_animation(){
     echo $efectos[$efecto];
 }
 
+function claseEstado(string $status) : string {
+    $clases = [
+        'pending'   => 'estado--proceso',
+        'confirmed' => 'estado--confirmado',
+        'completed' => 'estado--completado',
+        'cancelled' => 'estado--cancelado'
+    ];
 
+    return $clases[$status] ?? 'estado--nuevo';
+}
 ?>
