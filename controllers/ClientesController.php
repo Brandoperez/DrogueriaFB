@@ -237,6 +237,14 @@ class ClientesController{
                 exit;
             }
         }
+
+        public static function clientes(Router $router){
+            isRole('client');
+
+            $router->render('cliente//index', [
+                'titulo' => 'Mis Pedidos'
+            ], 'cliente-layout');
+        }
 }
 
 

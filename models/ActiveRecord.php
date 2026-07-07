@@ -248,6 +248,13 @@ class ActiveRecord {
         return $stmt->execute([$this->id]);
     }
 
+    //CONTADOR
+    public static function contar() {
+        $query = "SELECT COUNT(*) FROM " . static::$tabla;
+        $stmt = self::$db->query($query);
+        return (int) $stmt->fetchColumn();
+    }
+
     //Limpiar las alertas
     public static function limpiarAlertas() {
     static::$alertas = [];

@@ -31,6 +31,7 @@ $router->get('/mensaje', [AuthController::class, 'mensaje']);
 $router->get('/confirmar-cuenta', [AuthController::class, 'confirmar']);
 
 
+//ZONA DE ADMINISTRACIÓN
 //Administración
 $router->get('/admin/dashboard', [AdminController::class, 'index']);
 
@@ -78,6 +79,10 @@ $router->get('/admin/usuarios/ver', [UsuariosController::class, 'ver']);
 $router->get('/admin/usuarios/editar', [UsuariosController::class, 'editar']);
 $router->post('/admin/usuarios/editar', [UsuariosController::class, 'editar']);
 $router->get('/admin/usuarios/eliminar', [UsuariosController::class, 'eliminar']);
+
+//ZONA GENERAL
+//Clientes
+$router->get('/cliente/clientes', [ClientesController::class, 'clientes']);
 
 
 

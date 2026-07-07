@@ -1119,6 +1119,12 @@ h3 {
   border-radius: 0.8rem;
   font-size: 2rem;
   opacity: 0.9;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 .sidebar__submenu--enlace i {
   width: 2rem;
@@ -1919,5 +1925,223 @@ h3 {
 }
 .clientes__nombre {
   font-weight: 700;
+}
+
+.clientes {
+  width: min(95%, 120rem);
+  margin: 0 auto;
+  padding: 2rem;
+}
+.clientes .cliente__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.clientes .cliente__nombre h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(0, 52, 130, 0.85);
+  margin: 0;
+}
+.clientes .cliente__usuario {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background-color: #FFFFFF;
+  padding: 1.8rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.clientes .cliente__usuario p {
+  font-size: 2.2rem;
+  margin: 0;
+  font-weight: 700;
+  color: rgba(0, 52, 130, 0.85);
+  text-align: right;
+}
+.clientes .cliente__usuario span {
+  display: block;
+  font-size: 1.8rem;
+  color: #64748B;
+  text-align: right;
+}
+.clientes .cliente__avatar {
+  width: 4rem;
+  height: 4rem;
+  background-color: rgba(89.2, 155.52, 255, 0.85);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clientes .cliente__avatar i {
+  font-size: 1.8rem;
+}
+.clientes .cliente__card {
+  background-color: #FFFFFF;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border-radius: 1.5rem;
+  margin-top: 2rem;
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.clientes .cliente__perfil {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+.clientes .cliente__iniciales {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background-color: rgba(0, 52, 130, 0.85);
+  color: #FFFFFF;
+  font-size: 2.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clientes .cliente__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.clientes .cliente__info {
+  flex: 1;
+}
+.clientes .cliente__info h3 {
+  margin: 0 0 2.2rem 0;
+  color: rgba(0, 52, 130, 0.85);
+  font-size: 2.5rem;
+}
+.clientes .cliente__datos {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.clientes .cliente__datos p {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #1E293B;
+}
+.clientes .cliente__datos i {
+  width: 2rem;
+  text-align: center;
+  color: rgba(0, 52, 130, 0.85);
+}
+.clientes .cliente__datos strong {
+  color: #1E293B;
+}
+.clientes .cliente__resumen {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: start;
+}
+.clientes .cliente__saldo {
+  background-color: rgba(221.8, 235.08, 255, 0.85);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border-radius: 1.5rem;
+  padding: 3.5rem;
+  margin: -2rem 0 1rem 0;
+}
+.clientes .cliente__saldo h3 {
+  margin: 1rem 0;
+  font-size: 3.2rem;
+  color: rgba(0, 52, 130, 0.85);
+}
+.clientes .cliente__saldo p {
+  margin: 1rem 0;
+  color: #64748B;
+  font-weight: 700;
+}
+.clientes .cliente__saldo strong {
+  color: #1a1b15;
+  font-weight: 400;
+}
+.clientes .cliente__saldo-detalle {
+  margin-top: 2rem;
+}
+.clientes .cliente__saldo-detalle p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: #64748B;
+}
+.clientes .cliente__acciones {
+  background-color: #FFFFFF;
+  border: 1px solid rgb(201.2029288703, 207.3953974895, 216.2970711297);
+  border-radius: 1.2rem;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+.clientes .cliente__acciones h3 {
+  margin: 1rem 0 2rem 0;
+  color: rgba(0, 52, 130, 0.85);
+}
+.clientes .cliente__boton {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.6rem;
+  border-radius: 1.2rem;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  color: rgba(0, 52, 130, 0.85);
+}
+.clientes .cliente__boton i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.2rem;
+  font-size: 2rem;
+  flex-shrink: 0;
+  background-color: rgba(0, 52, 130, 0.85);
+  color: #FFFFFF;
+}
+.clientes .cliente__boton:hover {
+  transform: translateY(-2px);
+}
+.clientes .cliente__tabs {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.clientes .cliente__tab {
+  border: none;
+  margin-right: 2rem;
+  background: none;
+  padding: 1.6rem;
+  border-bottom: 3px solid rgba(0, 52, 130, 0.85);
+  color: #64748B;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.clientes .cliente__tab:hover {
+  color: rgba(0, 52, 130, 0.85);
+  border-bottom: 3px solid #64748B;
+}
+.clientes .cliente__tab i {
+  font-size: 1.8rem;
 }
 /*# sourceMappingURL=app.css.map */

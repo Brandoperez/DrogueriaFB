@@ -20,15 +20,16 @@ class AuthController {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
             $auth = new Usuario($_POST);
-
             $alertas = $auth->validarLogin();
             
             if(empty($alertas)) {
                 // Verificar quel el usuario exista
                 $usuario = Usuario::where('email', $auth->email);
-                if(!$usuario || !$usuario->active) {
+                if($usuario) {
+
+                if(!$usuario->active) {
                     $alertas['error'][] = 'El usuario no existe o no está Confirmado';
-                }elseif(!password_verify($auth->password, $usuario->password)){
+                } elseif(!password_verify($auth->password, $usuario->password)) {
                     $alertas['error'][] = 'La Contraseña es Incorrecta';
                 }else{
                         iniciarSession();  
@@ -46,9 +47,30 @@ class AuthController {
 
                        redirectByRole();
                 }
+            }else{
+                $cliente = Cliente::where('email', $auth->email);
+                    if(!$cliente || !$cliente->active){
+                        $alertas['error'][] = 'El usuario no existe o no está Confirmado';
+                    }elseif(!password_verify($auth->password, $cliente->password)){
+                        $alertas['error'][] = 'La Contraseña es Incorrecta';
+                    }else{
+                        iniciarSession();
+                        session_regenerate_id(true);
+
+                        $_SESSION['id'] = null;
+                        $_SESSION['name'] = $cliente->name;
+                        $_SESSION['first_name'] = $cliente->name;
+                        $_SESSION['last_name'] = '';
+                        $_SESSION['email'] = $cliente->email;
+                        $_SESSION['role'] = 'client';
+                        $_SESSION['client_id'] = $cliente->id;
+                        $_SESSION['login'] = true;
+
+                        redirectByRole();
+                    }
             }
         }
-
+    }
         $router->render('auth/login', [
             'titulo' => 'Iniciar Sesión',
             'alertas' => $alertas

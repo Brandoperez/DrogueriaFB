@@ -1,13 +1,13 @@
 <aside class="sidebar">
     <div class="sidebar__logo">
         <img src="/build/img/logo.jpg" alt="Logo de Droguería FB">
-        <p>Panel Administrativo</p>
+        <p>Portal de Clientes</p>
     </div>
 
     <nav class="sidebar__menu">
-        <a href="/admin/dashboard" class="sidebar__enlace <?php echo paginaActual('/admin/dashboard') ? 'sidebar__enlace--actual' : '' ?> ">
+        <a href="/cliente/clientes" class="sidebar__enlace <?php echo paginaActual('/admin/dashboard') ? 'sidebar__enlace--actual' : '' ?> ">
             <i class="fa-solid fa-house"></i> 
-            <span>Dashboard</span>
+            <span>Inicio</span>
         </a>
 
         <div class="sidebar__grupo <?php echo paginaActual('/admin/pedidos') ? 'sidebar__enlace--actual' : ''; ?>">
@@ -34,42 +34,6 @@
                 </a>
             </div>
         </div>
-
-        <div class="sidebar__grupo">
-            <a href="#" class="sidebar__enlace sidebar__toggle">
-                <i class="fa-solid fa-capsules"></i>
-                <span>Productos</span>
-                <i class="fa-solid fa-chevron-down sidebar__flecha"></i>
-            </a>
-
-            <div class="sidebar__submenu">
-                <a href="/admin/productos/excel" class="sidebar__submenu--enlace">
-                    <i class="fa-solid fa-file-import"></i>
-                    <span>Carga Diaria</span>
-                </a>
-
-                <a href="/admin/productos/historial" class="sidebar__submenu--enlace">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                    <span>Historial de Cargas</span>
-                </a>
-            </div>
-        </div>
-        
-
-        <div class="sidebar__grupo <?php echo paginaActual('/admin/clientes') ? 'sidebar__enlace--actual' : ''; ?>">
-           <a href="/admin/clientes" class="sidebar__enlace ">
-                <i class="fa-solid fa-users"></i>
-                <span>Clientes</span>
-            </a> 
-        </div>
-        
-
-        <div class="sidebar__grupo <?php echo paginaActual('/admin/usuarios') ? 'sidebar__enlace--actual' : ''; ?>">
-            <a href="/admin/usuarios" class="sidebar__enlace ">
-                <i class="fa-solid fa-user-gear"></i>
-                <span>Usuarios</span>
-            </a>
-        </div>
         
 
         <div class="sidebar__grupo">
@@ -95,8 +59,8 @@
             <i class="fa-solid fa-user"></i>
         </div>
         <div class="sidebar__info">
-            <p>Administrador</p>
-            <span>Admin</span>
+            <p><?php echo s(sessionUser('first_name')); ?></p>
+            <span>Cliente</span>
         </div>
     </div>
 </aside>

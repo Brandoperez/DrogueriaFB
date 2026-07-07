@@ -56,7 +56,7 @@ function redirectByRole() : void {
  
     $rutas = [
         'admin'     => '/admin/dashboard',
-        'client'    => '/cliente/pedidos',
+        'client'    => '/cliente/clientes',
         'seller'    => '/vendedor/dashboard',
         'logistics' => '/logistica/dashboard',
     ];
@@ -87,4 +87,18 @@ function claseEstado(string $status) : string {
 
     return $clases[$status] ?? 'estado--nuevo';
 }
+
+    function fechaEnEspanol(?string $fecha = null) : string {
+        $dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+        $meses = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+        $timestamp = $fecha ? strtotime($fecha) : time();
+
+        $dia = $dias[date('w', $timestamp)];
+        $numero = date('j', $timestamp);
+        $mes = $meses[(int) date('n', $timestamp)];
+        $anio = date('Y', $timestamp);
+
+        return "{$dia} {$numero} de {$mes} de {$anio}";
+    }
 ?>

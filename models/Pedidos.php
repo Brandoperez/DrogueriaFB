@@ -252,6 +252,36 @@ class Pedidos extends ActiveRecord{
 
             return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function obtenerEstadisticas(){
+        global $db;
+
+        $query = "SELECT
+                    COUNT(*) AS total,
+                    COUNT(*) FILTER (WHERE status = 'pending') AS pendientes,
+                    COUNT(*) FILTER (WHERE status = 'completed') AS completados,
+                    COUNT(*) FILTER (WHERE status = 'cancelled') AS cancelados
+                  FROM orders";
+
+                  $stmt = $db->query($query);
+                  return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function obtenerUltimos($limite = 5){
+        global $db;
+
+        $query = "SELECT o.id, o.status, o.total, o.created_at,
+                         c.name AS client_name,
+                         u.first_name || ' ' || u.last_name AS seller_name
+                  FROM orders o
+                  LEFT JOIN clients c ON o.client_id = c.id
+                  LEFT JOIN users u ON o.seller_id = u.id
+                  ORDER BY o.created_at DESC
+                  LIMIT " . (int) $limite;
+
+        $stmt = $db->query($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     public static function cambiarEstado($id, $nuevoEstado){
     global $db;
