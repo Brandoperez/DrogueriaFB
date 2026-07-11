@@ -23,20 +23,20 @@
     <div class="cliente__card">
         <div class="cliente__perfil">
             <div class="cliente__iniciales">
-                <p>FS</p>
+                <p><p><?php echo strtoupper(mb_substr($cliente->name, 0, 2)); ?></p>
             </div>
 
             <div class="cliente__info">
-                <h3>Farmacia del Sol</h3>
+                <h3><?php echo s(sessionUser('first_name')); ?></h3>
                 <span class="estado estado--completado">Activo</span>
 
                 <div class="cliente__datos">
-                    <p><i class="fa-solid fa-id-card"></i><strong>CUIT:</strong><span>20-12345678-9</span></p>
-                    <p><i class="fa-solid fa-envelope"></i><strong>Email:</strong><span>contacto@farmaciadelsol.com</span></p>
-                    <p><i class="fa-solid fa-phone"></i><strong>Teléfono:</strong><span>341 555-1234</span></p>
-                    <p><i class="fa-solid fa-location-dot"></i><strong>Dirección:</strong><span>Av. San Martín 1234, Rosario, Santa Fe</span></p>
-                    <p><i class="fa-solid fa-list"></i><strong>Lista de precios:</strong><span>Lista 2 - Preferencial</span></p>
-                    <p><i class="fa-solid fa-user"></i><strong>Vendedor asignado:</strong><span>Martín Pérez</span></p>
+                    <p><i class="fa-solid fa-id-card"></i><strong>CUIT:</strong><span><?php echo $cliente->cuit; ?></span></p>
+                    <p><i class="fa-solid fa-envelope"></i><strong>Email:</strong><span><?php echo $cliente->email; ?></span></p>
+                    <p><i class="fa-solid fa-phone"></i><strong>Teléfono:</strong><span><?php echo $cliente->phone; ?></span></p>
+                    <p><i class="fa-solid fa-location-dot"></i><strong>Dirección:</strong><span><?php echo $cliente->address; ?></span></p>
+                    <p><i class="fa-solid fa-list"></i><strong>Lista de precios:</strong><span><?php echo $listaPrecios->name; ?></span></p>
+                    <p><i class="fa-solid fa-user"></i><strong>Vendedor asignado:</strong><span><?php echo $cliente->vendedor()->first_name . ' ' . $cliente->vendedor()->last_name; ?></span></p>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
 
              <div class="cliente__resumen">
                 <div class="cliente__btn">
-                    <a href="#" class="btn btn__azul">Lista de Precios</a>
+                    <a href="/cliente/lista-precios" class="btn btn__azul">Lista de Precios</a>
                 </div>
             </div>
         </div>
@@ -87,17 +87,25 @@
                 <span>Acciones</span>
             </div>
 
+            <?php if(empty($pedidos)): ?>
+                <div class="tabla__vacia">
+                    <p>Todavía no realizaste ningún pedido.</p>
+                </div>
+            <?php else:  ?>
+            <?php foreach($pedidos as $pedido): ?>
             <div class="tabla tabla__fila--listado-pe pedidos__fila">
-                <span>000325</span>
-                <span>24/04/2024</span>
-                <span>09:30</span>
-                <span>Martín Pérez</span>
-                <span class="estado estado--proceso">En Proceso</span>
-                <span>$345.200,00</span>
+                <span>#<?php echo str_pad($pedido['id'], 6, '0', STR_PAD_LEFT); ?></span>
+                <span><?php echo date('d/m/Y', strtotime($pedido['created_at'])); ?></span>
+                <span><?php echo date('H:i', strtotime($pedido['created_at'])); ?></span>
+                <span><?php echo $pedido['seller_name'] ?? 'Sin asignar'; ?></span>
+                <span class="estado <?php echo claseEstado($pedido['status']); ?>"><?php echo ucfirst($pedido['status']); ?></span>
+                <span>$<?php echo number_format($pedido['total'], 2, ',', '.'); ?></span>
                 <div class="tabla__acciones">
-                    <a href="#" class="tabla__accion"><i class="fa-solid fa-eye"></i></a>
+                    <a href="/cliente/pedidos/detalle?id=<?php echo $pedido['id']; ?>" class="tabla__accion"><i class="fa-solid fa-eye"></i></a>
                 </div>
             </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

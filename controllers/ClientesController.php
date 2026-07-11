@@ -4,8 +4,11 @@ namespace Controllers;
 use Model\Cliente;
 use Model\PriceList;
 use Model\Usuario;
+use Model\Pedidos;
+use Model\Producto;
 use MVC\Router;
 use PDO;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class ClientesController{
@@ -241,10 +244,59 @@ class ClientesController{
         public static function clientes(Router $router){
             isRole('client');
 
+                $cliente = Cliente::find($_SESSION['client_id']);
+                $vendedor = $cliente->vendedor();
+                $listaPrecios = $cliente->listaPrecios();
+                $pedidos = Pedidos::buscarConFiltros(['cliente' => $cliente->id]);
+                $ultimosPedidos = array_slice($pedidos, 0, 5);
+
             $router->render('cliente//index', [
-                'titulo' => 'Mis Pedidos'
+                'titulo' => 'Mis Pedidos',
+                'cliente' => $cliente,
+                'vendedor' => $vendedor,
+                'listaPrecios' => $listaPrecios,
+                'pedidos' => $ultimosPedidos
             ], 'cliente-layout');
         }
+
+        public static function descargarListaPrecios(){
+            isRole('client');
+
+            $cliente = Cliente::find($_SESSION['client_id']);
+            $productos = Producto::obtenerListaPrecios($cliente->price_list_id);
+
+            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $hoja = $spreadsheet->getActiveSheet();
+
+            $hoja->setCellValue('A1', 'Codigo');
+            $hoja->setCellValue('B1', 'Descripcion');
+            $hoja->setCellValue('C1', 'Laboratorio');
+            $hoja->setCellValue('D1', 'Stock');
+            $hoja->setCellValue('E1', 'Precio');
+            $hoja->getStyle('A1:E1')->getFont()->setBold(true);
+
+            $fila = 2;
+            foreach($productos as $producto){
+                $hoja->setCellValue('A' . $fila, $producto['code']);
+                $hoja->setCellValue('B' . $fila, $producto['description']);
+                $hoja->setCellValue('C' . $fila, $producto['laboratory']);
+                $hoja->setCellValue('D' . $fila, $producto['stock']);
+                $hoja->setCellValue('E' . $fila, $producto['precio']);
+                $fila++;
+            }
+
+            foreach(['A', 'B', 'C', 'D', 'E'] as $columna){
+                $hoja->getColumnDimension($columna)->setAutoSize(true);
+            }
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="lista-precios.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $writer->save('php://output');
+            exit;
+}
 }
 
 

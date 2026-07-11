@@ -118,10 +118,9 @@
 
         &__resumen{
             margin-top: 1rem;
-            display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 2rem;
-            align-items: start;
+            display: flex;
+            justify-content: flex-end;
+            
                 a{
                     color: v.$blanco;
                 }

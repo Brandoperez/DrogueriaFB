@@ -79,6 +79,27 @@ class Producto extends ActiveRecord{
 
                     return (float) $stmt->fetchColumn();
     }
+
+    public static function obtenerListaPrecios($priceListId){
+    global $db;
+
+    $query = "SELECT p.code, p.description, p.laboratory, p.stock,
+            COALESCE(
+                pp.price - (pp.price * pp.discount_percentage / 100),
+                p.base_price
+            ) AS precio
+            FROM products p
+            LEFT JOIN product_prices pp
+                ON pp.product_id = p.id
+                AND pp.price_list_id = :price_list_id
+            WHERE p.active = true
+            ORDER BY p.description ASC";
+
+    $stmt = $db->prepare($query);
+    $stmt->execute([':price_list_id' => $priceListId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 
 

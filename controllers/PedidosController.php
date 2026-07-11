@@ -336,7 +336,6 @@ class PedidosController{
                     'total' => $total
                 ], $pedido->productos);
                 
-                debuguear($orderId);
 
                 if($orderId){
                     self::enviarCorreoFacturacion($orderId);

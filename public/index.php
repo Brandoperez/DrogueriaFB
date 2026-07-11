@@ -88,12 +88,13 @@ $router->get('/', [AuthController::class, 'index']);
 $router->get('/cliente/clientes', [ClientesController::class, 'clientes']);
 $router->get('/cliente/pedidos/crear', [PedidosController::class, 'crearCliente']);
 $router->post('/cliente/pedidos/crear', [PedidosController::class, 'crearCliente']);
-$router->get('/cliente/pedidos/excel', [PedidosController::class, 'crearExcel']);
-$router->post('/cliente/pedidos/excel', [PedidosController::class, 'crearExcel']);
+$router->get('/cliente/pedidos/excel', [PedidosController::class, 'excelCliente']);
+$router->post('/cliente/pedidos/excel', [PedidosController::class, 'excelCliente']);
 $router->get('/cliente/pedidos/confirmar', [PedidosController::class, 'confirmarCliente']);
 $router->post('/cliente/pedidos/confirmar', [PedidosController::class, 'confirmarCliente']);
 $router->get('/cliente/pedidos/listado', [PedidosController::class, 'listadoCliente']);
 $router->get('/cliente/pedidos/detalle', [PedidosController::class, 'detalleCliente']);
+$router->get('/cliente/lista-precios', [ClientesController::class, 'descargarListaPrecios']);
 
 $router->get('/api/cliente/pedidos/productos', [PedidosController::class, 'buscarProductosCliente']);
 $router->get('/api/cliente/pedidos/buscar', [PedidosController::class, 'buscarPedidosCliente']);
