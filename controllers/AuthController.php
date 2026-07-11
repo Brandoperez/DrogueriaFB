@@ -53,6 +53,12 @@ class AuthController {
                         $_SESSION['client_id'] = $usuario->client_id;
                         $_SESSION['login'] = true;
 
+                        if(!empty($_POST['recordarme'])){
+                            setcookie('recordarme_email', $auth->email, time() + (30 * 24 * 60 * 60), '/');
+                        }else{
+                            setcookie('recordarme_email', '', time() - 3600, '/');
+                        }
+
                        redirectByRole();
                 }
             }else{
@@ -73,6 +79,12 @@ class AuthController {
                         $_SESSION['role'] = 'client';
                         $_SESSION['client_id'] = $cliente->id;
                         $_SESSION['login'] = true;
+
+                         if(!empty($_POST['recordarme'])){
+                        setcookie('recordarme_email', $auth->email, time() + (30 * 24 * 60 * 60), '/');
+                        } else {
+                            setcookie('recordarme_email', '', time() - 3600, '/');
+                        }
 
                         redirectByRole();
                     }

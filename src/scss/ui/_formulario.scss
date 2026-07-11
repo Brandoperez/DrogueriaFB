@@ -134,6 +134,10 @@
             align-items: center;
             color: v.$gris;
             gap: 2rem;
+                label{
+                    display: flex;
+                    gap: .8rem;
+                }
                 a{
                     color: v.$azul;
                     font-weight: v.$bold;
@@ -143,6 +147,8 @@
                 }
                 &--login{
                     justify-content: space-between;
+                    margin: 2rem 0;
+                    gap: 2rem;
                 }
         }
     }

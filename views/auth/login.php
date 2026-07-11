@@ -4,7 +4,7 @@
 
             <div class="login__contenido">
                 <h1>Suministrando salud a tu negocio.</h1>
-                <p>Distribución de medicamentos e insumos para farmacias, hospitales y centros de diálisis.</p>
+                <p>Distribución de medicamentos e insumos para farmacias, clínicas, hospitales, droguerías y municipalidades.</p>
             </div>
 
             <div class="login__beneficios">
@@ -51,7 +51,7 @@
 
                 <div class="formulario__campo">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" placeholder="ejemplo@gmail.com" value="<?php echo s($_POST['email'] ?? ''); ?>">
+                    <input type="email" id="email" name="email" placeholder="ejemplo@gmail.com" value="<?php echo s($_POST['email'] ?? $_COOKIE['recordarme_email'] ?? ''); ?>">
                 </div>
 
                 <div class="formulario__campo">

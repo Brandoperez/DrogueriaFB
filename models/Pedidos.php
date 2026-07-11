@@ -43,6 +43,8 @@ class Pedidos extends ActiveRecord{
                     $datosPedido['observations'],
                     $datosPedido['total']
                 ]);
+
+                
                 $orderId = $stmt->fetchColumn();
 
                 $stmtItem = self::$db->prepare(
@@ -62,6 +64,7 @@ class Pedidos extends ActiveRecord{
                 return $orderId;
         }catch(PDOException $e){
             self::$db->rollBack();
+            error_log($e->getMessage());
             return false;
         }
     }

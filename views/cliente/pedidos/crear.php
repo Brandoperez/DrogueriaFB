@@ -1,13 +1,13 @@
 <section class="pedidos">
     <div class="pedidos__breadcrum">
-        <a href="/admin/dashboard">Inicio</a>
+        <a href="/cliente/clientes">Inicio</a>
         <span>/</span> 
-        <a href="/admin/pedidos/listado">Pedidos</a>
+        <a href="/cliente/pedidos/listado">Pedidos</a>
         <span>/</span> 
         <p>Carga Manual</p>
     </div>
 
-    <form action="/admin/pedidos/crear" method="POST" class="formulario">
+    <form action="/cliente/pedidos/crear" method="POST" class="formulario">
         <section class="formulario__card">
             <div class="formulario__campos">
                 <div class="formulario__campo">
@@ -73,7 +73,7 @@
         </section>
 
         <div class="excel__acciones"> <!--Arreglar CSS-->
-            <a href="/admin/dashboard" class="btn btn__transparente"> <i class="fa-solid fa-arrow-left"></i> Cancelar</a>
+            <a href="/cliente/clientes" class="btn btn__transparente"> <i class="fa-solid fa-arrow-left"></i> Cancelar</a>
 
             <div class="excel__acciones-right">
                 <button type="submit" class="excel__accion btn__azul"><i class="fa-solid fa-file-import"></i>Confirmar</button>

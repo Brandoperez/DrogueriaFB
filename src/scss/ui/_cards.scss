@@ -99,6 +99,15 @@
             align-items: center;
         }
     }
+    &__eliminar{
+        font-size: 2rem;
+        color: v.$azul;
+        padding: 0 .3rem;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
 }
 
 

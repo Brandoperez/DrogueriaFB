@@ -114,7 +114,7 @@ class PedidosController{
          }
 
     public static function plantilla(){
-        isRole('admin');
+        isRole('admin', 'client');
 
             $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
             $hoja = $spreadsheet->getActiveSheet();
