@@ -122,6 +122,14 @@
             grid-template-columns: 1.2fr .8fr;
             gap: 2rem;
             align-items: start;
+                a{
+                    color: v.$blanco;
+                }
+        }
+        &__btn{
+            display: flex;
+            justify-content: start;
+            
         }
         &__saldo{
             background-color: lighten(v.$azul, 68%);

@@ -114,6 +114,10 @@ const inputCliente = document.querySelector('#cliente');
 const contenedorInputCliente = document.querySelector('#resultado-clientes');
 let clienteSeleccionado = null;
 
+if(window.clienteActual){
+    clienteSeleccionado = window.clienteActual;
+}
+
 if(inputCliente && contenedorInputCliente){
     inputCliente.addEventListener('input', (e) =>{
         const termino = e.target.value;
@@ -166,7 +170,9 @@ const btnAgregarProductos = document.querySelector('.pedidos__agregar');
                 return;
             }
 
-            fetch(`/api/pedidos/productos?q=${encodeURIComponent(termino)}&price_list_id=${clienteSeleccionado.price_list_id ?? ''}`)
+            const rutaProductos = window.RUTA_BUSCAR_PRODUCTOS || '/api/pedidos/productos';
+
+            fetch(`${rutaProductos}?q=${encodeURIComponent(termino)}&price_list_id=${clienteSeleccionado.price_list_id ?? ''}`)
                 .then(respuesta => respuesta.json())
                 .then(productos => {
                     console.log(productos);

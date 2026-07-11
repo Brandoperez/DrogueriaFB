@@ -18,17 +18,17 @@
             </a>
 
             <div class="sidebar__submenu">
-                <a href="/admin/pedidos/crear" class="sidebar__submenu--enlace <?php echo paginaActual('/admin/pedidos/crear') ? 'sidebar__submenu--actual' : ''; ?> ">
+                <a href="/cliente/pedidos/crear" class="sidebar__submenu--enlace <?php echo paginaActual('/cliente/pedidos/crear') ? 'sidebar__submenu--actual' : ''; ?> ">
                     <i class="fa-solid fa-calendar-plus"></i>
                     <span>Carga Manual</span>
                 </a>
 
-                <a href="/admin/pedidos/excel" class="sidebar__submenu--enlace <?php echo paginaActual('/admin/pedidos/excel') ? 'sidebar__submenu--actual' : '';?>">
+                <a href="/cliente/pedidos/excel" class="sidebar__submenu--enlace <?php echo paginaActual('/cliente/pedidos/excel') ? 'sidebar__submenu--actual' : '';?>">
                     <i class="fa-solid fa-file-excel"></i>
                     <span>Carga Pedido Excel</span>
                 </a>
 
-                <a href="/admin/pedidos/listado" class="sidebar__submenu--enlace <?php echo paginaActual('/admin/pedidos/listado') ? 'sidebar_submenu--activo' : ''; ?>">
+                <a href="/cliente/pedidos/listado" class="sidebar__submenu--enlace <?php echo paginaActual('/cliente/pedidos/listado') ? 'sidebar_submenu--activo' : ''; ?>">
                     <i class="fa-solid fa-clipboard-list"></i>
                     <span>Listado de Pedidos</span>
                 </a>

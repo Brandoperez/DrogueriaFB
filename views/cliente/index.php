@@ -42,19 +42,6 @@
         </div>
 
         <div class="cliente__sidebar">
-            <div class="cliente__resumen">
-                <div class="cliente__saldo">
-                    <p>Saldo pendiente</p>
-                    <h3>$1.245.300,00</h3>
-                        <div class="cliente__saldo--detalle">
-                            <p>
-                                <span>Último pago:</span>
-                                <strong>15/04/2024</strong>
-                            </p>
-                        </div>
-                </div>
-            </div>
-
             <div class="cliente__acciones">
                 <h3>Acciones rápidas</h3>
 
@@ -75,6 +62,12 @@
                     </a>
                 </div>
                     
+            </div>
+
+             <div class="cliente__resumen">
+                <div class="cliente__btn">
+                    <a href="#" class="btn btn__azul">Lista de Precios</a>
+                </div>
             </div>
         </div>
     </div>

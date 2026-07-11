@@ -8,6 +8,14 @@ use Model\Cliente;
 use MVC\Router;
 
 class AuthController {
+
+    public static function index(Router $router){
+
+    $router->render('auth/index', [
+        'titulo' => 'Drogueria FB'
+    ]);
+    }
+
     public static function login(Router $router) {
 
     iniciarSession();

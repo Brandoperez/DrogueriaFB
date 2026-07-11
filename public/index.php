@@ -81,8 +81,22 @@ $router->post('/admin/usuarios/editar', [UsuariosController::class, 'editar']);
 $router->get('/admin/usuarios/eliminar', [UsuariosController::class, 'eliminar']);
 
 //ZONA GENERAL
+
+$router->get('/', [AuthController::class, 'index']);
+
 //Clientes
 $router->get('/cliente/clientes', [ClientesController::class, 'clientes']);
+$router->get('/cliente/pedidos/crear', [PedidosController::class, 'crearCliente']);
+$router->post('/cliente/pedidos/crear', [PedidosController::class, 'crearCliente']);
+$router->get('/cliente/pedidos/excel', [PedidosController::class, 'crearExcel']);
+$router->post('/cliente/pedidos/excel', [PedidosController::class, 'crearExcel']);
+$router->get('/cliente/pedidos/confirmar', [PedidosController::class, 'confirmarCliente']);
+$router->post('/cliente/pedidos/confirmar', [PedidosController::class, 'confirmarCliente']);
+$router->get('/cliente/pedidos/listado', [PedidosController::class, 'listadoCliente']);
+$router->get('/cliente/pedidos/detalle', [PedidosController::class, 'detalleCliente']);
+
+$router->get('/api/cliente/pedidos/productos', [PedidosController::class, 'buscarProductosCliente']);
+$router->get('/api/cliente/pedidos/buscar', [PedidosController::class, 'buscarPedidosCliente']);
 
 
 
