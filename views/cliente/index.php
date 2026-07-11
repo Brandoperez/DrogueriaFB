@@ -75,7 +75,6 @@
     <div class="cliente__pedidos">
         <div class="cliente__tabs">
             <button class="cliente__tab cliente__tab--active"><i class="fa-solid fa-list"></i>Pedidos Realizados</button>
-            <button class="cliente__tab"><i class="fa-solid fa-dollar-sign"></i>Historial de Saldos</button>
         </div>
         <div class="formulario__card">
             <div class="tabla tabla__grid--listado-pe">
