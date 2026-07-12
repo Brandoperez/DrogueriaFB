@@ -6,8 +6,8 @@
         </a>
 
         <div class="header__contenido">
-            <a href="tel:1100000000" class="header__contacto">
-                <i class="fa-solid fa-phone"></i><span>1100000000</span>
+            <a href="tel:1160560030" class="header__contacto">
+                <i class="fa-solid fa-phone"></i><span>+54 9 11 60560030</span>
             </a>
             <a href="mailto:administracion@drogueriafb.com.ar" class="header__contacto">
                 <i class="fa-solid fa-envelope"></i><span>administracion@droigueriafb.com.ar</span>
@@ -20,32 +20,6 @@
     </div>
 </header>
 
-<section class="hero swiper">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide hero__slide hero__slide--principal">
-            <div class="hero__overlay">
-                <div class="hero__contenedor">
-                    <div class="hero__contenido">
-                        <h1 class="hero__heading">Suministrando salud a tu negocio</h1>
-                        <p class="hero__texto">Distribución de medicamentos e insumos para farmacias, droguerias, clínicas, hospitales, municipalidades y obras sociales</p>
-                        <div class="header__acciones">
-                            <a href="/login" class="btn header__btn btn__azul">Ingreso al Sistema</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="swiper-slide hero__slide hero__slide--promo1"></div>
-        <div class="swiper-slide hero__slide hero__slide--promo2"></div>
-        <div class="swiper-slide hero__slide hero__slide--promo3"></div>
-    </div>
-
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-</section>
-<!--
 <section class="hero">
     <div class="hero__overlay">
         <div class="hero__contenedor">
@@ -59,7 +33,31 @@
         </div>
     </div>
 </section>
--->
+
+<section class="ofertas">
+    <div class="ofertas__contenedor">
+        <div class="ofertas__heading">
+            <span class="ofertas__linea"></span>
+            <h2>Ofertas del Mes</h2>
+            <span class="ofertas__linea"></span>
+        </div>
+    
+        <div class="swiper ofertas__slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide ofertas__slide ofertas__slide--promo1"></div>
+                <div class="swiper-slide ofertas__slide ofertas__slide--promo2"></div>
+                <div class="swiper-slide ofertas__slide ofertas__slide--promo3"></div>
+            </div>
+
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+</section>
+
+
 <section class="beneficios">
     <div class="beneficios__contenedor">
         <article class="beneficio">

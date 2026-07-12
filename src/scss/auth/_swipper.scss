@@ -1,62 +1,72 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
-.hero{
-    min-height: 100vh;
-        .swiper-slide{
-            min-height: 100vh;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-        &__slide{
-            &--principal{
-                background-image: url('/build/img/hero.png');
-            }
-            &--promo1{
-                background-image: url('/build/img/promo1.png');
-            }
-            &--promo2{
-                background-image: url('/build/img/promo2.png');
-            }
-            &--promo3{
-                background-image: url('/build/img/promo3.png');
-            }
-        }
-        &__overlay{
-            display: flex;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(to right, rgba(v.$negro,.55) 0%, rgba(v.$negro,.35) 35%, rgba(v.$negro,.05) 100%);
-        }
+.ofertas{
+    padding: 7rem 0;
+    background-color: lighten(v.$gris, 47%);
         &__contenedor{
             @include m.contenedor;
         }
-        &__contenido{
-            max-width: 55rem;
-            color: v.$blanco;
-        }
         &__heading{
-            font-weight: v.$bold;
-            font-size: 5rem;
-            line-height: 1.2;
-            margin: 0 0 4rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 5rem;
+                h2{
+                    margin: 0;
+                    color: v.$azul;
+                    font-size: 3rem;
+                    font-weight: v.$bold;
+                    white-space: nowrap;
+                }
         }
-        &__texto{
-            font-size: 2.5rem;
-            margin-bottom: 4rem;
-            line-height: 1.5;
-            text-transform: capitalize;
+        &__linea{
+            flex: 1;
+            height: 1px;
+            background-color: lighten(v.$gris, 35%);
         }
-    .swiper-button-prev,
-    .swiper-button-next{
-        color: v.$blanco;
-    }
-    .swiper-pagination-bullet{
-        background: v.$blanco;
-        opacity: .6;
+        &__slider{
+            width: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+            @include m.shadow;
+        }
+        &__slide{
+            min-height: 30rem;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+                 @include m.tablet{
+                    min-height: 42rem;
+                }
 
-        &-active{
-            opacity: 1;
+                @include m.desktop{
+                    min-height: 55rem;
+                }
+                 &--promo1{
+                        background-image: url('/build/img/promo1.png');
+                    }
+                 &--promo2{
+                        background-image: url('/build/img/promo2.png');
+                    }
+                &--promo3{
+                        background-image: url('/build/img/promo3.png');
+                    }
         }
-    }
-}
+
+        .swiper-button-prev,
+        .swiper-button-next{
+            color: v.$blanco;
+            @include m.tablet{
+                display: flex;
+            }
+        }
+
+        .swiper-pagination-bullet{
+            background: v.$blanco;
+            opacity: .6;
+
+            &-active{
+                opacity: 1;
+            }
+        }
+        }

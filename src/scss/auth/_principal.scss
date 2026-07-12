@@ -25,10 +25,13 @@
             text-transform: uppercase;
         }
         &__contenido{
-            display: flex;
+            display: none;
             align-items: center;
             gap: 2rem;
             margin-left: 2rem;
+                @include m.tablet{
+                    display: flex;
+                }
         }
         &__contacto{
             display: flex;
@@ -46,7 +49,6 @@
             align-items: center;
         }
 }
-/*
 .hero{
     background-image: url('/build/img/hero.png');
     background-size: cover;
@@ -81,7 +83,7 @@
         text-transform: capitalize;
     }
 }
-*/
+
 .beneficios{
     background-color: v.$blanco;
     padding: 3rem 0;

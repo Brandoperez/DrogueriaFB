@@ -20,7 +20,7 @@ img {
     height: auto;
 }
 .swal2-popup {
-    width: 90rem !important;
+    width: min(90rem, 92vw) !important;
     font-size: 1.9rem;
 }
 .titulos--h2{

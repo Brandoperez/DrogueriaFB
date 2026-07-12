@@ -24,11 +24,12 @@ class Email {
          $mail->isSMTP();
          $mail->Host = $_ENV['EMAIL_HOST'];
          $mail->SMTPAuth = true;
+         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
          $mail->Port = $_ENV['EMAIL_PORT'];
          $mail->Username = $_ENV['EMAIL_USER'];
          $mail->Password = $_ENV['EMAIL_PASS'];
      
-         $mail->setFrom('noreply@drogueriafb.com');
+         $mail->setFrom($_ENV['EMAIL_USER'],'Droguería FB');
          $mail->addAddress($this->email, $this->name);
          $mail->Subject = 'Confirma tu Cuenta en Droguería FB';
 
@@ -58,11 +59,12 @@ class Email {
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $_ENV['EMAIL_PORT'];
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
     
-        $mail->setFrom('noreply@drogueriafb.com');
+        $mail->setFrom($_ENV['EMAIL_USER'], 'Droguería FB');
         $mail->addAddress($this->email, $this->name);
         $mail->Subject = 'Recuperación de Contraseña - Droguería FB';
 
@@ -87,11 +89,12 @@ class Email {
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $_ENV['EMAIL_PORT'];
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
 
-        $mail->setFrom('noreply@drogueriafb.com');
+        $mail->setFrom($_ENV['EMAIL_USER'], 'Droguería FB');
         $mail->addAddress($this->email, $this->name);
         $mail->Subject = 'Pedido Confirmado - Droguería FB';
         $mail->isHTML(TRUE);
@@ -123,11 +126,12 @@ class Email {
     $mail->isSMTP();
     $mail->Host = $_ENV['EMAIL_HOST'];
     $mail->SMTPAuth = true;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = $_ENV['EMAIL_PORT'];
     $mail->Username = $_ENV['EMAIL_USER'];
     $mail->Password = $_ENV['EMAIL_PASS'];
 
-    $mail->setFrom('noreply@drogueriafb.com', 'Droguería FB');
+    $mail->setFrom($_ENV['EMAIL_USER'], 'Droguería FB');
     $mail->addAddress($_ENV['EMAIL_FACTURACION']);
 
     $numeroPedido = str_pad($pedido['id'], 6, '0', STR_PAD_LEFT);
@@ -183,14 +187,21 @@ class Email {
 public function enviarPedidoRecibido($pedido){
 
     $mail = new PHPMailer();
+
+    $mail->SMTPDebug = 2;
+    $mail->Debugoutput = function($mensaje, $nivel) {
+        error_log("SMTP DEBUG {$nivel}: {$mensaje}");
+    };
+    
     $mail->isSMTP();
     $mail->Host = $_ENV['EMAIL_HOST'];
     $mail->SMTPAuth = true;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = $_ENV['EMAIL_PORT'];
     $mail->Username = $_ENV['EMAIL_USER'];
     $mail->Password = $_ENV['EMAIL_PASS'];
 
-    $mail->setFrom('noreply@drogueriafb.com', 'Droguería FB');
+    $mail->setFrom($_ENV['EMAIL_USER'], 'Droguería FB');
     $mail->addAddress($this->email, $this->name);
 
     $numeroPedido = str_pad($pedido['id'], 6, '0', STR_PAD_LEFT);
@@ -221,3 +232,8 @@ public function enviarPedidoRecibido($pedido){
     return true;
 }
 }
+
+//EMAIL_HOST='sandbox.smtp.mailtrap.io'
+//EMAIL_PORT=2525
+//EMAIL_USER='7d1a2350ec0e97'
+//EMAIL_PASS='dad52c6c09f301'
