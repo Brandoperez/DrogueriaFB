@@ -103,10 +103,7 @@
                 </div>
 
                 <p class="excel__texto">Descargá la plantilla para cargar tus pedidos correctamente.</p>
-                <button type="button" class="btn btn__transparente">
-                    <i class="fa-solid fa-download"></i>
-                    Descargar
-                </button>
+                <a href="/admin/productos/plantilla" class="btn btn__transparente"><i class="fa-solid fa-download"></i>Descargar</a>
             </div>
         </div>
         </div>
@@ -142,13 +139,11 @@
 
             <div class="excel__tabs">
                 <button class="excel__tab excel__tab--active">Todos los Registros</button>
-                <button class="excel__tab">Válidos</button>
-                <button class="excel__tab">Errores</button>
             </div>
 
             <div class="excel__contenido-carga--productos">
-                <div class="excel__tabla formulario__card">
-                    <div class="tabla__header tabla__header--productos excel__grid--productos">
+                <div class="formulario__card m__bottom">
+                    <div class="tabla tabla__grid--excel">
                         <span>Código</span>
                         <span>Descripción</span>
                         <span>Laboratorio</span>
@@ -158,13 +153,14 @@
                     </div>
                     
                     <?php foreach($resultado['productosProcesados'] ?? [] as $producto): ?>
-                        <div class="tabla__fila excel__grid--productos">
+                        <div class="tabla tabla__fila--excel">
                             <span><?php echo $producto['code']; ?></span>
                             <span><?php echo $producto['description']; ?></span>
                             <span><?php echo $producto['laboratory']; ?></span>
                             <span>$<?php echo number_format($producto['price'], 2, ',', '.'); ?></span>
                             <span><?php echo $producto['stock']; ?></span>
-                            <div class="excel__estado excel__estado--valido">
+                            <?php $claseEstado = $producto['estado'] === 'Error' ? 'excel__estado--error' : 'excel__estado--valido';  ?>
+                            <div class="excel__estado <?php echo $claseEstado; ?>">
                                 <?php echo $producto['estado']; ?>
                             </div>
                         </div>
@@ -185,9 +181,9 @@
                                 <?php foreach($resultado['errores'] as $error): ?>
                                     <div class="excel__error">
                                         <span class="excel__error--fila">
-                                            <?php echo $error['fila']; ?>
+                                            Fila <?php echo $error['fila']; ?>
                                         </span>
-                                        <p><?php echo $error['mensaje']; ?></p>
+                                        <p><?php echo implode(', ', $error['errores']); ?></p>
                                     </div>
                                 <?php endforeach; ?>
 
@@ -203,7 +199,7 @@
         </div>
 
         <div class="excel__acciones">
-             <div></div>
+             <div><a href="/admin/productos/excel" class="btn btn__transparente">Volver</a></div>
                 <div class="excel__acciones-right">
                     <form action="/admin/productos/confirmar" method="POST">
                         <?php $hayErrores = !empty($resultado['errores']); ?>

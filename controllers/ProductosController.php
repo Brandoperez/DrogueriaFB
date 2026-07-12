@@ -205,7 +205,7 @@ class ProductosController{
 
                             if(!empty($erroresFila)){
                                 $errores[] = [
-                                    'fila' => $fila,
+                                    'fila' => $numeroFila,
                                     'codigo' => $codigo,
                                     'errores' => $erroresFila
                                 ];
@@ -294,6 +294,58 @@ class ProductosController{
             'importaciones' => $importaciones
         ], 'admin-layout');
     }
+
+    public static function plantilla(){
+            isRole('admin');
+
+            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $hoja = $spreadsheet->getActiveSheet();
+
+            $encabezados = [
+                'A1' => 'Codigo',
+                'B1' => 'Descripcion',
+                'C1' => 'Laboratorio',
+                'D1' => 'Monodroga',
+                'E1' => 'Precio Lista 1',
+                'F1' => 'Precio Lista 2',
+                'G1' => 'Precio Lista 3',
+                'H1' => 'Stock',
+                'I1' => 'Precio Base',
+                'J1' => 'Descuento Lista 1',
+                'K1' => 'Descuento Lista 2',
+                'L1' => 'Descuento Lista 3',
+            ];
+
+            foreach($encabezados as $celda => $texto){
+                $hoja->setCellValue($celda, $texto);
+            }
+            $hoja->getStyle('A1:L1')->getFont()->setBold(true);
+
+            $hoja->setCellValue('A2', 'PROD001');
+            $hoja->setCellValue('B2', 'Ibuprofeno 600mg');
+            $hoja->setCellValue('C2', 'Laboratorio X');
+            $hoja->setCellValue('D2', 'Ibuprofeno');
+            $hoja->setCellValue('E2', 1500);
+            $hoja->setCellValue('F2', 1450);
+            $hoja->setCellValue('G2', 1400);
+            $hoja->setCellValue('H2', 100);
+            $hoja->setCellValue('I2', 1600);
+            $hoja->setCellValue('J2', 0);
+            $hoja->setCellValue('K2', 0);
+            $hoja->setCellValue('L2', 0);
+
+            foreach(range('A', 'L') as $columna){
+                $hoja->getColumnDimension($columna)->setAutoSize(true);
+            }
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="plantilla-productos.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $writer->save('php://output');
+            exit;
+}
 }
 
 

@@ -66,7 +66,7 @@
             <div class="formulario__card">
                 <div class="formulario__campo">
                     <label for="observaciones">Observaciones:</label>
-                    <textarea name="observaciones" id="observaciones" placeholder="Escribí alguna observación si es necesario..."></textarea>
+                    <textarea name="observations" id="observations" placeholder="Escribí alguna observación si es necesario..."></textarea>
                 </div>
             </div>
             <input type="hidden" name="productos" id="productos_json">

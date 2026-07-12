@@ -14,6 +14,7 @@ class ImportacionProducto extends ActiveRecord{
     public $errors_count;
     public $status;
     public $created_at;
+    public $usuario;
 
     public function __construct($args = [])
     {
@@ -26,6 +27,8 @@ class ImportacionProducto extends ActiveRecord{
         $this->errors_count = $args['errors_count'] ?? 0;
         $this->status = $args['status'] ?? 'completed';
         $this->created_at = $args['created_at'] ?? null;
+        $this->usuario = $args['usuario'] ?? null; 
+
     }
 
     public static function obtenerHistorial() {
@@ -38,7 +41,7 @@ class ImportacionProducto extends ActiveRecord{
                 pi.errors_count,
                 pi.status,
                 pi.created_at,
-                u.name AS usuario
+                u.first_name || ' ' || u.last_name AS usuario
             FROM product_imports pi
             LEFT JOIN users u ON pi.user_id = u.id
             ORDER BY pi.created_at DESC";

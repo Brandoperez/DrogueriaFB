@@ -18,20 +18,16 @@
             <span>Fecha</span>
             <span>Usuario</span>
             <span>Estado</span>
-            <span>Acciones</span>
         </div>
 
         <?php foreach($importaciones as $importacion): ?>
 
-            <div class="tabla__fila tabla__fila--listado">
+            <div class="tabla tabla__fila--listado">
                 <span><?php echo $importacion->file_name; ?></span>
                 <span><?php echo date('d/m/Y H:i', strtotime($importacion->created_at)); ?></span>
                 <span><?php echo $importacion->usuario ?? 'Sin usuario'; ?></span>
                 <span class="estado estado--completado">
                     <?php echo $importacion->status; ?>
-                </span>
-                <span class="tabla__acciones">
-                    <a href="#" class="tabla__accion"><i class="fa-solid fa-eye"></i></a>
                 </span>
             </div>
 

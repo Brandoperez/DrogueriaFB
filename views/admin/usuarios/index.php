@@ -1,3 +1,4 @@
+<?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
 <div class="clientes">
     <div class="pedidos__breadcrum">
         <a href="/admin/dashboard">Inicio</a>
@@ -40,7 +41,7 @@
 
         <?php if(!empty($usuarios)) : ?>
             <?php foreach($usuarios as $usuario) : ?>
-        <div class="tabla__fila--usuarios">
+        <div class="tabla tabla__fila--usuarios">
             <span class="clientes__nombre"><?php echo $usuario->first_name ?></span>
             <span class="clientes__nombre"><?php echo $usuario->last_name ?></span>
             <span><?php echo $usuario->email ?></span>

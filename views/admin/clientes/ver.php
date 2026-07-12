@@ -7,8 +7,8 @@
             <p><?php echo $cliente->name; ?></p>
         </div>
 
-        <div class="formulario__card">
-            <h2><?php echo $cliente->name; ?></h2>
+        <div class="formulario__card clientes__texto">
+            <h2 class="clientes__nombre--vista"><?php echo $cliente->name; ?></h2>
 
             <p><strong>CUIT: </strong><?php echo $cliente->cuit;?></p>
             <p><strong>Correo: </strong><?php echo $cliente->email;?></p>

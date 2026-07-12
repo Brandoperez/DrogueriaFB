@@ -16,7 +16,7 @@ class PedidosController{
          isRole('admin');
          $pedido = new Pedidos([
             'client_id' => $_POST['cliente_id'] ?? '',
-            'observations' => $_POST['observacions'] ?? '',
+            'observations' => $_POST['observations'] ?? '',
             'productos' => json_decode($_POST['productos'] ?? '', true) ?? []
          ]);
          $alertas = [];
@@ -38,7 +38,7 @@ class PedidosController{
             $orderId = Pedidos::crearConProductos([
                 'client_id' => $cliente->id,
                 'seller_id' => $cliente->seller_id,
-                'observacions' => $pedido->observacions,
+                'observations' => $pedido->observations,
                 'total' => $total
             ], $pedido->productos);
 

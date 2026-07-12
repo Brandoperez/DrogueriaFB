@@ -70,44 +70,45 @@ if(btnBuscar && btnLimpiar){ // ← verificar que existan antes de usarlos
         document.getElementById('vendedor').value  = '';
         document.getElementById('estado').value    = '';
         document.getElementById('localidad').value = '';
+        
         buscarClientes();
     }
 
     function renderizarClientes(clientes) {
-        const tabla = document.querySelector('.clientes__tabla');
-        tabla.querySelectorAll('.fila').forEach(f => f.remove());
-        tabla.querySelector('.tabla__vacia')?.remove();
+    const tabla = document.querySelector('.clientes__tabla');
+    tabla.querySelectorAll('.tabla__fila--clientes').forEach(f => f.remove());  // ✅ selector correcto
+    tabla.querySelector('.tabla__vacia')?.remove();
 
-        if(clientes.length === 0){
-            const vacia = document.createElement('p');
-            vacia.className = 'tabla__vacia';
-            vacia.textContent = 'No se encontraron clientes';
-            tabla.appendChild(vacia);
-            return;
-        }
-
-        clientes.forEach(c => {
-            const fila = document.createElement('div');
-            fila.className = 'fila grid-7';
-            fila.innerHTML = `
-                <span class="clientes__nombre">${c.name}</span>
-                <span>${c.cuit}</span>
-                <span>${c.province ?? '-'}</span>
-                <span>${c.seller_name ?? 'Sin vendedor'}</span>
-                <span>${c.price_list_name ?? 'Sin lista'}</span>
-                <a href="#" class="estado js-cambiar-estado ${c.active ? 'estado--completado' : 'estado--cancelado'}"
-                   data-id="${c.id}" data-estado="${c.active}">
-                   ${c.active ? 'Activo' : 'Inactivo'}
-                </a>
-                <div class="acciones--tabla">
-                    <a href="/admin/clientes/ver?id=${c.id}" class="acciones__editar"><i class="fa-solid fa-eye"></i></a>
-                    <a href="/admin/clientes/editar?id=${c.id}" class="acciones__editar"><i class="fa-solid fa-pen"></i></a>
-                    <a href="/admin/clientes/eliminar?id=${c.id}" class="acciones__eliminar js-eliminar"><i class="fa-solid fa-trash"></i></a>
-                </div>
-            `;
-            tabla.appendChild(fila);
-        });
+    if(clientes.length === 0){
+        const vacia = document.createElement('p');
+        vacia.className = 'tabla__vacia';
+        vacia.textContent = 'No se encontraron clientes';
+        tabla.appendChild(vacia);
+        return;
     }
+
+    clientes.forEach(c => {
+        const fila = document.createElement('div');
+        fila.className = 'tabla tabla__fila--clientes';  // ✅ mismas clases que usa el PHP
+        fila.innerHTML = `
+            <span class="clientes__nombre">${c.name}</span>
+            <span>${c.cuit}</span>
+            <span>${c.province ?? '-'}</span>
+            <span>${c.seller_name ?? 'Sin vendedor'}</span>
+            <span>${c.price_list_name ?? 'Sin lista'}</span>
+            <a href="#" class="estado js-cambiar-estado ${c.active ? 'estado--completado' : 'estado--cancelado'}"
+               data-id="${c.id}" data-estado="${c.active}">
+               ${c.active ? 'Activo' : 'Inactivo'}
+            </a>
+            <div class="acciones--tabla">
+                <a href="/admin/clientes/ver?id=${c.id}" class="acciones__editar"><i class="fa-solid fa-eye"></i></a>
+                <a href="/admin/clientes/editar?id=${c.id}" class="acciones__editar"><i class="fa-solid fa-pen"></i></a>
+                <a href="/admin/clientes/eliminar?id=${c.id}" class="acciones__eliminar js-eliminar"><i class="fa-solid fa-trash"></i></a>
+            </div>
+        `;
+        tabla.appendChild(fila);
+    });
+}
 }
 //BUSCAR CLIENTES PARA PEDIDOS
 const inputCliente = document.querySelector('#cliente');

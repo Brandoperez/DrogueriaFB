@@ -7,8 +7,8 @@
             <p><?php echo $usuario->first_name . ' ' . $usuario->last_name; ?></p>
         </div>
 
-        <div class="formulario__card">
-            <h2><?php echo $usuario->first_name . ' ' . $usuario->last_name; ?></h2>
+        <div class="formulario__card clientes__texto">
+            <h2 class="clientes__nombre--vista"><?php echo $usuario->first_name . ' ' . $usuario->last_name; ?></h2>
 
             <p><strong>Nombre: </strong><?php echo $usuario->first_name;?></p>
             <p><strong>Apellido: </strong><?php echo $usuario->last_name;?></p>

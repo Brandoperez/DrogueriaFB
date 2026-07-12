@@ -111,6 +111,10 @@ class UsuariosController{
                 if(empty($alertas)){
                     $resultado = $usuario->guardar();
                     if($resultado){
+                        $_SESSION['alerta'] = [
+                                'tipo' => 'success',
+                                'mensaje' => 'Usuario actualizado correctamente'
+                            ];
                         header('Location: /admin/usuarios');
                         exit;
                     }

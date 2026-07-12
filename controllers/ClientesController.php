@@ -133,6 +133,10 @@ class ClientesController{
                 if(empty($alertas)){
                     $resultado = $cliente->guardar();
                     if($resultado){
+                        $_SESSION['alerta'] = [
+                                'tipo' => 'success',
+                                'mensaje' => 'Cliente actualizado correctamente'
+                            ];
                         header('Location: /admin/clientes');
                         exit;
                     }
@@ -234,8 +238,21 @@ class ClientesController{
                     exit;
                 }
 
+                if(Pedidos::existenPedidosDeCliente($cliente->id)){
+                    $_SESSION['alerta'] = [
+                        'tipo' => 'error',
+                        'mensaje' => 'No se puede eliminar: el cliente tiene pedidos cargados. Podés desactivarlo en su lugar.'
+                    ];
+                    header('Location: /admin/clientes');
+                    exit;
+                }
+
             $resultado = $cliente->eliminar();
             if($resultado){
+                $_SESSION['alerta'] = [
+                    'tipo' => 'success',
+                    'mensaje' => 'Cliente eliminado correctamente'
+                ];
                 header('Location: /admin/clientes');
                 exit;
             }

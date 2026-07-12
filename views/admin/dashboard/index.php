@@ -119,10 +119,10 @@
                 <a href="/admin/pedidos/crear" class="dashboard__accion"><i class="fa-solid fa-plus"></i>Nuevo Pedido</a>
             </div>
             <div class="dashboard__acciones--rapidas">
-                <a href="/admin/productos/crear" class="dashboard__accion"> <i class="fa-solid fa-capsules"></i>Nuevo Producto</a>
+                <a href="/admin/productos/excel" class="dashboard__accion"> <i class="fa-solid fa-capsules"></i>Nuevo Producto</a>
             </div>
             <div class="dashboard__acciones--rapidas">
-                <a href="/admin/productos/crear" class="dashboard__accion"><i class="fa-solid fa-user-plus"></i>Nuevo Cliente</a>
+                <a href="/admin/clientes/crear" class="dashboard__accion"><i class="fa-solid fa-user-plus"></i>Nuevo Cliente</a>
             </div>
             <div class="dashboard__acciones--rapidas">
                 <a href="/admin/usuarios/crear" class="dashboard__accion"> <i class="fa-solid fa-user-gear"></i>Nuevo Usuario</a>

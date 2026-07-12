@@ -14,7 +14,7 @@ class Pedidos extends ActiveRecord{
     public $client_id;
     public $seller_id;
     public $status;
-    public $observacions;
+    public $observations;
     public $total;
     public $created_at;
     public $productos;
@@ -24,7 +24,7 @@ class Pedidos extends ActiveRecord{
        $this->client_id = $args['client_id'] ?? null;
        $this->seller_id = $args['seller_id'] ?? null;
        $this->status = $args['status'] ?? '';
-       $this->observacions = $args['observacions'] ?? '';
+       $this->observations = $args['observations'] ?? '';
        $this->total = $args['total'] ?? 0;
        $this->created_at = $args['created_at'] ?? null;
        $this->productos = $args['productos'] ?? [];
@@ -317,6 +317,16 @@ class Pedidos extends ActiveRecord{
             $stmt = $db->prepare($query);
             return $stmt->execute([$nuevoEstado, $id]);
         }
+
+        public static function existenPedidosDeCliente($clienteId){
+            global $db;
+
+            $query = "SELECT COUNT(*) FROM orders WHERE client_id = ?";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$clienteId]);
+
+            return (int) $stmt->fetchColumn() > 0;
+}
 }
 
     

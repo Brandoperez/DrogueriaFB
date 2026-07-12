@@ -63,7 +63,18 @@
             background-color: lighten(v.$gris-claro, 1%);
         }
     }
-    &__nombre{
+    &__nombre--vista{
         font-weight: v.$bold;
+        color: v.$azul;
+        font-size: 3.4rem;
+        text-transform: capitalize;
+    }
+    &__texto{
+        p{
+            color: v.$gris;
+        }
+        strong{
+            color: v.$gris-oscuro;
+        }
     }
 }

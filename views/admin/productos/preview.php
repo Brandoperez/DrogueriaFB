@@ -51,8 +51,8 @@
         <div class="excel__validacion">
             
             <div class="excel__contenido-carga--productos">
-                <div class="excel__tabla formulario__card">
-                    <div class="tabla__header tabla__header--productos excel__grid--productos">
+                <div class="formulario__card m__bottom">
+                    <div class="tabla tabla__grid--excel">
                         <span>Código</span>
                         <span>Descripción</span>
                         <span>Laboratorio</span>
@@ -62,7 +62,7 @@
                     </div>
                     
                     <?php foreach($resultado['todosLosProductos'] as $producto): ?>
-                        <div class="tabla__fila excel__grid--productos">
+                        <div class="tabla tabla__fila--excel">
                             <span><?php echo $producto['code']; ?></span>
                             <span><?php echo $producto['description']; ?></span>
                             <span><?php echo $producto['laboratory']; ?></span>

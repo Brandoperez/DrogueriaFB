@@ -2362,8 +2362,17 @@ h3 {
 .clientes__fila:hover {
   background-color: rgb(251.57, 252.55, 253.53);
 }
-.clientes__nombre {
+.clientes__nombre--vista {
   font-weight: 700;
+  color: rgba(0, 52, 130, 0.85);
+  font-size: 3.4rem;
+  text-transform: capitalize;
+}
+.clientes__texto p {
+  color: #64748B;
+}
+.clientes__texto strong {
+  color: #1E293B;
 }
 
 .clientes {

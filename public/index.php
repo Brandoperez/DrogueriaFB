@@ -58,6 +58,7 @@ $router->get('/admin/productos/confirmar', [ProductosController::class, 'confirm
 $router->post('/admin/productos/confirmar', [ProductosController::class, 'confirmar']);
 $router->get('/admin/productos/preview', [ProductosController::class, 'preview']);
 $router->get('/admin/productos/historial', [ProductosController::class, 'listado']);
+$router->get('/admin/productos/plantilla', [ProductosController::class, 'plantilla']);
 
 //CLientes
 $router->get('/admin/clientes', [ClientesController::class, 'index']);

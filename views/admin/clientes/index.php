@@ -1,3 +1,4 @@
+<?php include_once __DIR__ . '/../../templates/alertas.php'; ?>
 <div class="clientes">
     <div class="pedidos__breadcrum">
         <a href="/admin/dashboard">Inicio</a>
@@ -13,7 +14,6 @@
             </div>
 
             <div class="clientes__acciones">
-                <a href="#" class="btn btn__azul">Modificar Saldos</a>
                 <a href="/admin/clientes/crear" class="btn btn__azul"><i class="fa-solid fa-plus"></i>Nuevo Cliente</a>
             </div>
         </div>
@@ -79,7 +79,7 @@
 
         <?php if(!empty($clientes)) : ?>
             <?php foreach($clientes as $cliente) : ?>
-        <div class="tabla__fila--clientes">
+        <div class="tabla tabla__fila--clientes">
             <span class="clientes__nombre"><?php echo $cliente->name; ?></span>
             <span><?php echo $cliente->cuit; ?></span>
             <span><?php echo $cliente->province; ?></span>
@@ -90,7 +90,7 @@
 
             <div class="acciones--tabla">
                 <a href="/admin/clientes/ver?id=<?php echo $cliente->id; ?>" class="acciones__editar"><i class="fa-solid fa-eye"></i></a>
-                <a href="/admin/clientes/editar?id=<?php echo $cliente->id; ?>" class="acciones__editar js-editar"><i class="fa-solid fa-pen"></i></a>
+                <a href="/admin/clientes/editar?id=<?php echo $cliente->id; ?>" class="acciones__editar"><i class="fa-solid fa-pen"></i></a>
                 <a href="/admin/clientes/eliminar?id=<?php echo $cliente->id; ?>" class="acciones__eliminar js-eliminar"><i class="fa-solid fa-trash"></i></a>
             </div>
         </div>

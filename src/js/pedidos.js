@@ -42,6 +42,8 @@ if(btnBuscarPedidos && btnLimpiarFiltros){
         filtrosVendedor.value = '';
         filtrosEstado.value = '';
         filtrosBuscar.value = '';
+
+        buscarPedidos();
     }
 
     function renderizarPedidos(pedidos){
@@ -58,18 +60,43 @@ if(btnBuscarPedidos && btnLimpiarFiltros){
             });
 
             const total = Number(pedido.total).toLocaleString('es-AR', { minimumFractionDigits: 2 });
+
+                let acciones = `
+                    <a href="/admin/pedidos/detalle?id=${pedido.id}">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                `;
+
+                if(pedido.status === 'pending'){
+            acciones += `
+                        <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="${pedido.id}" data-estado="confirmed" title="Confirmar pedido"> <i class="fa-solid fa-circle-arrow-right"></i></a>
+
+                        <a href="#" class="tabla__accion js-cancelar-pedido" data-id="${pedido.id}" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>
+                    `;
+                } else if(pedido.status === 'confirmed'){
+                    acciones += `
+                        <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="${pedido.id}" data-estado="completed" title="Completar pedido"> <i class="fa-solid fa-check"></i></a>
+
+                        <a href="#" class="tabla__accion js-cancelar-pedido" data-id="${pedido.id}" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>`;
+                }
+
+                const claseEstado =
+                    pedido.status === 'pending' ? 'estado--proceso' :
+                    pedido.status === 'completed' ? 'estado--completado' :
+                    pedido.status === 'cancelled' ? 'estado--cancelado' :
+                    'estado--confirmado';
             return `
             <div class="tabla tabla__fila--listado-pe pedidos__fila">
                 <span class="pedidos__pedido-id">#${numero}</span>
                 <span>${fecha}</span>
                 <span>${pedido.client_name ?? 'Sin cliente'}</span>
                 <span>${pedido.seller_name ?? 'Sin vendedor'}</span>
-                <div class="estado estado--proceso">
-                <span>${pedido.status}</span>
+                <div class="estado ${claseEstado}">
+                    <span>${pedido.status}</span>
                 </div>
                 <span>$${total}</span>
-                <div class="tabla__acciones-tabla">
-                    <a href="/admin/pedidos/detalle?id=<?php echo $pedido['id']; ?>" class="tabla__editar"><i class="fa-solid fa-eye"></i></a>
+                <div class="tabla__acciones">
+                    ${acciones}
                 </div>
             </div>
         `;
@@ -80,54 +107,57 @@ if(btnBuscarPedidos && btnLimpiarFiltros){
 const botonesEstado = document.querySelectorAll('.js-cambiar-estado-pedido');
 const botonesCancelar = document.querySelectorAll('.js-cancelar-pedido');
 
-if(botonesEstado.length > 0){
-    botonesEstado.forEach(boton => {
-        boton.addEventListener('click', async function(e) {
-            e.preventDefault();
+if(tablaBody){
+    tablaBody.addEventListener('click', async function(e){
+        const botonEstado = e.target.closest('.js-cambiar-estado-pedido');
 
-            const id = this.dataset.id;
-            const estado = this.dataset.estado;
+        if(!botonEstado){
+            return;
+        }
 
-            const formData = new FormData();
-            formData.append('id', id);
-            formData.append('estado', estado);
-            
-            const respuesta = await fetch('/api/pedidos/estado', {
-                method: 'POST',
-                body: formData
-            });
+        e.preventDefault();
 
-            const resultado = await respuesta.json();
-            if(resultado.resultado){
+        const id = botonEstado.dataset.id;
+        const estado = botonEstado.dataset.estado;
 
-    const fila = this.closest('.pedidos__fila');
-    const estadoDiv = fila.querySelector('.estado');
-    const estadoTexto = estadoDiv.querySelector('span');
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('estado', estado);
 
-    estadoDiv.classList.remove(
-        'estado--proceso',
-        'estado--confirmado',
-        'estado--completado'
-    );
+        const respuesta = await fetch('/api/pedidos/estado', {
+            method: 'POST',
+            body: formData
+        });
+
+        const resultado = await respuesta.json();
+
+        if(resultado.resultado){
+            const fila = botonEstado.closest('.pedidos__fila');
+            const estadoDiv = fila.querySelector('.estado');
+            const estadoTexto = estadoDiv.querySelector('span');
+
+            estadoDiv.classList.remove(
+                'estado--proceso',
+                'estado--confirmado',
+                'estado--completado'
+            );
 
             if(resultado.estado === 'confirmed'){
-                    estadoTexto.textContent = 'Confirmado';
-                    estadoDiv.classList.add('estado--confirmado');
+                estadoTexto.textContent = 'Confirmado';
+                estadoDiv.classList.add('estado--confirmado');
 
-                    this.dataset.estado = 'completed';
-                    this.title = 'Completar pedido';
-                    this.innerHTML = '<i class="fa-solid fa-check"></i>';
+                botonEstado.dataset.estado = 'completed';
+                botonEstado.title = 'Completar pedido';
+                botonEstado.innerHTML = '<i class="fa-solid fa-check"></i>';
 
-                }else if(resultado.estado === 'completed'){
-                    estadoTexto.textContent = 'Completado';
-                    estadoDiv.classList.add('estado--completado');
+            } else if(resultado.estado === 'completed'){
+                estadoTexto.textContent = 'Completado';
+                estadoDiv.classList.add('estado--completado');
 
-                    this.remove();
-                }
-
+                botonEstado.remove();
             }
-        })
-    })
+        }
+    });
 }
 
 if(botonesCancelar.length > 0){
