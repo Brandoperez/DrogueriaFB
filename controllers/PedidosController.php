@@ -28,6 +28,9 @@ class PedidosController{
             if(!$pedido->client_id && !$cliente){
                 $alertas['error'][] = 'El cliente seleccionado no es válido';
             }
+            if($cliente && !$cliente->active){
+                $alertas['error'][] = 'El cliente seleccionado está inactivo y no puede recibir pedidos';
+            }
 
             if(empty($alertas)){
             $total = 0;
@@ -45,6 +48,8 @@ class PedidosController{
             if($orderId){
 
                 self::enviarCorreoFacturacion($orderId);
+                sleep(5);
+                self::enviarCorreoPedidoRecibido($orderId);
                 $_SESSION['alerta'] = [
                     'tipo' => 'success',
                     'mensaje' => 'Pedido cargado correctamente'
@@ -73,6 +78,19 @@ class PedidosController{
                     $_SESSION['alerta'] = [
                         'tipo' => 'error',
                         'mensaje' => 'Debe seleccionar un cliente para continuar.'
+                    ];
+                    $router->render('admin/pedidos/excel', [
+                        'titulo' => 'Carga masiva de Pedidos',
+                        'step' => 1,
+                        'resultado' => null
+                    ], 'admin-layout');
+                    return;
+                }
+
+                if(!$cliente->active){
+                    $_SESSION['alerta'] = [
+                        'tipo' => 'error',
+                        'mensaje' => 'El cliente seleccionado está inactivo y no puede recibir pedidos.'
                     ];
                     $router->render('admin/pedidos/excel', [
                         'titulo' => 'Carga masiva de Pedidos',
@@ -173,6 +191,7 @@ class PedidosController{
 
             if($orderId){
                 self::enviarCorreoFacturacion($orderId);
+                self::enviarCorreoPedidoRecibido($orderId);
                 $_SESSION['alerta'] = ['tipo' => 'success', 'mensaje' => 'Pedido creado correctamente'];
                 header('Location: /admin/pedidos/listado');
                 exit;
@@ -277,6 +296,16 @@ class PedidosController{
             $email->enviarAvisoFacturacion($pedido);
     }
 
+    private static function enviarCorreoPedidoRecibido($orderId){
+        $datosCorreo = Pedidos::obtenerDatosCorreo($orderId);
+            if(!$datosCorreo || empty($datosCorreo['email'])){
+                return;
+            }
+
+            $email = new Email($datosCorreo['email'], $datosCorreo['name'], null);
+            $email->enviarPedidoRecibido($datosCorreo);
+    }
+
     public static function detalle(Router $router){
          isRole('admin');
          $id = $_GET['id'] ?? null;
@@ -323,6 +352,10 @@ class PedidosController{
          if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $alertas = $pedido->validarOrden();
 
+            if(!$cliente->active){
+                $alertas['error'][] = 'Tu cuenta está inactiva, no podés realizar pedidos. Comunicate con Droguería FB.';
+            }
+
             if(empty($alertas)){
                 $total = 0;
                 foreach($pedido->productos as $item){
@@ -339,6 +372,7 @@ class PedidosController{
 
                 if($orderId){
                     self::enviarCorreoFacturacion($orderId);
+                    self::enviarCorreoPedidoRecibido($orderId);
                     $_SESSION['alerta'] = [
                         'tipo' => 'success',
                         'mensaje' => 'Pedido cargado correctamente'
@@ -359,42 +393,58 @@ class PedidosController{
     }
 
     public static function excelCliente(Router $router){
-        isRole('client');
+    isRole('client');
 
-        $cliente = Cliente::find($_SESSION['client_id']);
+    $cliente = Cliente::find($_SESSION['client_id']);
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $archivoTemporal = $_FILES['archivo']['tmp_name'];
-            $spreadsheet = IOFactory::load($archivoTemporal);
-            $filas = $spreadsheet->getActiveSheet()->toArray();
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-            $resultado = Pedidos::validarPedidoExcel($filas, $cliente->price_list_id);
-
-            $_SESSION['pedido_excel_cliente'] = [
-                'cliente_id' => $cliente->id,
-                'seller_id' => $cliente->seller_id,
-                'resultado' => $resultado
+        if(!$cliente->active){
+            $_SESSION['alerta'] = [
+                'tipo' => 'error',
+                'mensaje' => 'Tu cuenta está inactiva, no podés realizar pedidos, comunicate con Droguería FB.'
             ];
-
-            $_SESSION['alerta'] = !empty($resultado['errores'])
-                ? ['tipo' => 'warning', 'mensaje' => 'El archivo tiene errores, corregilos antes de confirmar']
-                : ['tipo' => 'success', 'mensaje' => 'Archivo validado correctamente, podés confirmar la carga.'];
-
             $router->render('cliente/pedidos/excel', [
                 'titulo' => 'Carga masiva de Pedidos',
-                'step' => 2,
-                'resultado' => $resultado,
+                'step' => 1,
+                'resultado' => null,
                 'cliente' => $cliente
             ], 'cliente-layout');
             return;
         }
+
+        $archivoTemporal = $_FILES['archivo']['tmp_name'];
+        $spreadsheet = IOFactory::load($archivoTemporal);
+        $filas = $spreadsheet->getActiveSheet()->toArray();
+
+        $resultado = Pedidos::validarPedidoExcel($filas, $cliente->price_list_id);
+
+        $_SESSION['pedido_excel_cliente'] = [
+            'cliente_id' => $cliente->id,
+            'seller_id' => $cliente->seller_id,
+            'resultado' => $resultado
+        ];
+
+        $_SESSION['alerta'] = !empty($resultado['errores'])
+            ? ['tipo' => 'warning', 'mensaje' => 'El archivo tiene errores, corregilos antes de confirmar']
+            : ['tipo' => 'success', 'mensaje' => 'Archivo validado correctamente, podés confirmar la carga.'];
+
         $router->render('cliente/pedidos/excel', [
             'titulo' => 'Carga masiva de Pedidos',
-            'step' => 1,
-            'resultado' => null,
+            'step' => 2,
+            'resultado' => $resultado,
             'cliente' => $cliente
         ], 'cliente-layout');
+        return;
     }
+
+    $router->render('cliente/pedidos/excel', [
+        'titulo' => 'Carga masiva de Pedidos',
+        'step' => 1,
+        'resultado' => null,
+        'cliente' => $cliente
+    ], 'cliente-layout');
+}
 
      public static function confirmarCliente(Router $router){
         isRole('client');
@@ -430,6 +480,7 @@ class PedidosController{
 
         if($orderId){
             self::enviarCorreoFacturacion($orderId);
+            self::enviarCorreoPedidoRecibido($orderId);
             $_SESSION['alerta'] = ['tipo' => 'success', 'mensaje' => 'Pedido creado correctamente'];
             header('Location: /cliente/pedidos/listado');
             exit;

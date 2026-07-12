@@ -30,13 +30,13 @@ class Pedidos extends ActiveRecord{
        $this->productos = $args['productos'] ?? [];
     }
     public static function crearConProductos(array $datosPedido, array $productos){
-        try{
+    try{
             self::$db->beginTransaction();
                 $stmt = self::$db->prepare(
                 "INSERT INTO orders (client_id, seller_id, status, observations, total)
-                 VALUES (?, ?, ?, ?, ?)
-                 RETURNING id" );
-                 $stmt->execute([
+                VALUES (?, ?, ?, ?, ?)
+                RETURNING id" );
+                $stmt->execute([
                     $datosPedido['client_id'],
                     $datosPedido['seller_id'],
                     'pending',
@@ -51,7 +51,13 @@ class Pedidos extends ActiveRecord{
                     "INSERT INTO order_items (order_id, product_id, quantity, price, subtotal)
                     VALUES (?, ?, ?, ?, ?)"
                 );
-                    foreach($productos as $item){
+
+                $stmtStock = self::$db->prepare(
+                    "UPDATE products SET stock = stock - ?
+                    WHERE id = ? AND stock >= ?"
+                );
+
+                foreach($productos as $item){
                     $stmtItem->execute([
                         $orderId,
                         $item['producto_id'],
@@ -59,6 +65,16 @@ class Pedidos extends ActiveRecord{
                         $item['precio'],
                         $item['precio'] * $item['cantidad']
                     ]);
+
+                    $stmtStock->execute([
+                        $item['cantidad'],
+                        $item['producto_id'],
+                        $item['cantidad']
+                    ]);
+
+                    if($stmtStock->rowCount() === 0){
+                        throw new PDOException("Stock insuficiente para el producto ID {$item['producto_id']}");
+                    }
                 }
                 self::$db->commit();
                 return $orderId;
@@ -203,6 +219,8 @@ class Pedidos extends ActiveRecord{
             $producto = Producto::where('code', $codigo);
                 if(!$producto){
                     $erroresFila[] = "El código {$codigo} no existe";
+                } elseif(is_numeric($cantidad) && $cantidad > $producto->stock){
+                    $erroresFila[] = "Stock insuficiente (disponible: {$producto->stock})";
                 }
 
                 if(!empty($erroresFila)){

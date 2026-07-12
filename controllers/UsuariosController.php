@@ -46,6 +46,10 @@ class UsuariosController{
                     $resultado =  $usuario->guardar();
 
                     if($resultado) {
+                        $_SESSION['alerta'] = [
+                            'tipo' => 'success',
+                            'mensaje' => 'Usuario creado correctamente'
+                        ];
                         header('Location: /admin/usuarios');
                         exit;
                     }

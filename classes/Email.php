@@ -179,4 +179,45 @@ class Email {
 
     return $mail->send();
 }
+
+public function enviarPedidoRecibido($pedido){
+
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host = $_ENV['EMAIL_HOST'];
+    $mail->SMTPAuth = true;
+    $mail->Port = $_ENV['EMAIL_PORT'];
+    $mail->Username = $_ENV['EMAIL_USER'];
+    $mail->Password = $_ENV['EMAIL_PASS'];
+
+    $mail->setFrom('noreply@drogueriafb.com', 'Droguería FB');
+    $mail->addAddress($this->email, $this->name);
+
+    $numeroPedido = str_pad($pedido['id'], 6, '0', STR_PAD_LEFT);
+
+    $mail->Subject = "Recibimos tu pedido #{$numeroPedido} - Droguería FB";
+
+    $mail->isHTML(true);
+    $mail->CharSet = 'UTF-8';
+
+    $contenido = '<html>';
+    $contenido .= "<div style='text-align:center; margin-bottom:20px;'>
+                   <img src='" . $_ENV['HOST'] . "/build/img/logo.jpg' alt='Droguería FB' style='max-width:220px;'></div>";
+    $contenido .= "<p><strong>Hola {$this->name}</strong></p>";
+    $contenido .= "<p>Recibimos tu pedido <strong>#{$numeroPedido}</strong> correctamente.</p>";
+    $contenido .= "<p>Lo estamos procesando y te llegará dentro de las próximas <strong>24 a 48 horas</strong>.</p>";
+    $contenido .= "<p>Te avisaremos por correo cuando esté confirmado y en camino.</p>";
+    $contenido .= "<p>Gracias por confiar en Droguería FB.</p>";
+    $contenido .= '</html>';
+
+    $mail->Body = $contenido;
+
+    if(!$mail->send()){
+        error_log('Error correo pedido recibido: ' . $mail->ErrorInfo);
+        return false;
+    }
+
+    error_log('Correo pedido recibido enviado correctamente');
+    return true;
+}
 }

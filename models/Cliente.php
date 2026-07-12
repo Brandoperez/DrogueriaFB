@@ -4,7 +4,7 @@ use PDO;
 
 class Cliente extends ActiveRecord{
     protected static $tabla = 'clients';
-    protected static $columnasDB = ['id', 'name', 'type', 'cuit', 'address', 'phone', 'email', 'province', 'active', 'seller_id', 'price_list_id', 'password', 'token'];
+    protected static $columnasDB = ['id', 'name', 'type', 'cuit', 'address', 'phone', 'email', 'province', 'locality', 'active', 'seller_id', 'price_list_id', 'password', 'token'];
 
 
     public $id;
@@ -15,6 +15,7 @@ class Cliente extends ActiveRecord{
     public $phone;
     public $email;
     public $province;
+    public $locality;
     public $active;
     public $seller_id;
     public $created_at;
@@ -33,6 +34,7 @@ class Cliente extends ActiveRecord{
         $this->phone = $args['phone'] ?? '';
         $this->email = $args['email'] ?? '';
         $this->province = $args['province'] ?? '';
+        $this->locality = $args['locality'] ?? '';
         $this->active = $args['active'] ?? false;
         $this->seller_id = $args['seller_id'] ?? null;
         $this->created_at = $args['created_at'] ?? null;
@@ -78,6 +80,10 @@ class Cliente extends ActiveRecord{
 
     if(!$this->province) {
         $alertas['error'][] = 'La provincia es obligatoria';
+    }
+
+    if(!$this->locality) {
+    $alertas['error'][] = 'La localidad es obligatoria';
     }
 
     if(!$this->type) {
@@ -146,6 +152,10 @@ class Cliente extends ActiveRecord{
         $alertas['error'][] = 'La provincia es obligatoria';
     }
 
+    if(!$this->locality) {
+    $alertas['error'][] = 'La localidad es obligatoria';
+    }
+
     if(!$this->type) {
         $alertas['error'][] = 'El tipo de cliente es obligatorio';
     }
@@ -196,8 +206,13 @@ class Cliente extends ActiveRecord{
     }
 
     public static function getProvincias(): array {
-    $stmt = self::$db->query("SELECT DISTINCT province FROM clients WHERE province IS NOT NULL AND province <> '' ORDER BY province ASC");
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    return [
+        'Buenos Aires', 'Catamarca', 'Chaco', 'Chubut', 'CABA', 'Córdoba',
+        'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa', 'La Rioja',
+        'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta', 'San Juan',
+        'San Luis', 'Santa Cruz', 'Santa Fe', 'Santiago del Estero',
+        'Tierra del Fuego', 'Tucumán'
+    ];
 }
 }
 

@@ -183,14 +183,22 @@ const btnAgregarProductos = document.querySelector('.pedidos__agregar');
                             const resultado = document.createElement('DIV');
                             resultado.classList.add('pedidos__resultado');
 
-                            resultado.textContent = `${producto.code} - ${producto.description}`;
+                            const sinStock = producto.stock <= 0;
 
-                            resultado.addEventListener('click', () => {
-                                inputProducto.value = producto.description;
-                                document.querySelector('#producto_id').value = producto.id;
-                                productoSeleccionado = producto;
-                                contenedorProductos.innerHTML = '';
-                            });
+                            resultado.textContent = sinStock
+                                ? `${producto.code} - ${producto.description} (Sin stock)`
+                                : `${producto.code} - ${producto.description}`;
+
+                                if(sinStock){
+                                    resultado.classList.add('pedidos__resultado--disabled');
+                                }else{
+                                    resultado.addEventListener('click', () => {
+                                    inputProducto.value = producto.description;
+                                    document.querySelector('#producto_id').value = producto.id;
+                                    productoSeleccionado = producto;
+                                    contenedorProductos.innerHTML = '';
+                                });
+                                }
 
                             contenedorProductos.appendChild(resultado);
                     });
@@ -242,6 +250,13 @@ function agregarProducto(){
     }
 
     const existente = productosPedidos.find(p => p.producto_id === productoSeleccionado.id);
+    const cantidadAcumulada = (existente ? existente.cantidad : 0) + cantidad;
+
+    if(cantidadAcumulada > productoSeleccionado.stock){
+        alert(`Solo hay ${productoSeleccionado.stock} unidades disponibles de este producto`);
+        return;
+    }
+
     if(existente){
         existente.cantidad += cantidad;
     }else{

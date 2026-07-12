@@ -71,6 +71,7 @@ $router->get('/admin/clientes/eliminar', [ClientesController::class, 'eliminar']
 
 $router->get('/api/clientes/estado', [ClientesController::class, 'estado']);
 $router->post('/api/clientes/buscar', [ClientesController::class, 'buscar']);
+$router->get('/api/clientes/localidades', [ClientesController::class, 'buscarLocalidades']);
 
 //Usuarios
 $router->get('/admin/usuarios', [UsuariosController::class, 'index']);

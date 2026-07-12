@@ -20,6 +20,32 @@
     </div>
 </header>
 
+<section class="hero swiper">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide hero__slide hero__slide--principal">
+            <div class="hero__overlay">
+                <div class="hero__contenedor">
+                    <div class="hero__contenido">
+                        <h1 class="hero__heading">Suministrando salud a tu negocio</h1>
+                        <p class="hero__texto">Distribución de medicamentos e insumos para farmacias, droguerias, clínicas, hospitales, municipalidades y obras sociales</p>
+                        <div class="header__acciones">
+                            <a href="/login" class="btn header__btn btn__azul">Ingreso al Sistema</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="swiper-slide hero__slide hero__slide--promo1"></div>
+        <div class="swiper-slide hero__slide hero__slide--promo2"></div>
+        <div class="swiper-slide hero__slide hero__slide--promo3"></div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</section>
+<!--
 <section class="hero">
     <div class="hero__overlay">
         <div class="hero__contenedor">
@@ -33,7 +59,7 @@
         </div>
     </div>
 </section>
-
+-->
 <section class="beneficios">
     <div class="beneficios__contenedor">
         <article class="beneficio">

@@ -45,9 +45,12 @@
                                 <i class="fa-solid fa-location-dot"></i>
                                     <select id="type" name="type">
                                         <option value="">Seleccionar</option>
-                                        <option value="farmacia" <?php echo $cliente->type === 'farmacia' ? 'selected' : ''; ?>>Farmacia</option>
-                                        <option value="distribuidor" <?php echo $cliente->type === 'distribuidor' ? 'selected' : ''; ?>>Distribuidor</option>
-                                        <option value="institucion" <?php echo $cliente->type === 'institucion' ? 'selected' : ''; ?>>Institución</option>
+                                            <option value="farmacia" <?php echo $cliente->type === 'farmacia' ? 'selected' : ''; ?>>Farmacia</option>
+                                            <option value="hospital" <?php echo $cliente->type === 'hospital' ? 'selected' : ''; ?>>Hospital</option>
+                                            <option value="clinica" <?php echo $cliente->type === 'clinica' ? 'selected' : ''; ?>>Clínica</option>
+                                            <option value="municipalidad" <?php echo $cliente->type === 'municipalidad' ? 'selected' : ''; ?>>Municipalidad</option>
+                                            <option value="drogueria" <?php echo $cliente->type === 'drogueria' ? 'selected' : ''; ?>>Droguería</option>
+                                            <option value="otro" <?php echo $cliente->type === 'otro' ? 'selected' : ''; ?>>Otro</option>
                                     </select>
                             </div>
                         </div>
@@ -66,12 +69,25 @@
                                  <i class="fa-solid fa-map-location-dot"></i>
                                  <select id="province" name="province">
                                     <option value="">Seleccioná una Provincia</option>
-                                    <option value="Buenos Aires">Buenos Aires</option>
-                                    <option value="CABA">CABA</option>
-                                    <option value="Córdoba">Córdoba</option>
-                                 </select>
+                                    <?php foreach($provincias as $provincia): ?>
+                                        <option value="<?php echo $provincia; ?>" <?php echo $cliente->province === $provincia ? 'selected' : ''; ?>>
+                                            <?php echo $provincia; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
+
+                        <div class="formulario__campo">
+                            <label for="locality">Localidad:</label>
+                            <div class="formulario__input--icono">
+                                <i class="fa-solid fa-map-pin"></i>
+                                <select id="locality" name="locality" data-actual="<?php echo $cliente->locality; ?>">
+                                    <option value="">Seleccioná primero una Provincia</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
             </fieldset>
 

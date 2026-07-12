@@ -98,7 +98,9 @@
                             <span><?php echo date('d/m/Y', strtotime($pedido['created_at'])); ?></span>
                             <span><?php echo s($pedido['client_name'] ?? 'Sin cliente'); ?></span>
                             <span><?php echo s($pedido['seller_name'] ?? 'Sin vendedor'); ?></span>
-                            <span><?php echo $pedido['status']; ?></span>
+                            <div class="estado <?php echo claseEstado($pedido['status']); ?>">
+                                <span><?php echo $pedido['status']; ?></span>
+                            </div>
                             <span>$<?php echo number_format($pedido['total'], 2, ',', '.'); ?></span>
                             <div class="tabla__acciones">
                                <span><a href="/admin/pedidos/detalle?id=<?php echo $pedido['id']; ?>"><i class="fa-solid fa-eye"></i></a></span> 

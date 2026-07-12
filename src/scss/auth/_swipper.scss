@@ -1,0 +1,62 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+.hero{
+    min-height: 100vh;
+        .swiper-slide{
+            min-height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        &__slide{
+            &--principal{
+                background-image: url('/build/img/hero.png');
+            }
+            &--promo1{
+                background-image: url('/build/img/promo1.png');
+            }
+            &--promo2{
+                background-image: url('/build/img/promo2.png');
+            }
+            &--promo3{
+                background-image: url('/build/img/promo3.png');
+            }
+        }
+        &__overlay{
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, rgba(v.$negro,.55) 0%, rgba(v.$negro,.35) 35%, rgba(v.$negro,.05) 100%);
+        }
+        &__contenedor{
+            @include m.contenedor;
+        }
+        &__contenido{
+            max-width: 55rem;
+            color: v.$blanco;
+        }
+        &__heading{
+            font-weight: v.$bold;
+            font-size: 5rem;
+            line-height: 1.2;
+            margin: 0 0 4rem;
+        }
+        &__texto{
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            line-height: 1.5;
+            text-transform: capitalize;
+        }
+    .swiper-button-prev,
+    .swiper-button-next{
+        color: v.$blanco;
+    }
+    .swiper-pagination-bullet{
+        background: v.$blanco;
+        opacity: .6;
+
+        &-active{
+            opacity: 1;
+        }
+    }
+}

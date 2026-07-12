@@ -35,6 +35,7 @@ class ClientesController{
         $cliente = new Cliente();
         $vendedores = Usuario::whereAll('role', 'seller');
         $listaPrecios = PriceList::all();
+        $provincias = Cliente::getProvincias();
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -59,6 +60,10 @@ class ClientesController{
                     $resultado =  $cliente->guardar();
 
                     if($resultado) {
+                        $_SESSION['alerta'] = [
+                            'tipo' => 'success',
+                            'mensaje' => 'Cliente creado correctamente'
+                        ];
                         header('Location: /admin/clientes');
                         exit;
                     }
@@ -72,7 +77,8 @@ class ClientesController{
             'cliente' => $cliente, 
             'alertas' => $alertas,
             'vendedores' => $vendedores,
-            'listaPrecios' => $listaPrecios
+            'listaPrecios' => $listaPrecios,
+            'provincias' => $provincias
         ]);
     }
 
@@ -114,6 +120,7 @@ class ClientesController{
         $alertas = [];
         $vendedores = Usuario::whereAll('role', 'seller');
         $listaPrecios = PriceList::all();
+        $provincias = Cliente::getProvincias();
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $cliente->sincronizar($_POST);
@@ -148,7 +155,8 @@ class ClientesController{
             'alertas' => $alertas,
             'cliente' => $cliente,
             'vendedores' => $vendedores,
-            'listaPrecios' => $listaPrecios
+            'listaPrecios' => $listaPrecios,
+            'provincias' => $provincias
         ]);
         }
 
@@ -256,6 +264,35 @@ class ClientesController{
                 header('Location: /admin/clientes');
                 exit;
             }
+        }
+
+        public static function buscarLocalidades(){
+            isRole('admin');
+
+            $provincia = $_GET['provincia'] ?? '';
+
+            if(!$provincia){
+                header('Content-Type: application/json');
+                echo json_encode([]);
+                return;
+            }
+
+            $url = 'https://apis.datos.gob.ar/georef/api/localidades?provincia=' . urlencode($provincia) . '&campos=nombre&max=1000&orden=nombre';
+
+            $respuesta = @file_get_contents($url);
+            $localidades = [];
+
+            if($respuesta){
+                $datos = json_decode($respuesta, true);
+                foreach(($datos['localidades'] ?? []) as $localidad){
+                    $localidades[] = $localidad['nombre'];
+                }
+                $localidades = array_unique($localidades);
+                sort($localidades);
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode(array_values($localidades));
         }
 
         public static function clientes(Router $router){
