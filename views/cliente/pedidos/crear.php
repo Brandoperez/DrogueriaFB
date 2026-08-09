@@ -54,6 +54,7 @@
                         <span>Precio</span>
                         <span>Subtotal</span>
                         <span>Acciones</span>
+                        <span>Observaciones</span>
                     </div>
 
                     <div class="tabla__vacia">

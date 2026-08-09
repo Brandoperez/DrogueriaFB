@@ -23,10 +23,12 @@
                     <span>Carga Manual</span>
                 </a>
 
+                <!-- Eesactivamos del sidebar de clientes la opción de CARGA DE PEDIDO MEDIANTE EXCEL
                 <a href="/cliente/pedidos/excel" class="sidebar__submenu--enlace <?php echo paginaActual('/cliente/pedidos/excel') ? 'sidebar__submenu--actual' : '';?>">
                     <i class="fa-solid fa-file-excel"></i>
                     <span>Carga Pedido Excel</span>
                 </a>
+                -->
 
                 <a href="/cliente/pedidos/listado" class="sidebar__submenu--enlace <?php echo paginaActual('/cliente/pedidos/listado') ? 'sidebar_submenu--activo' : ''; ?>">
                     <i class="fa-solid fa-clipboard-list"></i>

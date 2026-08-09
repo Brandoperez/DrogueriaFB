@@ -54,6 +54,52 @@
     font-weight: v.$bold;
     cursor: pointer;
 } 
+&__resultado{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid v.$gris-claro;
+
+    &:hover{
+        background-color: rgba(v.$azul, 1);
+    }
+
+    &--nombre{
+        flex: 1 1 100%;
+        font-weight: v.$bold;
+    }
+    &--precio{
+        display: flex;
+        align-items: baseline;
+        gap: .8rem;
+    }
+    &--pvp{
+        font-size: 1.8rem;
+        color: v.$gris;
+    }
+    &--tachado{
+        text-decoration: line-through;
+    }
+    &--final{
+        font-weight: v.$bold;
+        color: v.$gris;
+    }
+    &--stock{
+        font-size: 1.4rem;
+        color: v.$gris;
+    }
+
+    &--disabled{
+        cursor: not-allowed;
+        opacity: .5;
+         &:hover{
+            background-color: transparent;
+        }
+    }
+}
 }
 
  

@@ -39,7 +39,7 @@
         <div class="login__card">
 
             <div class="login__marca">
-                <img src="/build/img/logo.jpg" alt="Logo Droguería FB">
+                <a href="/"><img src="/build/img/logo.jpg" alt="Logo Droguería FB"></a>
             </div>
 
             <h2>Acceso al sistema</h2>
@@ -66,11 +66,6 @@
 
                 <input type="submit" class="formulario__submit" value="Ingresar al sistema">
             </form>
-
-            <div class="formulario__enlaces formulario__enlaces--login">
-                <span>¿No tenés cuenta?</span>
-                <a href="/registro">Crear Una</a>
-            </div>
         </div>
     </section>
 </main>

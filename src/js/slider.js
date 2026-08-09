@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fadeEffect: {
                 crossFade: true
             },
+            autoHeight: true,
             autoplay: {
                 delay: 5000,
                 disableOnInteraction: false

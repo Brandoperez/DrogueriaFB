@@ -48,8 +48,8 @@ class Pedidos extends ActiveRecord{
                 $orderId = $stmt->fetchColumn();
 
                 $stmtItem = self::$db->prepare(
-                    "INSERT INTO order_items (order_id, product_id, quantity, price, subtotal)
-                    VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO order_items (order_id, product_id, quantity, price, subtotal, notes)
+                    VALUES (?, ?, ?, ?, ?, ?)"
                 );
 
                 $stmtStock = self::$db->prepare(
@@ -63,7 +63,8 @@ class Pedidos extends ActiveRecord{
                         $item['producto_id'],
                         $item['cantidad'],
                         $item['precio'],
-                        $item['precio'] * $item['cantidad']
+                        $item['precio'] * $item['cantidad'],
+                        $item['observaciones'] ?? null
                     ]);
 
                     $stmtStock->execute([

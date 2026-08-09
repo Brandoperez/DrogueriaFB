@@ -36,6 +36,8 @@ class Producto extends ActiveRecord{
         global $db;
 
          $query = "SELECT p.id, p.code, p.description, p.laboratory, p.stock,
+                COALESCE(pp.price, p.base_price) AS pvp,
+                COALESCE(pp.discount_percentage, 0) AS descuento,
                 COALESCE(
                 pp.price - (pp.price * pp.discount_percentage / 100),
                 p.base_price

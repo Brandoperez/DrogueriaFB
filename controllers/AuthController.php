@@ -103,7 +103,7 @@ class AuthController {
             iniciarSession();
             $_SESSION = [];
             session_destroy();
-            header('Location: /login');
+            header('Location: /');
             exit;
         }
        
@@ -175,93 +175,156 @@ class AuthController {
         ]);
     }
 
-    public static function olvide(Router $router) {
-        $alertas = [];
-        
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+   public static function olvide(Router $router) {
+    $alertas = [];
 
-            $auth = new Usuario($_POST);
-            $alertas = $auth->validarEmail();
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(empty($alertas)) {
-                // Buscar el usuario
-                $usuario = Usuario::where('email', $auth->email);
+        $emailIngresado = strtolower(trim($_POST['email'] ?? ''));
 
-                if(!$usuario || !$usuario->active) {
-                    $alertas['error'][] = 'El usuario no existe o no esta activo'; 
-                }else{
-                    // Generar un nuevo token
-                    $usuario->crearToken();
-                    unset($usuario->password2);
-
-                    //actualizar el usuario
-                    $resultado = $usuario->guardar();
-                    if($resultado){
-                        $email = new Email($usuario->email, $usuario->name, $usuario->token);
-                        $email->enviarInstrucciones();
-
-                        $alertas['exito'][] = 'Hemos enviado las intrucciones a tu correo electrónico.';
-                    }
-                }   
-            }
-        }
-
-        $router->render('auth/olvide', [
-            'titulo' => 'Olvide mi Contraseña',
-            'alertas' => $alertas
+        $auth = new Usuario([
+            'email' => $emailIngresado
         ]);
-    }
 
-    public static function restablecer(Router $router) {
-        $alertas = [];
-        $token = s($_GET['token']) ?? '';
-        $token_valido = true;
+        $alertas = $auth->validarEmail();
 
-        if(!$token) header('Location: /login');
+        if(empty($alertas)) {
 
-        // Identificar el usuario con este token
-        $usuario = Usuario::where('token', $token);
+            // Primero buscar en usuarios internos
+            $usuario = Usuario::where('email', $emailIngresado);
 
-        if(!$usuario) {
-            $alertas['error'][] = 'Token no válido, intente de nuevo.';
-            $token_valido = false;
-        }
+            if($usuario && $usuario->active) {
 
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            // Añadir el nuevo password
-            $usuario->sincronizar($_POST);
-
-            // Validar el password
-            $alertas = $usuario->validarPassword();
-
-            if(empty($alertas)) {
-                // Hashear el nuevo password
-                $usuario->hashPassword();
-
-                // Eliminar el Token
-                $usuario->token = null;
+                $usuario->crearToken();
                 unset($usuario->password2);
 
-                // Guardar el usuario en la BD
                 $resultado = $usuario->guardar();
 
-                // Redireccionar
                 if($resultado) {
-                    header('Location: /login');
-                    exit;
+                    $email = new Email(
+                        $usuario->email,
+                        $usuario->name,
+                        $usuario->token
+                    );
+
+                    $email->enviarInstrucciones();
+
+                    $alertas['exito'][] =
+                        'Hemos enviado las instrucciones a tu correo electrónico.';
+                }
+
+            } else {
+
+                // Si no está en users, buscar en clients
+                $cliente = Cliente::where('email', $emailIngresado);
+
+                if(!$cliente || !$cliente->active) {
+                    $alertas['error'][] =
+                        'El usuario no existe o no está activo';
+                } else {
+
+                    $cliente->crearToken();
+                    unset($cliente->password2);
+
+                    $resultado = $cliente->guardar();
+
+                    if($resultado) {
+                        $email = new Email(
+                            $cliente->email,
+                            $cliente->name,
+                            $cliente->token
+                        );
+
+                        $email->enviarInstrucciones();
+
+                        $alertas['exito'][] =
+                            'Hemos enviado las instrucciones a tu correo electrónico.';
+                    }
                 }
             }
         }
-
-        $router->render('auth/restablecer', [
-            'titulo' => 'Restablecer Contraseña',
-            'alertas' => $alertas,
-            'token_valido' => $token_valido,
-            'token' => $token
-        ]);
     }
+
+    $router->render('auth/olvide', [
+        'titulo' => 'Olvidé mi Contraseña',
+        'alertas' => $alertas
+    ]);
+}
+
+    public static function restablecer(Router $router) {
+    $alertas = [];
+    $token = s($_GET['token'] ?? '');
+    $token_valido = true;
+
+    if(!$token) {
+        header('Location: /login');
+        exit;
+    }
+
+    // Buscar primero en usuarios internos
+    $cuenta = Usuario::where('token', $token);
+
+    // Si no está en users, buscar en clients
+    if(!$cuenta) {
+        $cuenta = Cliente::where('token', $token);
+    }
+
+    if(!$cuenta) {
+        $alertas['error'][] = 'Token no válido o expirado';
+        $token_valido = false;
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && $token_valido) {
+
+        $cuenta->sincronizar($_POST);
+
+        // Validar la nueva contraseña
+        if(!$cuenta->password) {
+            $alertas['error'][] = 'La contraseña es obligatoria';
+        }
+
+        if(strlen($cuenta->password) < 8) {
+            $alertas['error'][] =
+                'La contraseña debe tener al menos 8 caracteres';
+        }
+
+        if(
+            isset($_POST['password2']) &&
+            $cuenta->password !== $_POST['password2']
+        ) {
+            $alertas['error'][] = 'Las contraseñas no coinciden';
+        }
+
+        if(empty($alertas)) {
+
+            // Hashear la nueva contraseña
+            $cuenta->hashPassword();
+
+            // El token deja de ser válido
+            $cuenta->token = null;
+            unset($cuenta->password2);
+
+            $resultado = $cuenta->guardar();
+
+            if($resultado) {
+                $_SESSION['alerta'] = [
+                    'tipo' => 'success',
+                    'mensaje' => 'Contraseña actualizada correctamente'
+                ];
+
+                header('Location: /login');
+                exit;
+            }
+        }
+    }
+
+    $router->render('auth/restablecer', [
+        'titulo' => 'Restablecer Contraseña',
+        'alertas' => $alertas,
+        'token_valido' => $token_valido,
+        'token' => $token
+    ]);
+}
 
     public static function mensaje(Router $router) {
 

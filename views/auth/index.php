@@ -34,30 +34,6 @@
     </div>
 </section>
 
-<section class="ofertas">
-    <div class="ofertas__contenedor">
-        <div class="ofertas__heading">
-            <span class="ofertas__linea"></span>
-            <h2>Ofertas del Mes</h2>
-            <span class="ofertas__linea"></span>
-        </div>
-    
-        <div class="swiper ofertas__slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide ofertas__slide ofertas__slide--promo1"></div>
-                <div class="swiper-slide ofertas__slide ofertas__slide--promo2"></div>
-                <div class="swiper-slide ofertas__slide ofertas__slide--promo3"></div>
-            </div>
-
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
-
-</section>
-
-
 <section class="beneficios">
     <div class="beneficios__contenedor">
         <article class="beneficio">

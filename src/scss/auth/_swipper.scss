@@ -42,17 +42,19 @@
                 @include m.desktop{
                     min-height: 55rem;
                 }
-                 &--promo1{
-                        background-image: url('/build/img/promo1.png');
-                    }
-                 &--promo2{
-                        background-image: url('/build/img/promo2.png');
-                    }
-                &--promo3{
-                        background-image: url('/build/img/promo3.png');
-                    }
         }
-
+        &--panel{
+            padding: 3rem 0;
+                .swiper-pagination-bullet{
+                    background: v.$gris;
+                }
+            }
+        &--imagen{
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        }
         .swiper-button-prev,
         .swiper-button-next{
             color: v.$blanco;
@@ -68,5 +70,4 @@
             &-active{
                 opacity: 1;
             }
-        }
         }

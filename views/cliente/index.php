@@ -50,7 +50,7 @@
                         <i class="fa-solid fa-cart-shopping"></i>
                         Crear Pedido Manual
                     </a>
-
+                    <!-- A peticion del cliente desactivamos los botones de las acciones rapidas de LISTA DIARIA (EXCEL) Y LISTADO DE PEDIDOS 
                     <a href="/cliente/pedidos/excel" class="cliente__boton cliente__boton--secundario">
                         <i class="fa-solid fa-upload"></i>
                         Carga de Lista Diaria (Excel)
@@ -60,17 +60,48 @@
                         <i class="fa-solid fa-list"></i>
                         Ver Listado de Pedidos
                     </a>
+                    En caso de que quiera habilitarlos solamente descomentar-->
                 </div>
                     
             </div>
 
-             <div class="cliente__resumen">
+        <!--<div class="cliente__resumen">
                 <div class="cliente__btn">
                     <a href="/cliente/lista-precios" class="btn btn__azul">Lista de Precios</a>
                 </div>
             </div>
+            Tambien descativamos el botn de lista diaria -->
         </div>
     </div>
+
+    <section class="ofertas ofertas--panel">
+        <div class="ofertas__contenedor">
+            <div class="ofertas__heading">
+                <span class="ofertas__linea"></span>
+                <h2>Ofertas del Mes</h2>
+                <span class="ofertas__linea"></span>
+            </div>
+        
+            <div class="swiper ofertas__slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide ofertas__slide">
+                        <img src="/build/img/promo1.png" alt="Oferta del mes" class="ofertas__imagen">
+                    </div>
+                    <div class="swiper-slide ofertas__slide">
+                        <img src="/build/img/promo2.png" alt="Oferta del mes" class="ofertas__imagen">
+                    </div>
+                    <div class="swiper-slide ofertas__slide">
+                        <img src="/build/img/promo3.png" alt="Oferta del mes" class="ofertas__imagen">
+                    </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+
+    </section>
 
     <div class="cliente__pedidos">
         <div class="cliente__tabs">

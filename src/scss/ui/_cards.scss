@@ -35,7 +35,7 @@
         &__grid--pedidos,
         &__fila--pedidos{
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr .5fr;
+            grid-template-columns: 1.5fr .5fr 1fr 1fr 1fr 1.5fr;
             gap: 2rem;
             padding: 1.8rem 0;
             color: v.$gris;

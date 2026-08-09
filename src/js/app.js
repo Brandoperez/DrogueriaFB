@@ -184,10 +184,20 @@ const btnAgregarProductos = document.querySelector('.pedidos__agregar');
                             resultado.classList.add('pedidos__resultado');
 
                             const sinStock = producto.stock <= 0;
+                            const pvp = parseFloat(producto.pvp);
+                            const precioFinal = parseFloat(producto.precio);
+                            const descuento = parseFloat(producto.descuento) || 0;
+                            const tieneDescuento = descuento > 0;
 
-                            resultado.textContent = sinStock
-                                ? `${producto.code} - ${producto.description} (Sin stock)`
-                                : `${producto.code} - ${producto.description}`;
+                            resultado.innerHTML = `
+                                <span class="pedidos__resultado--nombre">${producto.description}${sinStock ? ' (Sin stock)' : ''}</span>
+                                <span class="pedidos__resultado--pvp${tieneDescuento ? ' pedidos__resultado--tachado' : ''}">$${pvp.toFixed(2)}</span>
+                                <span class="pedidos__resultado--stock">Stock: ${producto.stock}</span>
+                                ${tieneDescuento ? `
+                                    <span class="pedidos__resultado--descuento">${descuento}% off PVP</span>
+                                    <span class="pedidos__resultado--final">$${precioFinal.toFixed(2)}</span>
+                                ` : ''}
+                            `;
 
                                 if(sinStock){
                                     resultado.classList.add('pedidos__resultado--disabled');
@@ -229,8 +239,12 @@ let productosPedidos = [];
                             <span>$${item.precio.toFixed(2)}</span>
                             <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
                             <button type="button" class="tabla__eliminar" data-index="${index}">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button type="button" class="tabla__eliminar" data-index="${index}">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
+                            <input type="text" class="tabla__observacion" data-index="${index}" placeholder="Nota del producto..." value="${item.observaciones}">
                         `;
                         tablaProductos.appendChild(fila);
             });
@@ -264,7 +278,9 @@ function agregarProducto(){
             producto_id: productoSeleccionado.id,
             description: productoSeleccionado.description,
             precio: parseFloat(productoSeleccionado.precio),
-            cantidad: cantidad
+            cantidad: cantidad,
+            stock: productoSeleccionado.stock,
+            observaciones: ''
         });
     }
     renderizarTablaPedidos();
@@ -287,7 +303,15 @@ if(inputCantidad){
         }
     });
 }
-    
+//GUARDAR OBSERVACION DEL PRODUCTO
+document.addEventListener('input', (e) => {
+    const inputObservacion = e.target.closest('.tabla__observacion');
+    if(!inputObservacion) return;
+
+    const index = parseInt(inputObservacion.dataset.index);
+    productosPedidos[index].observaciones = inputObservacion.value;
+});
+
 //ELIMINAR PRODUCTO TABLA
 document.addEventListener('click', (e) =>{
     const btnEliminar = e.target.closest('.tabla__eliminar');

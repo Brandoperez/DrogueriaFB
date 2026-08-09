@@ -690,30 +690,34 @@ h3 {
     min-height: 55rem;
   }
 }
-.ofertas__slide--promo1 {
-  background-image: url("/build/img/promo1.png");
+.ofertas--panel {
+  padding: 3rem 0;
 }
-.ofertas__slide--promo2 {
-  background-image: url("/build/img/promo2.png");
+.ofertas--panel .swiper-pagination-bullet {
+  background: #64748B;
 }
-.ofertas__slide--promo3 {
-  background-image: url("/build/img/promo3.png");
+.ofertas--imagen {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.ofertas .swiper-button-prev,
-.ofertas .swiper-button-next {
+
+.swiper-button-prev,
+.swiper-button-next {
   color: #FFFFFF;
 }
 @media (min-width: 768px) {
-  .ofertas .swiper-button-prev,
-  .ofertas .swiper-button-next {
+  .swiper-button-prev,
+  .swiper-button-next {
     display: flex;
   }
 }
-.ofertas .swiper-pagination-bullet {
+
+.swiper-pagination-bullet {
   background: #FFFFFF;
   opacity: 0.6;
 }
-.ofertas .swiper-pagination-bullet-active {
+.swiper-pagination-bullet-active {
   opacity: 1;
 }
 
@@ -1369,7 +1373,7 @@ h3 {
 }
 .tabla__grid--pedidos, .tabla__fila--pedidos {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1.5fr 0.5fr 1fr 1fr 1fr 1.5fr;
   gap: 2rem;
   padding: 1.8rem 0;
   color: #64748B;
@@ -1984,6 +1988,49 @@ h3 {
   color: #FFFFFF;
   font-weight: 700;
   cursor: pointer;
+}
+.pedidos__resultado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #F8FAFC;
+}
+.pedidos__resultado:hover {
+  background-color: #003482;
+}
+.pedidos__resultado--nombre {
+  flex: 1 1 100%;
+  font-weight: 700;
+}
+.pedidos__resultado--precio {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+.pedidos__resultado--pvp {
+  font-size: 1.8rem;
+  color: #64748B;
+}
+.pedidos__resultado--tachado {
+  text-decoration: line-through;
+}
+.pedidos__resultado--final {
+  font-weight: 700;
+  color: #64748B;
+}
+.pedidos__resultado--stock {
+  font-size: 1.4rem;
+  color: #64748B;
+}
+.pedidos__resultado--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.pedidos__resultado--disabled:hover {
+  background-color: transparent;
 }
 
 .formulario__card {
