@@ -35,10 +35,17 @@
         &__grid--pedidos,
         &__fila--pedidos{
             display: grid;
-            grid-template-columns: 1.5fr .5fr 1fr 1fr 1fr 1.5fr;
+            grid-template-columns: 2fr .6fr 1fr 1fr 1fr 1.5fr;
             gap: 2rem;
             padding: 1.8rem 0;
             color: v.$gris;
+        }
+        &__fila--pedidos{
+            align-items: center;
+            border-bottom: 1px solid lighten(v.$gris, 35%);
+                &:last-child{
+                    border-bottom: none;
+                }
         }
         &__grid--excel,
         &__fila--excel{
@@ -99,7 +106,9 @@
             align-items: center;
         }
     }
-    &__eliminar{
+    &__eliminar,
+    &__editar,
+    &__guardar{
         font-size: 2rem;
         color: v.$azul;
         padding: 0 .3rem;
@@ -107,6 +116,36 @@
         background: none;
         border: none;
         cursor: pointer;
+    }
+    &__cantidad--input{
+        width: 100%;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 1px solid #CBD5E1;
+        font-size: 1.6rem;
+        font-weight: normal;
+        background-color: v.$blanco;
+        color: v.$gris-oscuro;
+            &:focus{
+            outline: none;
+            border-color: v.$azul;
+            box-shadow: 0 0 0 .3rem rgba(0, 125, 244, .15);
+        }
+    }
+    &__observacion{
+        width: 100%;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 1px solid #CBD5E1;
+        font-size: 1.6rem;
+        font-weight: normal;
+        background-color: v.$blanco;
+        color: v.$gris-oscuro;
+            &:focus{
+                outline: none;
+                border-color: v.$azul;
+                box-shadow: 0 0 0 .3rem rgba(0, 125, 244, .15);
+            }
     }
 }
 

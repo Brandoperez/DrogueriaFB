@@ -220,9 +220,19 @@ const btnAgregarProductos = document.querySelector('.pedidos__agregar');
 const tablaProductos = document.querySelector('.tabla__productos');
 const filaVacia = document.querySelector('.tabla__vacia');
 let productosPedidos = [];
+let indexEditando = null;
+
+    function actualizarTotalPedido(){
+        const totalPedido = document.querySelector('#totalPedido');
+        if(!totalPedido) return;
+
+        const total = productosPedidos.reduce((acumulado, item) => acumulado + (item.precio * item.cantidad), 0);
+        totalPedido.textContent = `$${total.toFixed(2)}`;
+    }
 
     function renderizarTablaPedidos(){
         tablaProductos.querySelectorAll('.tabla__fila--pedidos').forEach(fila => fila.remove());
+        actualizarTotalPedido();
             if(productosPedidos.length === 0){
                 tablaProductos.appendChild(filaVacia);
                 return;
@@ -233,22 +243,32 @@ let productosPedidos = [];
             productosPedidos.forEach((item, index) => {
                 const fila = document.createElement('DIV');
                       fila.className = 'tabla__fila--pedidos';
+
+                      const enEdicion = index === indexEditando;
+                      const celdaCantidad = enEdicion
+                        ? `<input type="number" class="tabla__cantidad--input" data-index="${index}" min="1" value="${item.cantidad}">`
+                        : `<span>${item.cantidad}</span>`;
+
+                        const botonAccion = enEdicion
+                        ? `<button type="button" class="tabla__guardar" data-index="${index}"><i class="fa-solid fa-check"></i></button>`
+                        : `<button type="button" class="tabla__editar" data-index="${index}"><i class="fa-solid fa-pen"></i></button>`;
+
                       fila.innerHTML = `
                             <span>${item.description}</span>
-                            <span>${item.cantidad}</span>
+                            ${celdaCantidad}
                             <span>$${item.precio.toFixed(2)}</span>
                             <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
-                            <button type="button" class="tabla__eliminar" data-index="${index}">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button type="button" class="tabla__eliminar" data-index="${index}">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                            <div class="tabla__acciones">
+                                ${botonAccion}
+                                <button type="button" class="tabla__eliminar" data-index="${index}"><i class="fa-solid fa-trash"></i></button>
+                            </div>
                             <input type="text" class="tabla__observacion" data-index="${index}" placeholder="Nota del producto..." value="${item.observaciones}">
                         `;
                         tablaProductos.appendChild(fila);
             });
     }
+
+
 
 //AGREGAR PRODUCTOS A LA TABLA
 function agregarProducto(){
@@ -310,6 +330,48 @@ document.addEventListener('input', (e) => {
 
     const index = parseInt(inputObservacion.dataset.index);
     productosPedidos[index].observaciones = inputObservacion.value;
+});
+
+//ACTIVAR EDICIÓN DE CANTIDAD
+document.addEventListener('click', (e) => {
+    const btnEditar = e.target.closest('.tabla__editar');
+    if(!btnEditar) return;
+
+    indexEditando = parseInt(btnEditar.dataset.index);
+    renderizarTablaPedidos();
+});
+
+//GUARDAR NUEVA CANTIDAD
+document.addEventListener('click', (e) => {
+    const btnGuardar = e.target.closest('.tabla__guardar');
+    if(!btnGuardar) return;
+
+    const index = parseInt(btnGuardar.dataset.index);
+    const inputCantidadEdit = document.querySelector(`.tabla__cantidad--input[data-index="${index}"]`);
+    const nuevaCantidad = parseInt(inputCantidadEdit.value);
+
+    if(!nuevaCantidad || nuevaCantidad <= 0){
+        alert('Debes ingresar una cantidad válida');
+        return;
+    }
+    if(nuevaCantidad > productosPedidos[index].stock){
+        alert(`Solo hay ${productosPedidos[index].stock} unidades disponibles de este producto`);
+        return;
+    }
+
+    productosPedidos[index].cantidad = nuevaCantidad;
+    indexEditando = null;
+    renderizarTablaPedidos();
+});
+
+//GUARDAR CANTIDAD CON ENTER
+document.addEventListener('keydown', (e) => {
+    if(e.key !== 'Enter') return;
+    const inputCantidadEdit = e.target.closest('.tabla__cantidad--input');
+    if(!inputCantidadEdit) return;
+
+    e.preventDefault();
+    document.querySelector(`.tabla__guardar[data-index="${inputCantidadEdit.dataset.index}"]`)?.click();
 });
 
 //ELIMINAR PRODUCTO TABLA
@@ -378,3 +440,26 @@ const textoArchivo = document.querySelector('.excel__archivo--seleccionado');
             textoArchivo.textContent = '';
         }
     });}
+//CONTADOR
+const contadorTiempo = document.querySelector('#contadorTiempo');
+if(contadorTiempo){
+    function actualizarContador(){
+        const ahora = new Date();
+        const limite = new Date();
+        limite.setHours(16, 0, 0, 0);
+
+        if(ahora >= limite){
+            limite.setDate(limite.getDate() + 1);
+        }
+
+        const diferencia = limite - ahora;
+        const horas = String(Math.floor(diferencia / (1000 * 60 * 60))).padStart(2, '0');
+        const minutos = String(Math.floor((diferencia / (1000 * 60)) % 60)).padStart(2, '0');
+        const segundos = String(Math.floor((diferencia / 1000) % 60)).padStart(2, '0');
+
+        contadorTiempo.textContent = `${horas}:${minutos}:${segundos}`;
+    }
+
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+}

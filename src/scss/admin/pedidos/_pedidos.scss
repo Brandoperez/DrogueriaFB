@@ -100,6 +100,48 @@
         }
     }
 }
+    &__total{
+        display: flex;
+        justify-content: flex-end;
+        align-items: baseline;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid lighten(v.$gris, 35%);
+        font-size: 1.8rem;
+        color: v.$gris-oscuro;
+            span:last-child{
+                font-size: 2.4rem;
+                font-weight: v.$bold;
+                color: v.$azul;
+            }
+    }
+    &__contador{
+        @include m.centrado;
+        flex-direction: column;
+        gap: .5rem;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        border-radius: 1rem;
+        background-color: rgba(v.$azul, .08);
+        text-align: center;
+            &-texto{
+                margin: 0;
+                font-size: 1.8rem;
+                font-weight: v.$bold;
+                color: v.$gris-oscuro;
+
+                span{
+                    color: v.$azul;
+                    font-size: 2rem;
+                }
+            }
+            &-aviso{
+                margin: 0;
+                font-size: 1.4rem;
+                color: v.$gris;
+            }
+    }
 }
 
  

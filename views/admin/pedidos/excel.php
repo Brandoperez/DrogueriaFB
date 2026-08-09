@@ -6,6 +6,14 @@
         <span>/</span>
         <p>Carga Masiva de Pedidos</p>
     </div>
+    <div class="pedidos__contador">
+        <p class="pedidos__contador-texto">
+            Te quedan <span id="contadorTiempo">--:--:--</span> para hacer tu pedido
+        </p>
+        <p class="pedidos__contador-aviso">
+            Hacé tu pedido antes de las 16:00hs y recibí tu pedido en las próximas 24hs.
+        </p>
+    </div>
 
     <?php if(isset($_SESSION['alerta'])): ?>
         <script>window.ALERTA = <?= json_encode($_SESSION['alerta']) ?>;</script>

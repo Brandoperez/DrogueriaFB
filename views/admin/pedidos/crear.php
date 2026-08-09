@@ -7,6 +7,15 @@
         <p>Carga Manual</p>
     </div>
 
+    <div class="pedidos__contador">
+        <p class="pedidos__contador-texto">
+            Te quedan <span id="contadorTiempo">--:--:--</span> para hacer tu pedido
+        </p>
+        <p class="pedidos__contador-aviso">
+            Hacé tu pedido antes de las 16:00hs y recibí tu pedido en las próximas 24hs.
+        </p>
+    </div>
+
     <form action="/admin/pedidos/crear" method="POST" class="formulario">
         <section class="formulario__card">
             <div class="formulario__campos">
@@ -54,12 +63,18 @@
                         <span>Precio</span>
                         <span>Subtotal</span>
                         <span>Acciones</span>
+                        <span>Observaciones</span>
                     </div>
 
                     <div class="tabla__vacia">
                         <i class="fa-solid fa-box-open"></i>
                         <p>No hay productos agregados al pedido.</p>
                     </div>
+                </div>
+
+                <div class="pedidos__total">
+                    <span>Total del pedido:</span>
+                    <span id="totalPedido">$0.00</span>
                 </div>
             </div>
 

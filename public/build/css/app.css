@@ -1373,10 +1373,17 @@ h3 {
 }
 .tabla__grid--pedidos, .tabla__fila--pedidos {
   display: grid;
-  grid-template-columns: 1.5fr 0.5fr 1fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2fr 0.6fr 1fr 1fr 1fr 1.5fr;
   gap: 2rem;
   padding: 1.8rem 0;
   color: #64748B;
+}
+.tabla__fila--pedidos {
+  align-items: center;
+  border-bottom: 1px solid rgb(201.2029288703, 207.3953974895, 216.2970711297);
+}
+.tabla__fila--pedidos:last-child {
+  border-bottom: none;
 }
 .tabla__grid--excel, .tabla__fila--excel {
   display: grid;
@@ -1432,7 +1439,7 @@ h3 {
   padding: 0 0.3rem;
   align-items: center;
 }
-.tabla__eliminar {
+.tabla__eliminar, .tabla__editar, .tabla__guardar {
   font-size: 2rem;
   color: rgba(0, 52, 130, 0.85);
   padding: 0 0.3rem;
@@ -1440,6 +1447,36 @@ h3 {
   background: none;
   border: none;
   cursor: pointer;
+}
+.tabla__cantidad--input {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #CBD5E1;
+  font-size: 1.6rem;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  color: #1E293B;
+}
+.tabla__cantidad--input:focus {
+  outline: none;
+  border-color: rgba(0, 52, 130, 0.85);
+  box-shadow: 0 0 0 0.3rem rgba(0, 125, 244, 0.15);
+}
+.tabla__observacion {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #CBD5E1;
+  font-size: 1.6rem;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  color: #1E293B;
+}
+.tabla__observacion:focus {
+  outline: none;
+  border-color: rgba(0, 52, 130, 0.85);
+  box-shadow: 0 0 0 0.3rem rgba(0, 125, 244, 0.15);
 }
 
 .acciones--tabla {
@@ -2031,6 +2068,49 @@ h3 {
 }
 .pedidos__resultado--disabled:hover {
   background-color: transparent;
+}
+.pedidos__total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgb(201.2029288703, 207.3953974895, 216.2970711297);
+  font-size: 1.8rem;
+  color: #1E293B;
+}
+.pedidos__total span:last-child {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: rgba(0, 52, 130, 0.85);
+}
+.pedidos__contador {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  background-color: rgba(0, 52, 130, 0.08);
+  text-align: center;
+}
+.pedidos__contador-texto {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+.pedidos__contador-texto span {
+  color: rgba(0, 52, 130, 0.85);
+  font-size: 2rem;
+}
+.pedidos__contador-aviso {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #64748B;
 }
 
 .formulario__card {
