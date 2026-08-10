@@ -67,24 +67,17 @@ if(btnBuscarPedidos && btnLimpiarFiltros){
                     </a>
                 `;
 
-                if(pedido.status === 'pending'){
-            acciones += `
-                        <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="${pedido.id}" data-estado="confirmed" title="Confirmar pedido"> <i class="fa-solid fa-circle-arrow-right"></i></a>
+                if(pedido.status === 'procesado'){ acciones += `
+                    <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="${pedido.id}" data-estado="completado" title="Completar pedido"> <i class="fa-solid fa-check"></i></a>
 
-                        <a href="#" class="tabla__accion js-cancelar-pedido" data-id="${pedido.id}" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>
-                    `;
-                } else if(pedido.status === 'confirmed'){
-                    acciones += `
-                        <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="${pedido.id}" data-estado="completed" title="Completar pedido"> <i class="fa-solid fa-check"></i></a>
-
-                        <a href="#" class="tabla__accion js-cancelar-pedido" data-id="${pedido.id}" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>`;
+                    <a href="#" class="tabla__accion js-cancelar-pedido" data-id="${pedido.id}" data-estado="cancelado" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>`;
                 }
 
                 const claseEstado =
-                    pedido.status === 'pending' ? 'estado--proceso' :
-                    pedido.status === 'completed' ? 'estado--completado' :
-                    pedido.status === 'cancelled' ? 'estado--cancelado' :
-                    'estado--confirmado';
+                    pedido.status === 'procesado' ? 'estado--proceso' :
+                    pedido.status === 'completado' ? 'estado--completado' :
+                    pedido.status === 'cancelado' ? 'estado--cancelado' :
+                    '';
             return `
             <div class="tabla tabla__fila--listado-pe pedidos__fila">
                 <span class="pedidos__pedido-id">#${numero}</span>
@@ -138,19 +131,10 @@ if(tablaBody){
 
             estadoDiv.classList.remove(
                 'estado--proceso',
-                'estado--confirmado',
                 'estado--completado'
             );
 
-            if(resultado.estado === 'confirmed'){
-                estadoTexto.textContent = 'Confirmado';
-                estadoDiv.classList.add('estado--confirmado');
-
-                botonEstado.dataset.estado = 'completed';
-                botonEstado.title = 'Completar pedido';
-                botonEstado.innerHTML = '<i class="fa-solid fa-check"></i>';
-
-            } else if(resultado.estado === 'completed'){
+            if(resultado.estado === 'completado'){
                 estadoTexto.textContent = 'Completado';
                 estadoDiv.classList.add('estado--completado');
 
@@ -200,7 +184,6 @@ if(botonesCancelar.length > 0){
 
                 estadoDiv.classList.remove(
                     'estado--proceso',
-                    'estado--confirmado',
                     'estado--completado'
                 );
 

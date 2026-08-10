@@ -39,7 +39,7 @@ class Pedidos extends ActiveRecord{
                 $stmt->execute([
                     $datosPedido['client_id'],
                     $datosPedido['seller_id'],
-                    'pending',
+                    'procesado',
                     $datosPedido['observations'],
                     $datosPedido['total']
                 ]);
@@ -119,11 +119,10 @@ class Pedidos extends ActiveRecord{
                     return null;
                 }
 
-                $queryItems = "SELECT oi.quantity, oi.price, oi.subtotal,
-                                p.description AS product_name
-                                FROM order_items oi
-                                LEFT JOIN products p ON oi.product_id = p.id
-                                WHERE oi.order_id = ?";
+                $queryItems = "SELECT  oi.quantity, oi.price, oi.subtotal, oi.notes AS product_notes, p.description AS product_name
+                FROM order_items oi
+                LEFT JOIN products p ON oi.product_id = p.id
+                WHERE oi.order_id = ?";
 
                                 $stmtItems = $db->prepare($queryItems);
                                 $stmtItems->execute([$id]);
@@ -278,12 +277,12 @@ class Pedidos extends ActiveRecord{
     public static function obtenerEstadisticas(){
         global $db;
 
-        $query = "SELECT
-                    COUNT(*) AS total,
-                    COUNT(*) FILTER (WHERE status = 'pending') AS pendientes,
-                    COUNT(*) FILTER (WHERE status = 'completed') AS completados,
-                    COUNT(*) FILTER (WHERE status = 'cancelled') AS cancelados
-                  FROM orders";
+     $query = "SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE status = 'procesado') AS procesados,
+                COUNT(*) FILTER (WHERE status = 'completado') AS completados,
+                COUNT(*) FILTER (WHERE status = 'cancelado') AS cancelados
+            FROM orders";
 
                   $stmt = $db->query($query);
                   return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -308,34 +307,90 @@ class Pedidos extends ActiveRecord{
     public static function cambiarEstado($id, $nuevoEstado){
     global $db;
 
-    $queryEstado = "SELECT status FROM orders WHERE id = ?";
-    $stmtEstado = $db->prepare($queryEstado);
-    $stmtEstado->execute([$id]);
-    $estadoActual = $stmtEstado->fetchColumn();
+    try {
+        $db->beginTransaction();
 
-            if(!$estadoActual){
-                return false;
-            }
+        // Obtener el estado actual del pedido
+        $queryEstado = "SELECT status FROM orders WHERE id = ?";
+        $stmtEstado = $db->prepare($queryEstado);
+        $stmtEstado->execute([$id]);
 
-            $transicionesPermitidas = [
-                'pending' => ['confirmed', 'cancelled'],
-                'confirmed' => ['completed', 'cancelled']
-            ];
+        $estadoActual = $stmtEstado->fetchColumn();
 
-            if(
-                !isset($transicionesPermitidas[$estadoActual]) ||
-                !in_array($nuevoEstado, $transicionesPermitidas[$estadoActual])
-            ){
-                return false;
-            }
-
-            $query = "UPDATE orders 
-                    SET status = ?
-                    WHERE id = ?";
-
-            $stmt = $db->prepare($query);
-            return $stmt->execute([$nuevoEstado, $id]);
+        if(!$estadoActual){
+            $db->rollBack();
+            return false;
         }
+
+        // Definir transiciones permitidas
+        $transicionesPermitidas = [
+            'procesado' => ['completado', 'cancelado'],
+            'completado' => [],
+            'cancelado' => []
+        ];
+
+        if(
+            !isset($transicionesPermitidas[$estadoActual]) ||
+            !in_array($nuevoEstado, $transicionesPermitidas[$estadoActual])
+        ){
+            $db->rollBack();
+            return false;
+        }
+
+        // Si el pedido se cancela,
+        // devolver el stock de todos sus productos
+        if($nuevoEstado === 'cancelado'){
+
+            $queryItems = "
+                SELECT product_id, quantity
+                FROM order_items
+                WHERE order_id = ?
+            ";
+
+            $stmtItems = $db->prepare($queryItems);
+            $stmtItems->execute([$id]);
+
+            $items = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
+
+            $stmtStock = $db->prepare("
+                UPDATE products
+                SET stock = stock + ?
+                WHERE id = ?
+            ");
+
+            foreach($items as $item){
+                $stmtStock->execute([
+                    $item['quantity'],
+                    $item['product_id']
+                ]);
+            }
+        }
+
+        // Cambiar estado del pedido
+        $query = "
+            UPDATE orders
+            SET status = ?
+            WHERE id = ?
+        ";
+
+        $stmt = $db->prepare($query);
+        $stmt->execute([$nuevoEstado, $id]);
+
+        $db->commit();
+
+        return true;
+
+    } catch(PDOException $e){
+
+        if($db->inTransaction()){
+            $db->rollBack();
+        }
+
+        error_log($e->getMessage());
+
+        return false;
+    }
+}
 
         public static function existenPedidosDeCliente($clienteId){
             global $db;

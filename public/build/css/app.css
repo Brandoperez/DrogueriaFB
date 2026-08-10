@@ -1422,7 +1422,7 @@ h3 {
 }
 .tabla__grid--detalle, .tabla__fila--detalle {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 2.5fr 0.7fr 1fr 1fr 2fr;
   gap: 2rem;
   align-items: center;
   padding: 1.8rem 1rem;
@@ -2442,10 +2442,6 @@ h3 {
   margin-right: auto;
 }
 .estado--proceso {
-  background-color: rgba(245, 158, 11, 0.15);
-  color: #d97706;
-}
-.estado--confirmado {
   background-color: rgba(0, 125, 244, 0.12);
   color: #007df4;
 }
@@ -2456,10 +2452,6 @@ h3 {
 .estado--cancelado {
   background-color: rgba(220, 38, 38, 0.15);
   color: #DC2626;
-}
-.estado--nuevo {
-  background-color: rgba(107, 114, 128, 0.12);
-  color: #64748B;
 }
 
 .detalle__pedido--info {

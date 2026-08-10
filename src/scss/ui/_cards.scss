@@ -89,11 +89,12 @@
     &__grid--detalle,
     &__fila--detalle{
         display: grid;
-        grid-template-columns: 3fr 1fr 1fr 1fr;
+        grid-template-columns: 2.5fr .7fr 1fr 1fr 2fr;
         gap: 2rem;
         align-items: center;
         padding: 1.8rem 1rem;
     }
+    
     &__acciones{
         display: flex;
         justify-content: flex-start;

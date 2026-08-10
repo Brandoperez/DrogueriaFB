@@ -40,13 +40,13 @@
 
             <div class="formulario__campo">
                 <label for="estado">Estado</label>
-                <select id="estado" name="estado">
-                    <option value="">Todos los estados</option>
-                    <option value="pending">Pendiente</option>
-                    <option value="confirmed">Confirmado</option>
-                    <option value="cancelled">Cancelado</option>
-                </select>
-            </div>
+                    <select id="estado" name="estado">
+                        <option value="">Todos los estados</option>
+                        <option value="procesado">Procesado</option>
+                        <option value="completado">Completado</option>
+                        <option value="cancelado">Cancelado</option>
+                   </select>
+        </div>
 
             <div class="formulario__campo">
                 <label for="buscar">Buscar</label>
@@ -91,15 +91,11 @@
                     <div class="tabla__acciones">
                         <a href="/admin/pedidos/detalle?id=<?php echo $pedido['id']; ?>"><i class="fa-solid fa-eye"></i></a>
 
-                        <?php if($pedido['status'] === 'pending'): ?>
-                            <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="confirmed" title="Confirmar pedido"> <i class="fa-solid fa-circle-arrow-right"></i></a>
+                        <?php if($pedido['status'] === 'procesado'): ?>
+                        <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="completado" title="Completar pedido"><i class="fa-solid fa-check"></i></a>
 
-                            <a href="#" class="tabla__accion js-cancelar-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>
-
-                        <?php elseif($pedido['status'] === 'confirmed'): ?>
-                            <a href="#" class="tabla__accion js-cambiar-estado-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="completed" title="Completar pedido"><i class="fa-solid fa-check"></i></a>
-
-                            <a href="#" class="tabla__accion js-cancelar-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="cancelled" title="Cancelar pedido"> <i class="fa-solid fa-trash"></i></a>
+                        <a href="#" class="tabla__accion js-cancelar-pedido" data-id="<?php echo $pedido['id']; ?>" data-estado="cancelado" title="Cancelar pedido"><i class="fa-solid fa-trash"></i></a>
+                        
                         <?php endif; ?>
                     </div>
                 </div>

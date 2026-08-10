@@ -50,6 +50,7 @@
                 <span>Cantidad</span>
                 <span>Precio</span>
                 <span>Subtotal</span>
+                <span>Observaciones</span>
             </div>
 
             <?php if(!empty($pedido['items'])): ?>
@@ -59,6 +60,7 @@
                     <span><?php echo $item['quantity']; ?></span>
                     <span>$<?php echo number_format($item['price'], 2, ',', '.'); ?></span>
                     <span>$<?php echo number_format($item['subtotal'], 2, ',', '.'); ?></span>
+                    <span><?php echo !empty($item['product_notes'])  ? s($item['product_notes'])  : 'Sin observaciones'; ?></span>
                 </div>
             <?php endforeach; ?>
                 <?php else: ?>

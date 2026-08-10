@@ -84,7 +84,7 @@ $router->get('/admin/usuarios/eliminar', [UsuariosController::class, 'eliminar']
 
 //ZONA GENERAL
 
-$router->get('/', [AuthController::class, 'index']);
+$router->get('/', [AuthController::class, 'login']);
 
 //Clientes
 $router->get('/cliente/clientes', [ClientesController::class, 'clientes']);

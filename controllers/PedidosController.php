@@ -256,7 +256,7 @@ class PedidosController{
         $id = $_POST['id'] ?? null;
         $estado = $_POST['estado'] ?? null;
 
-        $estadosPermitidos = ['confirmed', 'completed', 'cancelled'];
+        $estadosPermitidos = ['procesado', 'completado', 'cancelado'];
 
             if(!$id || !in_array($estado, $estadosPermitidos)){
                 header('Content-Type: application/json');
@@ -268,7 +268,7 @@ class PedidosController{
 
                 $resultado = Pedidos::cambiarEstado($id, $estado);
                 $emailEnviado = false;
-                    if($resultado && $estado === 'confirmed'){
+                    if($resultado && $estado === 'completado'){
                         $datosCorreo = Pedidos::obtenerDatosCorreo($id);
                             if($datosCorreo && !empty($datosCorreo['email'])){
                                 $email = new Email($datosCorreo['email'], $datosCorreo['name'], null);

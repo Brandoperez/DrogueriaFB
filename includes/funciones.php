@@ -79,10 +79,9 @@ function ao_animation(){
 
 function claseEstado(string $status) : string {
     $clases = [
-        'pending'   => 'estado--proceso',
-        'confirmed' => 'estado--confirmado',
-        'completed' => 'estado--completado',
-        'cancelled' => 'estado--cancelado'
+        'procesado'   => 'estado--proceso',
+        'completado' => 'estado--completado',
+        'cancelado' => 'estado--cancelado'
     ];
 
     return $clases[$status] ?? 'estado--nuevo';
