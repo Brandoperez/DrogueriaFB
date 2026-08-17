@@ -70,6 +70,13 @@
                 <span>Usuarios</span>
             </a>
         </div>
+
+        <div class="sidebar__grupo <?php echo paginaActual('/admin/ofertas') ? 'sidebar__enlace--actual' : ''; ?>">
+            <a href="/admin/ofertas" class="sidebar__enlace ">
+                <i class="fa-solid fa-tags"></i>
+                <span>Ofertas</span>
+            </a>
+        </div>
         
 
         <div class="sidebar__grupo">

@@ -48,7 +48,7 @@
             <i class="fa-solid fa-clock"></i>
         </div>
         <div class="dashboard__cards--info">
-        <span><?php echo $estadisticas['procesadoss'] ?? 0; ?></span>
+        <span><?php echo $estadisticas['procesados'] ?? 0; ?></span>
         <p>Procesados</p>
         </div>
     </div>

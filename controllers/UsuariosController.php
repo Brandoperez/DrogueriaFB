@@ -3,6 +3,7 @@ namespace Controllers;
 
 use MVC\Router;
 use Model\Usuario;
+use Model\Pedidos;
 
 class UsuariosController{
     public static function index(Router $router){
@@ -133,25 +134,45 @@ class UsuariosController{
         }
 
         public static function eliminar(Router $router){
-            isRole('admin');
+    isRole('admin');
 
-            $id = $_GET['id'] ?? null;
-                if(!$id || !is_numeric($id)){
-                    header('Location: /admin/clientes');
-                    exit;
-                }
-            $usuario = Usuario::find($id);
-                if(!$usuario){
-                    header('Location: /admin/clientes');
-                    exit;
-                }
+    $id = $_GET['id'] ?? null;
 
-            $resultado = $usuario->eliminar();
-            if($resultado){
-                header('Location: /admin/usuarios');
-                exit;
-            }
-        }
+    if(!$id || !is_numeric($id)){
+        header('Location: /admin/usuarios');
+        exit;
+    }
+
+    $usuario = Usuario::find($id);
+
+    if(!$usuario){
+        header('Location: /admin/usuarios');
+        exit;
+    }
+
+    // Verificar si el vendedor tiene pedidos asociados
+    if(Pedidos::existenPedidosDeVendedor($usuario->id)){
+        $_SESSION['alerta'] = [
+            'tipo' => 'error',
+            'mensaje' => 'No se puede eliminar: el vendedor tiene pedidos asociados. Podés desactivarlo en su lugar.'
+        ];
+
+        header('Location: /admin/usuarios');
+        exit;
+    }
+
+    $resultado = $usuario->eliminar();
+
+    if($resultado){
+        $_SESSION['alerta'] = [
+            'tipo' => 'success',
+            'mensaje' => 'Usuario eliminado correctamente'
+        ];
+
+        header('Location: /admin/usuarios');
+        exit;
+    }
+}
     
 }
 

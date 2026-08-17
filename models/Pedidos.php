@@ -401,6 +401,15 @@ class Pedidos extends ActiveRecord{
 
             return (int) $stmt->fetchColumn() > 0;
 }
+public static function existenPedidosDeVendedor($vendedorId){
+    global $db;
+
+    $query = "SELECT COUNT(*) FROM orders WHERE seller_id = ?";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$vendedorId]);
+
+    return (int) $stmt->fetchColumn() > 0;
+}
 }
 
     

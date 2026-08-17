@@ -85,13 +85,13 @@
             <div class="swiper ofertas__slider">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide ofertas__slide">
-                        <img src="/build/img/promo1.png" alt="Oferta del mes" class="ofertas__imagen">
+                        <img src="<?php echo rutaOferta(1); ?>" alt="Oferta del mes" class="ofertas__imagen">
                     </div>
                     <div class="swiper-slide ofertas__slide">
-                        <img src="/build/img/promo2.png" alt="Oferta del mes" class="ofertas__imagen">
+                        <img src="<?php echo rutaOferta(2); ?>" alt="Oferta del mes" class="ofertas__imagen">
                     </div>
                     <div class="swiper-slide ofertas__slide">
-                        <img src="/build/img/promo3.png" alt="Oferta del mes" class="ofertas__imagen">
+                        <img src="<?php echo rutaOferta(3); ?>" alt="Oferta del mes" class="ofertas__imagen">
                     </div>
                 </div>
 

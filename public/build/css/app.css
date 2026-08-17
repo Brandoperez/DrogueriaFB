@@ -2574,6 +2574,27 @@ h3 {
   color: #1E293B;
 }
 
+.ofertas__admin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .ofertas__admin-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ofertas__admin-preview {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  border-radius: 0.8rem;
+  margin: 1.5rem 0;
+  background-color: #F8FAFC;
+}
+
 .clientes {
   width: min(95%, 120rem);
   margin: 0 auto;

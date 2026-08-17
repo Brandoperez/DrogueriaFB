@@ -20,10 +20,9 @@
                 <label for="estado">Estado</label>
                 <select id="estado" name="estado">
                     <option value="">Todos los estados</option>
-                    <option value="pending">Pendiente</option>
-                    <option value="confirmed">Confirmado</option>
-                    <option value="completed">Completado</option>
-                    <option value="cancelled">Cancelado</option>
+                    <option value="procesado">Procesado</option>
+                    <option value="completado">Completado</option>
+                    <option value="cancelado">Cancelado</option>
                 </select>
             </div>
 

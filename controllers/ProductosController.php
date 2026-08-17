@@ -110,10 +110,11 @@ class ProductosController{
     }
 
     private static function ImportarPrecios(Producto $producto, array $fila){
+        
         $precios = [
-            1 => [ 'price_list_id' => 1, 'price' => (float)$fila[4], 'discount' => (float)$fila[9]],
-            2 => [ 'price_list_id' => 2, 'price' => (float)$fila[5], 'discount' => (float)$fila[10]],
-            3 => [ 'price_list_id' => 3, 'price' => (float)$fila[6], 'discount' => (float)$fila[11]],
+            1 => ['price_list_id' => 1, 'price' => (float)$fila[4], 'discount' => (float)$fila[9] * 100],
+            2 => [ 'price_list_id' => 2, 'price' => (float)$fila[5], 'discount' => (float)$fila[10] * 100],
+            3 => [ 'price_list_id' => 3, 'price' => (float)$fila[6], 'discount' => (float)$fila[11] * 100],
         ];
 
         foreach($precios as $listaId => $data){

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/app.php';
 use Controllers\AdminController;
 use Controllers\AuthController;
 use Controllers\ClientesController;
-use Controllers\LogisticaController;
+use Controllers\OfertasController;
 use Controllers\PedidosController;
 use Controllers\ProductosController;
 use Controllers\UsuariosController;
@@ -72,6 +72,10 @@ $router->get('/admin/clientes/eliminar', [ClientesController::class, 'eliminar']
 $router->get('/api/clientes/estado', [ClientesController::class, 'estado']);
 $router->post('/api/clientes/buscar', [ClientesController::class, 'buscar']);
 $router->get('/api/clientes/localidades', [ClientesController::class, 'buscarLocalidades']);
+
+//Ofertas
+$router->get('/admin/ofertas', [OfertasController::class, 'index']);
+$router->post('/admin/ofertas', [OfertasController::class, 'index']);
 
 //Usuarios
 $router->get('/admin/usuarios', [UsuariosController::class, 'index']);

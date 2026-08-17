@@ -87,6 +87,16 @@ function claseEstado(string $status) : string {
     return $clases[$status] ?? 'estado--nuevo';
 }
 
+    function rutaOferta(int $n) : string {
+    $archivo = __DIR__ . '/../public/uploads/ofertas/promo' . $n . '.png';
+ 
+    if (file_exists($archivo)) {
+        return '/uploads/ofertas/promo' . $n . '.png?v=' . filemtime($archivo);
+    }
+ 
+    return '/build/img/promo' . $n . '.png';
+}
+
     function fechaEnEspanol(?string $fecha = null) : string {
         $dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
         $meses = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];

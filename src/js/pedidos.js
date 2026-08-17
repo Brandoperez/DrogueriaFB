@@ -11,7 +11,7 @@ const filtrosBuscar = document.querySelector('#buscar');
 
 const tablaBody = document.querySelector('.pedidos__tabla-body');
 
-if(btnBuscarPedidos && btnLimpiarFiltros){
+if(btnBuscarPedidos && btnLimpiarFiltros && filtrosVendedor && filtrosCliente){
     btnBuscarPedidos.addEventListener('click', buscarPedidos);
     btnLimpiarFiltros.addEventListener('click', limpiarFiltros);
 }

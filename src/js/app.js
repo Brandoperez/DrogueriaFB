@@ -24,7 +24,7 @@ if(toggleSidebar.length > 0){
 
 // BUSCADOR DE USUARIOS
 const buscador = document.querySelector('#buscarUsuarios');
-const filas = document.querySelectorAll('.usuario-fila');
+const filas = document.querySelectorAll('.tabla__fila--usuarios');
 
 if(buscador){
     buscador.addEventListener('input', e => {
@@ -191,10 +191,10 @@ const btnAgregarProductos = document.querySelector('.pedidos__agregar');
 
                             resultado.innerHTML = `
                                 <span class="pedidos__resultado--nombre">${producto.description}${sinStock ? ' (Sin stock)' : ''}</span>
-                                <span class="pedidos__resultado--pvp${tieneDescuento ? ' pedidos__resultado--tachado' : ''}">$${pvp.toFixed(2)}</span>
+                                <span class="pedidos__resultado--pvp${tieneDescuento ? ' pedidos__resultado--tachado' : ''}">PVP $${pvp.toFixed(2)}</span>
                                 <span class="pedidos__resultado--stock">Stock: ${producto.stock}</span>
                                 ${tieneDescuento ? `
-                                    <span class="pedidos__resultado--descuento">${descuento}% off PVP</span>
+                                    <span class="pedidos__resultado--descuento">${descuento}% OFF:</span>
                                     <span class="pedidos__resultado--final">$${precioFinal.toFixed(2)}</span>
                                 ` : ''}
                             `;

@@ -33,36 +33,50 @@ class Producto extends ActiveRecord{
     }
 
     public static function buscarParaPedido($termino, $priceListId = null) {
-        global $db;
+    global $db;
 
-         $query = "SELECT p.id, p.code, p.description, p.laboratory, p.stock,
+    $query = "SELECT 
+                p.id,
+                p.code,
+                p.description,
+                p.laboratory,
+                p.stock,
+
                 COALESCE(pp.price, p.base_price) AS pvp,
+
                 COALESCE(pp.discount_percentage, 0) AS descuento,
-                COALESCE(
-                pp.price - (pp.price * pp.discount_percentage / 100),
-                p.base_price
-            ) AS precio
+
+                CASE
+                    WHEN pp.price IS NOT NULL
+                    THEN pp.price - (pp.price * COALESCE(pp.discount_percentage, 0) / 100)
+                    ELSE p.base_price
+                END AS precio
+
             FROM products p
+
             LEFT JOIN product_prices pp
                 ON pp.product_id = p.id
                 AND pp.price_list_id = :price_list_id
+
             WHERE p.active = true
             AND (
                 p.code ILIKE :termino
                 OR p.description ILIKE :termino
                 OR p.laboratory ILIKE :termino
             )
+
             ORDER BY p.description ASC
             LIMIT 10";
 
-        $stmt = $db->prepare($query);
-        $stmt->execute([
-            ':termino' => "%{$termino}%",
-            ':price_list_id' => $priceListId
-        ]);
+    $stmt = $db->prepare($query);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt->execute([
+        ':termino' => "%{$termino}%",
+        ':price_list_id' => $priceListId
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     public static function obtenerPrecioLista($productId, $priceListId){
         global $db;
